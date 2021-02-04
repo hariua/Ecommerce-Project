@@ -4,16 +4,22 @@
   </head>
 
 <body>
-    {{#if somebody}}
-    {{>somebody}}
-    {{else}}
+    
+  
     {{#if admin}}
     {{>admin-header}}
-    {{else}}
+    {{/if}}
+    {{#if user}}
     {{>user-header}}
     {{/if}}
-    {{/if}}
     {{{body}}}
+
+    {{#if admin}}
+    {{>admin-footer}}
+    {{/if}}
+    {{#if user}}
+    {{>user-footer}}
+    {{/if}}
 
 
     

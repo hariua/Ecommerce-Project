@@ -4,11 +4,11 @@ var userHelper = require('../helper/user-helper')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index',{admin:false});
+  res.render('index',{user:true});
 });
 router.get('/userLogin',(req,res)=>
 {
-  res.render('user/userLogin')
+  res.render('user/userLogin',{user:true})
 })
 router.post('/userLogin',(req,res)=>
 {
@@ -33,7 +33,7 @@ router.post('/userLogin',(req,res)=>
 })
 router.get('/userSignup',(req,res)=>
 {
-  res.render('user/userSignup')
+  res.render('user/userSignup',{user:true})
 })
 router.post('/userSignup',(req,res)=>
 {
@@ -47,11 +47,11 @@ router.post('/userSignup',(req,res)=>
 })
 router.get('/userProduct',(req,res)=>
 {
-  res.render('user/userProduct')
+  res.render('user/userProduct',{user:true})
 })
 router.get('/userCart',(req,res)=>
 {
-  res.render('user/userCart')
+  res.render('user/userCart',{user:true})
 })
 
 module.exports = router;

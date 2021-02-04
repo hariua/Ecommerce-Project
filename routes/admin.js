@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 });
 router.get('/home',(req,res)=>
 {
-  res.render('admin/adminHome')
+  res.render('admin/adminHome',{admin:true})
  
 })
 router.post('/login',(req,res)=>
@@ -24,6 +24,10 @@ router.post('/login',(req,res)=>
   else{
     res.redirect('/admin')
   }
+})
+router.get('/demo',(req,res)=>
+{
+  res.render('admin/allUsers',{admin:true})
 })
 
 module.exports = router;
