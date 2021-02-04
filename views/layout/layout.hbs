@@ -1,23 +1,23 @@
 <html>
-    <head>
-        <link rel="profile" href="https://gmpg.org/xfn/11">
-    <link rel="canonical" href="https://htmldemo.hasthemes.com/furns/" />
-     <link rel="icon" href="/assets/images/favicon/favicon.png" sizes="32x32" />
-    <link rel="icon" href="/assets/images/favicon/favicon.png" sizes="192x192" />
-    <link rel="apple-touch-icon" href="/assets/images/favicon/favicon.png" />
-    <meta name="msapplication-TileImage" content="/assets/images/favicon/favicon.png" />
 
-    <link rel="stylesheet" href="/assets/css/vendor/vendor.min.css" />
-    <link rel="stylesheet" href="/assets/css/plugins/plugins.min.css" />
-    <link rel="stylesheet" href="/assets/css/style.min.css">
+<head>
+  </head>
 
-    </head>
-    <body>
+<body>
+    {{#if somebody}}
+    {{>somebody}}
+    {{else}}
     {{#if admin}}
     {{>admin-header}}
     {{else}}
     {{>user-header}}
     {{/if}}
+    {{/if}}
     {{{body}}}
-    </body>
+
+
+    
+
+</body>
+
 </html>
