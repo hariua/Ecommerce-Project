@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Target Material Design Bootstrap Admin Template</title>
+	<title>Ecommerce Admin</title>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="/admin/materialize/css/materialize.min.css" media="screen,projection" />
 	<!-- Bootstrap Styles-->
@@ -42,17 +42,17 @@
 
 			<ul class="nav navbar-top-links navbar-right">
 				<li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i
-							class="fa fa-user fa-fw"></i> <b>John Doe</b> <i
+							class="fa fa-user fa-fw"></i> <b>Harikrishnan</b> <i
 							class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 		</nav>
 		<!-- Dropdown Structure -->
 		<ul id="dropdown1" class="dropdown-content">
-			<li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
-			</li>
-			<li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-			</li>
-			<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+			{{!-- <li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
+			</li> --}}
+			{{!-- <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+			</li> --}}
+			<li><a href="/admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 			</li>
 		</ul>
 
@@ -62,19 +62,19 @@
 				<ul class="nav" id="main-menu">
 
 					<li>
-						<a href="ui-elements.html" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i>
+						<a href="/admin/home" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i>
 							Dashboard</a>
 					</li><br><br>
 					<li>
-						<a href="ui-elements.html" class="waves-effect waves-dark"><i class="fa fa-desktop"></i>
+						<a href="/admin/allUsers" class="waves-effect waves-dark"><i class="fa fa-desktop"></i>
 							All Users</a>
 					</li>
 					<li>
-						<a href="chart.html" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>
+						<a href="/admin/allProducts" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>
 							All Products</a>
 					</li>
 					<li>
-						<a href="tab-panel.html" class="waves-effect waves-dark"><i class="fa fa-qrcode"></i>All Transactions</a>
+						<a href="" class="waves-effect waves-dark"><i class="fa fa-qrcode"></i>All Transactions</a>
 					</li>
 
 					

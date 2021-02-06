@@ -1,0 +1,40 @@
+
+<div class="container-fluid" id="page-wrapper">
+    <div class="login-register-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                <div class="login-register-wrapper">
+                    <div class="login-register-tab-list nav">
+                        
+
+                    </div>
+                    <div class="tab-content ">
+                        <div id="lg1" class="tab-pane active">
+                            <div class="login-form-container alert bg-light border-success">
+                                <div class="login-register-form">
+                                    <form action="/admin/editUser?id={{userDetails._id}}" method="post">
+                                    <label class="text-primary">Name:</label>
+                                     <input type="text" name="Name" value="{{userDetails.Name}}" required/>
+                                      <label class="text-primary">Email ID:</label>
+                                        <input type="email" name="Email"value="{{userDetails.Email}}" required/>
+                                         <label class="text-primary">Mobile Number:</label>
+                                        <input type="number" name="Mobile" value="{{userDetails.Mobile}}" required />
+                                         
+                                        <div class="button-box">
+                                           
+                                            <button type="submit"><span>Update User</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+   

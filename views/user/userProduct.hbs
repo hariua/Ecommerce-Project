@@ -32,45 +32,45 @@
                 <!-- Swiper -->
                 <div class="swiper-container zoom-top">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide zoom-image-hover">
-                            <img class="img-responsive m-auto" src="/assets/images/product-image/zoom-image/1.jpg"
+                        <div class="swiper-slide ">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}a.jpg"
                                 alt="">
                         </div>
-                        <div class="swiper-slide zoom-image-hover">
-                            <img class="img-responsive m-auto" src="/assets/images/product-image/zoom-image/2.jpg"
+                        <div class="swiper-slide ">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}b.jpg"
                                 alt="">
                         </div>
-                        <div class="swiper-slide zoom-image-hover">
-                            <img class="img-responsive m-auto" src="/assets/images/product-image/zoom-image/3.jpg"
+                        <div class="swiper-slide ">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}c.jpg"
                                 alt="">
                         </div>
-                        <div class="swiper-slide zoom-image-hover">
+                        {{!-- <div class="swiper-slide zoom-image-hover">
                             <img class="img-responsive m-auto" src="/assets/images/product-image/zoom-image/4.jpg"
                                 alt="">
                         </div>
                         <div class="swiper-slide zoom-image-hover">
                             <img class="img-responsive m-auto" src="/assets/images/product-image/zoom-image/5.jpg"
                                 alt="">
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="swiper-container zoom-thumbs slider-nav-style-1 small-nav  mb-3">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <img class="img-responsive m-auto" src="/assets/images/product-image/1.jpg" alt="">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}a.jpg" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img class="img-responsive m-auto" src="/assets/images/product-image/2.jpg" alt="">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}b.jpg" alt="">
                         </div>
                         <div class="swiper-slide">
-                            <img class="img-responsive m-auto" src="/assets/images/product-image/3.jpg" alt="">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}c.jpg" alt="">
                         </div>
-                        <div class="swiper-slide">
+                        {{!-- <div class="swiper-slide">
                             <img class="img-responsive m-auto" src="/assets/images/product-image/4.jpg" alt="">
                         </div>
                         <div class="swiper-slide">
                             <img class="img-responsive m-auto" src="/assets/images/product-image/5.jpg" alt="">
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- Add Arrows -->
                     {{!-- <div class="swiper-buttons">
@@ -81,7 +81,7 @@
             </div>
             <div class="col-lg-7 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                 <div class="product-details-content quickview-content">
-                    <h2>Originals Kaval Windbr</h2>
+                    <h2 class="" style="margin-top: 50px;">{{product.Name}}</h2>
 
                     <div class="pro-details-rating-wrap">
                         <div class="rating-product">
@@ -95,15 +95,13 @@
                     </div>
                     <div class="pricing-meta">
                         <ul>
-                            <li class="old-price not-cut">$18.90</li>
+                            <li class="old-price not-cut">Rs : {{product.Price}}</li>
                         </ul>
                     </div>
-                    <p class="quickview-para">Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid
-                        ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco</p>
+                    <p class="quickview-para">{{product.Description}}</p>
 
                     <div class="pro-details-cart mb-3">
-                        <button class="add-cart btn btn-primary btn-hover-primary ml-4" href="#"> Add To
-                            Cart</button>
+                        <a onclick="addCart('{{product._id}}')" class="add-cart btn btn-secondary btn-hover-primary ml-4 my-auto">Add To Cart</a>
                     </div>
                 </div>
                 {{!-- <div class="pro-details-wish-com">
@@ -151,3 +149,25 @@
         </div>
     </div>
 </div>
+ <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function addCart(productId)
+{
+    $.ajax({
+        url:'add-to-cart',
+        data:{proId:productId},
+        method:'post',
+        success:(response)=>
+        {
+            if(cartOne)
+            {
+                
+                window.location.href="userProduct"
+            }
+        }
+    })
+}
+
+
+</script>

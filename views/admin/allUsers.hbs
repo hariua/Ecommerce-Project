@@ -1,8 +1,14 @@
 <div id="page-wrapper">
 <div class="container ">
-    <table class="table table-striped mt-5" style="margin-top:30px;">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/admin/addUser" class="btn btn-primary ">Add New User</a>
+        </div>
+    </div>
+    <table class="table table-striped mt-5" style="margin-top:30px;" id="userTable">
   <thead>
     <tr>
+        <th scope="col">No.</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">Mobile Number</th>
@@ -11,16 +17,20 @@
     </tr>
   </thead>
   <tbody>
+      {{#each users}}
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td><a href ="" class="btn btn-primary" >Edit</a> </td> 
-      <td><a href ="" class="btn btn-danger" >Delete</a> </td> 
+      <td>{{@index}}</td>
+      <td>{{this.Name}}</td>
+      <td>{{this.Email}}</td>
+      <td>{{this.Mobile}}</td>
+      <td></td>
+      <td><a href ="/admin/editUser?id={{this._id}}" class="btn btn-primary" >Edit</a> </td> 
+      <td><a href ="/admin/deleteUser?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Do you want to Delete {{this.Name}}')">Delete</a> </td> 
     </tr>
+    {{/each}}
    
   </tbody>
 </table>
 </div>
 </div>
+

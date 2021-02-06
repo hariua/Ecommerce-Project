@@ -53,9 +53,11 @@
     <link rel="stylesheet" href="/assets/css/vendor/vendor.min.css" />
     <link rel="stylesheet" href="/assets/css/plugins/plugins.min.css" />
     <link rel="stylesheet" href="/assets/css/style.min.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!-- Main Style -->
     <!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
+    
+    	
 
 </head>
 
@@ -70,7 +72,7 @@
                     <!-- Header Logo Start -->
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="index.html"><img src="/assets/images/logo/logo.png" alt="Site Logo" /></a>
+                            <a href="/"><img src="/assets/images/logo/logo.png" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Header Logo End -->
@@ -91,21 +93,27 @@
                             <!-- Single Wedge Start -->
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
-                                        class="icon-user"></i></button>
+                                        class="icon-user"></i>
+                                        {{#if userBtn}}
+                                        {{userBtn.Name}}
+                                        {{/if}}
+                                        </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                    <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="login.html">Sign in</a></li>
+                                    {{!-- <li><a class="dropdown-item" href="my-account.html">My account</a></li> --}}
+                                    {{#if userBtn}}
+                                    <li><a class="dropdown-item" href="/userLogout">Logout</a></li>
+                                    {{else}}
+                                    <li><a class="dropdown-item" href="/userLogin"> Login</a></li>
+                                    {{/if}}
                                 </ul>
                             </div>
                             <!-- Single Wedge End -->
-                            <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                           <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0">
                                 <i class="icon-handbag"></i>
-                                <span class="header-action-num">01</span>
-                                <!-- <span class="cart-amount">€30.00</span> -->
-                            </a>
-                            <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
-                                <i class="icon-menu"></i>
+                                
+                                <span class="header-action-num" >{{cartCount}}</span> </a>
+                            {{!-- <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
+                                <i class="icon-menu"></i> --}}
                             </a>
                         </div>
                     </div>
@@ -121,7 +129,7 @@
                     <!-- Header Logo Start -->
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="index.html"><img src="/assets/images/logo/logo.png" alt="Site Logo" /></a>
+                            <a href="/"><img src="/assets/images/logo/logo.png" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Header Logo End -->
@@ -142,21 +150,29 @@
                             <!-- Single Wedge Start -->
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
-                                        class="icon-user"></i></button>
+                                        class="icon-user"></i>
+                                         {{#if userBtn}}
+                                        {{userBtn.Name}}
+                                        {{/if}}
+                                        </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                    <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                    <li><a class="dropdown-item" href="login.html">Sign in</a></li>
+                                     {{#if userBtn}}
+                                    <li><a class="dropdown-item" href="/userLogout">Logout</a></li>
+                                    {{else}}
+                                    <li><a class="dropdown-item" href="/userLogin"> Login</a></li>
+                                    {{/if}}
                                 </ul>
                             </div>
                             <!-- Single Wedge End -->
-                            <a href="#offcanvas-cart" class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                            <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0">
                                 <i class="icon-handbag"></i>
-                                <span class="header-action-num">01</span>
+                                
+                                <span class="header-action-num">{{cartCount}}</span> </a>
                                 <!-- <span class="cart-amount">€30.00</span> -->
-                            </a>
-                            <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
-                                <i class="icon-menu"></i>
+                                {{!-- <a href="/userCart" class="" style="text-decoration: none;font-size:larger">Cart<i class="icon-handbag"></i></a> --}}
+                            
+                            {{!-- <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
+                                <i class="icon-menu"></i> --}}
                             </a>
                         </div>
                     </div>

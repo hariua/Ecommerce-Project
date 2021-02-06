@@ -1,0 +1,42 @@
+<div id="page-wrapper">
+<div class="container ">
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/admin/addProduct" class="btn btn-primary ">Add New Product</a>
+        </div>
+    </div>
+    <table class="table table-striped mt-5" style="margin-top:30px;" id="userTable">
+  <thead>
+    <tr>
+        <th scope="col">No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">description</th>
+      <th scope="col">Image</th>
+      <th scope="col">Stock</th>
+      
+      
+      
+    </tr>
+  </thead>
+  <tbody>
+      {{#each products}}
+    <tr>
+      <td>{{@index}}</td>
+      <td>{{this.Name}}</td>
+      <td>{{this.Price}}</td>
+      <td>{{this.Description}}</td>
+      <td><img src="/product-images/{{this._id}}a.jpg" class="img-fluid" style="width: 25px;height:25px">
+      <img src="/product-images/{{this._id}}b.jpg" class="img-fluid" style="width: 25px;height:25px">
+      <img src="/product-images/{{this._id}}c.jpg" class="img-fluid" style="width: 25px;height:25px"></td>
+      <td>{{this.Stock}}</td>
+      <td><a href ="/admin/editProduct?id={{this._id}}" class="btn btn-primary" >Edit</a> </td> 
+      <td><a href ="/admin/deleteProduct?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Do you want to Delete {{this.Name}}')">Delete</a> </td> 
+    </tr>
+    {{/each}}
+   
+  </tbody>
+</table>
+</div>
+</div>
+

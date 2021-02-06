@@ -16,14 +16,22 @@
                             <div class="login-form-container alert bg-light border-success">
                                 <div class="login-register-form">
                                     <form action="/userSignup" method="post">
-                                     <input type="text" name="Name" placeholder="Enter your Name here" />
-                                        <input type="email" name="Email" placeholder="Email ID" />
-                                        <input type="number" name="Mobile" placeholder="Mobile Number" />
-                                        <input type="password" name="Password" placeholder="Password" />
+                                     <input type="text" name="Name" placeholder="Enter your Name here" required/>
+                                        <input type="email" name="Email" placeholder="Email ID" required/>
+                                        {{#if emailErr}}
+                                        <p class="text-center text-danger">{{emailErr}}</p>
+                                        {{/if}}
+                                        <input type="number" name="Mobile" placeholder="Mobile Number" required/>
+                                        {{#if mobileErr}}
+                                        <p class="text-center text-danger">{{mobileErr}}</p>
+                                        {{/if}}
+                                        <input type="password" name="Password" placeholder="Password" required/>
                                         <div class="button-box">
                                            
                                             <button type="submit"><span>Signup</span></button>
+                                            <a href="/userLogin" class="text-dark ml-5" style="text-decoration: none;">Already Have an Account</a>
                                         </div>
+                                        
                                     </form>
                                 </div>
                             </div>
