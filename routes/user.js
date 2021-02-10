@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var userHelper = require('../helper/user-helper')
 var adminHelper = require('../helper/admin-helper');
+var otp = require('../config/otp-secrets')
+const twilio = require('twilio')(otp.accountSID,otp.authToken)
 const { Db } = require('mongodb');
 
 const verifyLogin = async(req,res,next)=>
@@ -207,5 +209,76 @@ router.get('/allProducts',async(req,res)=>
     
     res.render('user/allProducts',{user:true,products,cartCount,userBtn:req.session.user});
   })
+})
+router.get('/userOTPLogin',(req,res)=>
+{
+  res.render('user/userOTPLogin',{user:true,"phoneErr":req.session.phone})
+  req.session.phone=false
+})
+router.post('/userOTPLogin',(req,res)=>
+{
+ 
+  userHelper.OtpRequest(req.body.Mobile).then((number)=>
+  {
+    req.session.otpPhone=number
+    twilio
+    .verify
+    .services(otp.serviceID)
+    .verifications
+    .create({
+      to:`+91${number}`,
+      channel:'sms'
+    }).then((data)=>
+    {
+      res.render('user/userOTPSubmit',{user:true})
+    })
+    
+    
+    
+  }).catch(()=>
+  {
+    req.session.phone="User is not Valid"
+    res.redirect('/userOTPLogin')
+  })
+  
+})
+router.get('/userOTPSubmit',(req,res)=>
+{
+  res.render('user/userOTPSubmit',{user:true})
+
+})
+router.post('/userOTPSubmit',(req,res)=>
+{
+ 
+  // let number = req.session.otpPhone
+  twilio
+    .verify
+    .services(otp.serviceID)
+    .verificationChecks
+    .create({
+      to:`+91${req.session.otpPhone}`,
+      code:req.body.Otp
+    }).then((data)=>{
+      if(data.valid)
+      {
+        userHelper.getUserOtp(req.session.otpPhone).then((user)=>
+        {
+          req.session.user=user
+          req.session.loggedIn=true
+          res.redirect('/')
+        })
+        req.session.otpPhone=null
+      }
+      else{
+        res.redirect('/userOTPSubmit')
+      }
+            
+      
+      // req.session.otpPhone=null
+    }).catch((data)=>
+    {
+      
+      res.redirect('/userOTPSubmit')
+    })
 })
 module.exports = router;

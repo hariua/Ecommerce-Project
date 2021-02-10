@@ -237,7 +237,47 @@ module.exports = {
             db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{$unset:{Status:""}}).then(()=>
             {
                 resolve()
-            })
+            })            
+        })
+    },
+    OtpRequest:(phone)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            
+            
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({Mobile:phone})
+            if(user)
+            {
+                let stat = user.Status
+                if(!stat)
+                {
+                    console.log(user.Mobile);
+                    resolve(user.Mobile)
+                }
+                else{
+                    reject()
+                }
+                
+            }
+            else{
+                reject()
+            }
+            
+            
+
+        })
+    },
+    getUserOtp:(phone)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({Mobile:phone})
+            
+            if(user)
+            {
+                resolve(user)
+            }
         })
     }
 
