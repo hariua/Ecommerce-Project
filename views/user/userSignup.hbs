@@ -21,7 +21,7 @@
                                         {{#if emailErr}}
                                         <p class="text-center text-danger">{{emailErr}}</p>
                                         {{/if}}
-                                        <input type="number" name="Mobile" placeholder="Mobile Number" required/>
+                                        <input type="tel" name="Mobile" placeholder="Mobile Number" minlength="10" maxlength="10" required/>
                                         {{#if mobileErr}}
                                         <p class="text-center text-danger">{{mobileErr}}</p>
                                         {{/if}}

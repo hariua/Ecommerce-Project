@@ -62,6 +62,7 @@ router.get('/allUsers',verifyAdmin,(req,res)=>
 {
   adminHelper.getAllUsers().then((users)=>
   {
+    
     res.render('admin/allUsers',{admin:true,users})
   })
   
@@ -166,5 +167,20 @@ router.get('/logout',(req,res)=>
 {
   req.session.adminLoggedIn=false
   res.redirect('/admin')
+})
+router.get('/block-user/:id',(req,res)=>
+{
+  
+  userHelper.blockUser(req.params.id).then((response)=>
+  {
+    res.redirect('/admin/allUsers')
+  })
+})
+router.get('/unblock-user/:id',(req,res)=>
+{
+  userHelper.unblockUser(req.params.id).then(()=>
+  {
+    res.redirect('/admin/allUsers')
+  })
 })
 module.exports = router;

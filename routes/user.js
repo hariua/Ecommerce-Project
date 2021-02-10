@@ -1,17 +1,28 @@
 var express = require('express');
 var router = express.Router();
 var userHelper = require('../helper/user-helper')
-var adminHelper = require('../helper/admin-helper')
+var adminHelper = require('../helper/admin-helper');
+const { Db } = require('mongodb');
 
-const verifyLogin = (req,res,next)=>
+const verifyLogin = async(req,res,next)=>
 {
   if(req.session.loggedIn)
   {
-    next()
-  }
-  else{
+    let person = await userHelper.userDetails(req.session.user._id)
+    if(!person.Status)
+    {
+      next()
+    }else{
+      req.session.loggedIn=false
+      res.redirect('/userLogin')
+    }
+
+    
+  }else{
+    req.session.user=false
     res.redirect('/userLogin')
   }
+  
 }
 
 
@@ -22,17 +33,32 @@ router.get('/', async function(req, res, next) {
     
   // }
   let cartCount = null
-  if(req.session.user)
+  if(req.session.loggedIn)
   {
-    cartCount = await userHelper.getCartCount(req.session.user._id)
+    if(req.session.user)
+    {
+      cartCount = await userHelper.getCartCount(req.session.user._id)
+    }
   }
   
-
-  adminHelper.getAllProducts().then((products)=>
+  if(req.session.loggedIn)
   {
-    console.log(products);
+    adminHelper.getAllProducts().then((items)=>
+  {
+    
+    
+    var products = items.slice(0,4)
     res.render('index',{user:true,products,cartCount,userBtn:req.session.user});
   })
+  }
+  adminHelper.getAllProducts().then((items)=>
+  {
+    
+    
+    var products = items.slice(0,4)
+    res.render('index',{user:true,products,cartCount});
+  })
+  
   
 });
 router.get('/userLogin',(req,res)=>
@@ -43,9 +69,10 @@ router.get('/userLogin',(req,res)=>
     res.redirect('/')
   }
   else{
-    res.render('user/userLogin',{user:true,'userErr':req.session.invalidUser,'passwordErr':req.session.invalidPassword})
+    res.render('user/userLogin',{user:true,'userErr':req.session.invalidUser,'passwordErr':req.session.invalidPassword,'blockErr':req.session.userBlocked})
     req.session.invalidPassword=false
     req.session.invalidUser=false
+    req.session.userBlocked=false
   }
  
 })
@@ -55,6 +82,7 @@ router.post('/userLogin',(req,res)=>
   {
     if(response.status)
     {
+    
       req.session.user=response.user
       req.session.loggedIn = true
       res.redirect('/')
@@ -67,6 +95,10 @@ router.post('/userLogin',(req,res)=>
       if(response.invalidPassword)
       {
         req.session.invalidPassword="Invalid Password"
+      }
+      if(response.userBlocked)
+      {
+        req.session.userBlocked="You are Temporarily Blocked by Admin"
       }
       res.redirect('/userLogin')
     }
@@ -161,5 +193,19 @@ router.get('/userLogout',(req,res)=>
   req.session.user=null
   
   res.redirect('/userLogin')
+})
+router.get('/allProducts',async(req,res)=>
+{
+  let cartCount = null
+  if(req.session.user)
+  {
+    cartCount = await userHelper.getCartCount(req.session.user._id)
+  }
+  
+  adminHelper.getAllProducts().then((products)=>
+  {
+    
+    res.render('user/allProducts',{user:true,products,cartCount,userBtn:req.session.user});
+  })
 })
 module.exports = router;

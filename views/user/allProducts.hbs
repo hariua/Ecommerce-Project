@@ -1,0 +1,134 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Shop</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- breadcrumb-area end -->
+
+<!-- Shop Category pages -->
+<div class="shop-category-area pb-100px pt-70px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12  col-md-12">
+                <!-- Shop Top Area Start -->
+                <div class="shop-top-bar d-flex">
+                    <!-- Left Side start -->
+                    <p>There Are Products.</p>
+                    <!-- Left Side End -->
+                    <!-- Right Side Start -->
+                    <div class="select-shoing-wrap d-flex align-items-center">
+                        <div class="shot-product">
+                            <p>Sort By:</p>
+                        </div>
+                        <div class="shop-select">
+                            <select class="shop-sort">
+                                <option data-display="Relevance">Relevance</option>
+                                <option value="1"> Name, A to Z</option>
+                                <option value="2"> Name, Z to A</option>
+                                <option value="3"> Price, low to high</option>
+                                <option value="4"> Price, high to low</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <!-- Right Side End -->
+                </div>
+                <!-- Shop Top Area End -->
+
+                <!-- Shop Bottom Area Start -->
+                <div class="shop-bottom-area">
+
+                    <div class="row">
+                        {{#each products}}
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6" data-aos="fade-up" data-aos-delay="200">
+                            <!-- Single Prodect -->
+                            <div class="product mb-5" style="width: 250px;height:400px">
+                                <div class="thumb">
+                                    <a href="/userProduct?id={{this._id}}" class="image">
+                                        <img src="/product-images/{{this._id}}a.jpg" alt="Product" style="height: 10em;"/>
+                                        <img class="hover-image" src="/product-images/{{this._id}}b.jpg"
+                                            alt="Product" />
+                                    </a>
+                                    <span class="badges">
+                                        <span class="new">New</span>
+                                    </span>
+                                    <div class="actions">
+                                        
+                                        
+                                    </div>
+                                    <button onclick="addCart('{{this._id}}')" title="Add To Cart" class=" add-to-cart">Add
+                                        To Cart</button>
+                                </div>
+                                <div class="content">
+                                    <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}</a></h5>
+                                    <span class="price">
+                                        <span class="new">Rs.{{this.Price}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+
+                        
+
+
+
+                    </div>
+                    <!--  Pagination Area Start -->
+                    <div class="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-6" data-aos="fade-up">
+                        <ul>
+                            <li>
+                                <a class="prev" href="#"><i class="ion-ios-arrow-left"></i></a>
+                            </li>
+                            <li><a class="active" href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li>
+                                <a class="next" href="#"><i class="ion-ios-arrow-right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--  Pagination Area End -->
+                </div>
+                <!-- Shop Bottom Area End -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function addCart(productId) {
+        $.ajax({
+            url: 'add-to-cart',
+            data: { proId: productId },
+            method: 'post',
+            success: (response) => {
+                if (cartOne) {
+
+                    window.location.href = "allProducts"
+                }
+            }
+        })
+    }
+
+
+</script>

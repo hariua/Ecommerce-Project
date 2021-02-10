@@ -118,10 +118,10 @@
                                         data-aos-delay="200">
                                         <!-- Single Prodect -->
                                         
-                                        <div class="product">
+                                        <div class="product mr-2" style="width: 250px;height:400px">
                                             <div class="thumb">
                                                 <a href="/userProduct?id={{this._id}}" class="image">
-                                                    <img src="/product-images/{{this._id}}a.jpg" class="img-fluid" alt="Product" />
+                                                    <img src="/product-images/{{this._id}}a.jpg" class="img-fluid img-responsive" alt="Product" style="height: 10em;"/>
                                                     <img class="hover-image" src="/product-images/{{this._id}}b.jpg"
                                                         alt="Product" />
                                                 </a>
@@ -138,14 +138,14 @@
                                                     {{!-- <a href="compare.html" class="action compare" title="Compare"><i
                                                             class="icon-refresh"></i></a> --}}
                                                 </div>
-                                                {{!-- <a href='/add-to-cart?id={{this._id}}' class=" add-to-cart">Add To Cart</a> --}}
+                                                <button onclick="addCart('{{this._id}}')" class="btn add-to-cart" style="text-decoration: none;">Add To Cart</button>
                                             </div>
                                             <div class="content">
                                                 <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}
                                                     </a>
                                                 </h5>
                                                 <span class="price">
-                                                    <span class="new">{{this.Price}}</span>
+                                                    <span class="new">Rs.{{this.Price}}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -155,138 +155,13 @@
                                 </div>
                             </div>
                             <!-- 1st tab end -->
-                            <!-- 2nd tab start -->
-                            <div class="tab-pane fade" id="tab-product-best-sellers">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6" data-aos="fade-up"
-                                        data-aos-delay="200">
-                                        <!-- Single Prodect -->
-                                        <div class="product">
-                                            <div class="thumb">
-                                                <a href="shop-left-sidebar.html" class="image">
-                                                    <img src="/assets/images/product-image/1.jpg" alt="Product" />
-                                                    <img class="hover-image" src="/assets/images/product-image/2.jpg"
-                                                        alt="Product" />
-                                                </a>
-                                                <span class="badges">
-                                                    <span class="new">New</span>
-                                                </span>
-                                                <div class="actions">
-                                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                                            class="icon-heart"></i></a>
-                                                    <a href="#" class="action quickview" data-link-action="quickview"
-                                                        title="Quick view" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal"><i
-                                                            class="icon-size-fullscreen"></i></a>
-                                                    <a href="compare.html" class="action compare" title="Compare"><i
-                                                            class="icon-refresh"></i></a>
-                                                </div>
-                                                <button title="Add To Cart" class=" add-to-cart">Add
-                                                    To Cart</button>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="title"><a href="shop-left-sidebar.html">Simple minimal Chair
-                                                    </a>
-                                                </h5>
-                                                <span class="price">
-                                                    <span class="new">$38.50</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- 2nd tab end -->
-                            <!-- 3rd tab start -->
-                            <div class="tab-pane fade" id="tab-product-sale-item">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6" data-aos="fade-up"
-                                        data-aos-delay="200">
-                                        <!-- Single Prodect -->
-                                        <div class="product">
-                                            <div class="thumb">
-                                                <a href="shop-left-sidebar.html" class="image">
-                                                    <img src="/assets/images/product-image/1.jpg" alt="Product" />
-                                                    <img class="hover-image" src="/assets/images/product-image/2.jpg"
-                                                        alt="Product" />
-                                                </a>
-                                                <span class="badges">
-                                                    <span class="new">New</span>
-                                                </span>
-                                                <div class="actions">
-                                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                                            class="icon-heart"></i></a>
-                                                    <a href="#" class="action quickview" data-link-action="quickview"
-                                                        title="Quick view" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal"><i
-                                                            class="icon-size-fullscreen"></i></a>
-                                                    <a href="compare.html" class="action compare" title="Compare"><i
-                                                            class="icon-refresh"></i></a>
-                                                </div>
-                                                <button title="Add To Cart" class=" add-to-cart">Add
-                                                    To Cart</button>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="title"><a href="shop-left-sidebar.html">Simple minimal Chair
-                                                    </a>
-                                                </h5>
-                                                <span class="price">
-                                                    <span class="new">$38.50</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- 3rd tab end -->
-                            <!-- 4th tab start -->
-                            <div class="tab-pane fade" id="tab-product-on-sales">
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6" data-aos="fade-up"
-                                        data-aos-delay="200">
-                                        <!-- Single Prodect -->
-                                        <div class="product">
-                                            <div class="thumb">
-                                                <a href="shop-left-sidebar.html" class="image">
-                                                    <img src="/assets/images/product-image/1.jpg" alt="Product" />
-                                                    <img class="hover-image" src="/assets/images/product-image/2.jpg"
-                                                        alt="Product" />
-                                                </a>
-                                                <span class="badges">
-                                                    <span class="new">New</span>
-                                                </span>
-                                                <div class="actions">
-                                                    <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                                            class="icon-heart"></i></a>
-                                                    <a href="#" class="action quickview" data-link-action="quickview"
-                                                        title="Quick view" data-bs-toggle="modal"
-                                                        data-bs-target="#exampleModal"><i
-                                                            class="icon-size-fullscreen"></i></a>
-                                                    <a href="compare.html" class="action compare" title="Compare"><i
-                                                            class="icon-refresh"></i></a>
-                                                </div>
-                                                <button title="Add To Cart" class=" add-to-cart">Add
-                                                    To Cart</button>
-                                            </div>
-                                            <div class="content">
-                                                <h5 class="title"><a href="shop-left-sidebar.html">Simple minimal Chair
-                                                    </a>
-                                                </h5>
-                                                <span class="price">
-                                                    <span class="new">$38.50</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!-- 4th tab end -->
+                            
+                            <a class="btn add-to-cart" href="/allProducts" style="text-decoration: none;">All Products</a>
                         </div>
                     </div>
                 </div>
+
+                
             </div>
         </div>
         <!-- Product tab Area End -->
@@ -296,4 +171,23 @@
         <!-- Banner Section End -->
         <!--  Blog area Start -->
         
-     
+     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function addCart(productId) {
+        $.ajax({
+            url: 'add-to-cart',
+            data: { proId: productId },
+            method: 'post',
+            success: (response) => {
+                if (cartOne) {
+
+                    window.location.href = "/"
+                }
+            }
+        })
+    }
+
+
+</script>

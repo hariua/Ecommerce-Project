@@ -16,7 +16,7 @@
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <form action="/userLogin" method="post">
-                                        <input type="email" name="Email" placeholder="Email ID" />
+                                        <input type="tel" name="Mobile" placeholder="Mobile Number" />
                                         {{#if userErr}}
                                         <p class="text-center text-danger">{{userErr}}</p>
                                         {{/if}}
@@ -33,6 +33,9 @@
                                             <button type="submit"><span>Login</span></button>
                                             <a href="/userSignup" class="text-dark ml-5" style="text-decoration: none;">Don't Have an Account</a>
                                         </div>
+                                        {{#if blockErr}}
+                                        <p class="text-center text-danger">{{blockErr}}</p>
+                                        {{/if}}
                                     </form>
                                 </div>
                             </div>

@@ -19,13 +19,30 @@
   <tbody>
       {{#each users}}
     <tr>
-      <td>{{@index}}</td>
+      <td>{{inc @index}}</td>
       <td>{{this.Name}}</td>
       <td>{{this.Email}}</td>
       <td>{{this.Mobile}}</td>
-      <td></td>
+      <td>
+        {{#if this.Status}}
+        <p class="text-center">Blocked</p>
+        {{else}}
+        <p class="text-center">Unblocked</p>
+      
+      {{/if}}
+      </td>
+      <td>
+        {{#if this.Status}}
+        <a class="btn btn-primary" id="unblock-btn" href="/admin/unblock-user/{{this._id}}">Unblock</a>
+        {{else}}
+        <a class="btn btn-danger" id="block-btn" href="/admin/block-user/{{this._id}}">Block</a>
+      
+      {{/if}}
+      </td>
       <td><a href ="/admin/editUser?id={{this._id}}" class="btn btn-primary" >Edit</a> </td> 
-      <td><a href ="/admin/deleteUser?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Do you want to Delete {{this.Name}}')">Delete</a> </td> 
+      {{!-- <td><a href ="/admin/deleteUser?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Do you want to Delete {{this.Name}}')">Delete</a> </td>  --}}
+      
+      
     </tr>
     {{/each}}
    

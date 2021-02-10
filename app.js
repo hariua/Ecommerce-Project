@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var hbs = require('express-handlebars')
+var handlebars = require('handlebars');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileupload = require('express-fileupload')
@@ -34,6 +35,10 @@ app.use(
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();
   })
+  handlebars.registerHelper("inc", function(value, options)
+{
+    return parseInt(value) + 1;
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(fileupload())

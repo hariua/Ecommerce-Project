@@ -39,22 +39,31 @@ module.exports = {
     loginUser: (userData) => {
         return new Promise(async (resolve, reject) => {
             let response = {}
-            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ Email: userData.Email })
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({ Mobile: userData.Mobile })
             if (user) {
-                bcrypt.compare(userData.Password, user.Password).then((status) => {
-                    if (status) {
-                        console.log("Login Success");
-                        response.user = user
-                        response.status = true
-                        resolve(response)
-                    }
-                    else {
-                        console.log(("Login Failure"));
-                        response.invalidPassword = true
-                        response.status = false
-                        resolve(response)
-                    }
-                })
+                let stat = user.Status
+                if(!stat)
+                {
+                    bcrypt.compare(userData.Password, user.Password).then((status) => {
+                        if (status) {
+                            console.log("Login Success");
+                            response.user = user
+                            response.status = true
+                            resolve(response)
+                        }
+                        else {
+                            console.log(("Login Failure"));
+                            response.invalidPassword = true
+                            response.status = false
+                            resolve(response)
+                        }
+                    })
+                }
+                else{
+                    console.log("User Blocked")
+                    response.userBlocked = true
+                    resolve(response)
+                }
 
             }
             else {
@@ -209,6 +218,26 @@ module.exports = {
                 count = user.products.length
             }
             resolve(count)
+        })
+    },
+    blockUser:(userId)=>
+    {
+        console.log(userId);
+        return new Promise((resolve,reject)=>
+        {
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{$set:{Status:'1'}}).then((response)=>{
+                resolve(response)
+            })
+        })
+    },
+    unblockUser:(userId)=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(userId)},{$unset:{Status:""}}).then(()=>
+            {
+                resolve()
+            })
         })
     }
 

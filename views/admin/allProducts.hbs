@@ -1,3 +1,4 @@
+
 <div id="page-wrapper">
 <div class="container ">
     <div class="row">
@@ -22,7 +23,8 @@
   <tbody>
       {{#each products}}
     <tr>
-      <td>{{@index}}</td>
+
+      <td>{{inc @index}}</td>
       <td>{{this.Name}}</td>
       <td>{{this.Price}}</td>
       <td>{{this.Description}}</td>
@@ -31,6 +33,7 @@
       <img src="/product-images/{{this._id}}c.jpg" class="img-fluid" style="width: 25px;height:25px"></td>
       <td>{{this.Stock}}</td>
       <td><a href ="/admin/editProduct?id={{this._id}}" class="btn btn-primary" >Edit</a> </td> 
+     
       <td><a href ="/admin/deleteProduct?id={{this._id}}" class="btn btn-danger" onclick="return confirm('Do you want to Delete {{this.Name}}')">Delete</a> </td> 
     </tr>
     {{/each}}
