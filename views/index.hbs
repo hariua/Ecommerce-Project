@@ -176,14 +176,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function addCart(productId) {
+        
         $.ajax({
             url: 'add-to-cart',
             data: { proId: productId },
             method: 'post',
             success: (response) => {
-                if (cartOne) {
+                if (response.cartOne) {
 
-                    window.location.href = "/"
+                    document.getElementById("cart-count").innerHTML=count
                 }
             }
         })

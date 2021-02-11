@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileupload = require('express-fileupload')
 var session = require('express-session')
+var Croppie = require('croppie')
 var db = require('./config/connection')
 
 var userRouter = require('./routes/user');
@@ -31,6 +32,7 @@ app.use(
 
   })
   );
+
   app.use(function (req, res, next) {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
     next();

@@ -159,15 +159,16 @@ router.get('/userCart',verifyLogin,async(req,res)=>
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }  
   let product = await userHelper.getCartProducts(req.session.user._id)
+  let total = await userHelper.getTotalAmount(req.session.user._id)
   // let cartCount = userHelper.getCartCount(req.session.user._id)
-  res.render('user/userCart',{user:true,product,userBtn:req.session.user,cartCount})
+  res.render('user/userCart',{user:true,product,userBtn:req.session.user,cartCount,total})
 })
 router.get('/add-to-cart',verifyLogin,(req,res)=>
 {
   res.redirect('/userProduct')  
 })
 router.post('/add-to-cart',verifyLogin,(req,res)=>{
-  userHelper.addToCart(req.body.proId,req.session.user._id).then(()=>
+  userHelper.addToCart(req.body.proId,req.session.user._id).then((response)=>
   {
     res.json({cartOne:true})
   })
@@ -175,17 +176,17 @@ router.post('/add-to-cart',verifyLogin,(req,res)=>{
 router.post('/delete-cart-item',(req,res)=>
 {
   
-  userHelper.delCartProduct(req.body).then(()=>
+  userHelper.delCartProduct(req.body).then((response)=>
   {
-    res.json({productDelete:true})
+    res.json(response)
   })
 })
 router.post('/change-product-qty',(req,res,next)=>
 {
   
-  userHelper.changeProductQty(req.body).then(()=>
+  userHelper.changeProductQty(req.body).then((response)=>
   {
-    res.json({cartAdd:true})
+    res.json(response)
   })
 }
 )

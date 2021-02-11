@@ -93,7 +93,7 @@
                             <!-- Single Wedge Start -->
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn text-white" data-bs-toggle="dropdown"><i
-                                        class="icon-user" "></i>
+                                        class="icon-user" ></i>
                                         {{#if userBtn}}
                                         {{userBtn.Name}}
                                         {{/if}}
@@ -108,10 +108,10 @@
                                 </ul>
                             </div>
                             <!-- Single Wedge End -->
-                           <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0">
+                           <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0" >
                                 <i class="icon-handbag" style="color: white;"></i>
                                 
-                                <span class="header-action-num" >{{cartCount}}</span> </a>
+                                <span class="header-action-num" id="cart-count">{{cartCount}}</span> </a>
                             {{!-- <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                 <i class="icon-menu"></i> --}}
                             </a>

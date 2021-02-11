@@ -54,7 +54,7 @@
                                     <td class="product-quantity">
                                         <a class="btn btn-danger text-center pb-2 mr-3" style="width: 30px;height:30px;"
                                             onclick="changeQty('{{this._id}}','{{this.product._id}}',-1)">-</a>
-                                        {{this.quantity}}<button class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
+                                       <span id ="{{this.product._id}}">{{this.quantity}}</span><button class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
                                             onclick="changeQty('{{this._id}}','{{this.product._id}}',1)">+</button>
                                     </td>
 
@@ -92,9 +92,9 @@
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                             </div>
-                            <h5 class="pb-5">Total products <span>$260.00</span></h5>
+                            <h5 class="pb-5"> <span></span></h5>
 
-                            <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
+                            <h4 class="grand-totall-title">Grand Total <span>Rs.{{total}}</span></h4>
                             <a href="" style="text-decoration: none;">Proceed to Checkout</a>
                         </div>
                     </div>
@@ -118,26 +118,30 @@
             },
                 method: 'post',
             success: (response) => {
-                if (response.productDelete == true) {
-                    window.location.href = "userCart"
+                if (response.deleteSingleProduct) {
+                   location.reload()
                 }
             }
         })
     }
     function changeQty(cartId, proId, count) {
-
+        let quantity = parseInt(document.getElementById(proId).innerHTML)
         $.ajax({
             url: '/change-product-qty',
             data: {
                 cart: cartId,
                 product: proId,
-                count: count
+                count: count,
+                quantity:quantity
             },
             method: 'post',
             success: (response) => {
-                if (response.cartAdd) {
+                if (response.removeProduct) {
+                    alert("The item has been removed")
+                    location.reload()
                     
-                    window.location.href="userCart"
+                }else{
+                    document.getElementById(proId).innerHTML=quantity+count
                 }
             }
         })
