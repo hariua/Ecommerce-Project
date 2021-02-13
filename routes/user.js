@@ -121,10 +121,22 @@ router.get('/userSignup',(req,res)=>
 })
 router.post('/userSignup',(req,res)=>
 {
-  userHelper.signupUser(req.body).then((response)=>
+  userHelper.userExist(req.body).then((response)=>
   {
-    res.redirect('/')
-    res.session.loggedIn=true
+   
+    req.session.genuineUser = req.body
+    twilio
+    .verify
+    .services(otp.serviceID)
+    .verifications
+    .create({
+      to:`+91${req.body.Mobile}`,
+      channel:'sms'
+    }).then((data)=>
+    {
+      res.render('user/signupOTPSubmit',{user:true})
+    })
+     
   }).catch((Msg)=>
   {
     if(Msg.Email)
@@ -137,6 +149,37 @@ router.post('/userSignup',(req,res)=>
     }
     res.redirect('/userSignup')
   })
+})
+router.post('/signupOTPSubmit',(req,res)=>{
+  twilio
+    .verify
+    .services(otp.serviceID)
+    .verificationChecks
+    .create({
+      to:`+91${req.session.genuineUser.Mobile}`,
+      code:req.body.Otp
+    }).then((data)=>{
+      if(data.valid)
+      {
+        userHelper.signupUser(req.session.genuineUser).then((data)=>
+        {
+          req.session.user=data.user
+          req.session.loggedIn=true
+          res.redirect('/')
+        })
+        
+      }
+      else{
+        res.redirect('/signupOTPSubmit')
+      }
+            
+      
+      // req.session.otpPhone=null
+    })  
+})
+router.get('/signupOTPSubmit',(req,res)=>
+{
+  res.render('user/signupOTPSubmit',{user:true})
 })
 router.get('/userProduct',async(req,res)=>
 {

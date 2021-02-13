@@ -7,7 +7,7 @@ const { PRODUCT_COLLECTION } = require('../config/collection')
 
 
 module.exports = {
-    signupUser: (userData) => {
+    userExist: (userData) => {
         signupMsg ={}
         return new Promise(async (resolve, reject) => {
             let userEmail = await db.get().collection(collection.USER_COLLECTION).findOne({ Email: userData.Email })
@@ -22,10 +22,9 @@ module.exports = {
             }
             if (!userEmail && !userPhone) {
                 
-                userData.Password = await bcrypt.hash(userData.Password, 10)
-                db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((response) => {
-                    resolve(response.ops[0])
-                })
+                
+                
+                resolve()
                 
             }
             else {
@@ -33,6 +32,18 @@ module.exports = {
             }
 
 
+        })
+    },
+    signupUser:(userData)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let data = {}
+            userData.Password = await bcrypt.hash(userData.Password, 10)
+                db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((response) => {
+                    data.user=userData
+                    resolve(data)
+                })
         })
     },
     loginUser: (userData) => {
