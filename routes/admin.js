@@ -107,6 +107,8 @@ router.get('/addproduct',verifyAdmin,(req,res)=>
 })
 router.post('/addProduct',(req,res)=>
 {
+  req.body.Price=parseInt(req.body.Price)
+  req.body.Stock=parseInt(req.body.Stock)
   adminHelper.addProduct(req.body).then((id)=>
   {
     let img1 = req.files.Image1
@@ -132,6 +134,8 @@ router.get('/editProduct',verifyAdmin,async(req,res)=>
 })
 router.post('/editProduct',(req,res)=>
 {
+  req.body.Price=parseInt(req.body.Price)
+  req.body.Stock=parseInt(req.body.Stock)
   adminHelper.updateProduct(req.query.id,req.body).then(()=>
   {
     res.redirect('/admin/allProducts')

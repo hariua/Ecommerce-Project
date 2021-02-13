@@ -12,5 +12,5 @@ module.exports={
     // rajubhai
     serviceID:"VAd56dec8dfbb375c9115f179f4f4fee2e",
     accountSID:"AC5a9fb5e2e2789ad353e66d07e67433a5",
-    authToken:"1eb91c385c9d845b0396cda5abcf6ff2"
+    authToken:"2fa23c85bc9a8bdbcddf8760c1c5b200"
 }

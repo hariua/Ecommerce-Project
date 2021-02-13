@@ -154,14 +154,19 @@ router.get('/userProduct',async(req,res)=>
 router.get('/userCart',verifyLogin,async(req,res)=>
 {
   let cartCount = null
+  let total = null
+  // let subtotal = null
   if(req.session.user)
   {
     cartCount = await userHelper.getCartCount(req.session.user._id)
+    total = await userHelper.getTotalAmount(req.session.user._id)
+    subtotal = await userHelper.getSubTotal(req.session.user._id)
   }  
+ 
   let product = await userHelper.getCartProducts(req.session.user._id)
-  let total = await userHelper.getTotalAmount(req.session.user._id)
-  // let cartCount = userHelper.getCartCount(req.session.user._id)
-  res.render('user/userCart',{user:true,product,userBtn:req.session.user,cartCount,total})
+  // let  subtotal = await userHelper.getSubTotal(req.session.user._id)
+  
+  res.render('user/userCart',{user:true,product,'userBtn':req.session.user._id,cartCount,total,subtotal})
 })
 router.get('/add-to-cart',verifyLogin,(req,res)=>
 {
@@ -184,8 +189,10 @@ router.post('/delete-cart-item',(req,res)=>
 router.post('/change-product-qty',(req,res,next)=>
 {
   
-  userHelper.changeProductQty(req.body).then((response)=>
+  userHelper.changeProductQty(req.body).then(async(response)=>
   {
+    
+    response.total = await userHelper.getTotalAmount(req.body.user)
     res.json(response)
   })
 }

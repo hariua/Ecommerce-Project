@@ -21,13 +21,12 @@ module.exports = {
                 signupMsg.Mobile=true
             }
             if (!userEmail && !userPhone) {
-                // if(!userPhone)
-                // {
+                
                 userData.Password = await bcrypt.hash(userData.Password, 10)
                 db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((response) => {
                     resolve(response.ops[0])
                 })
-                // }
+                
             }
             else {
                 reject(signupMsg)
@@ -176,7 +175,7 @@ module.exports = {
                 
             ]).toArray()
             
-            console.log(CartItem[0]);
+            console.log(CartItem);
             resolve(CartItem)
 
         })
@@ -199,6 +198,7 @@ module.exports = {
     {
         console.log(details)
         details.count=parseInt(details.count)
+        details.quantity=parseInt(details.quantity)
         return new Promise((resolve,reject)=>
         {
             if(details.count==-1 && details.quantity==1)
@@ -218,7 +218,7 @@ module.exports = {
                 }).then((response)=> 
                 {
                     
-                    resolve(true)
+                    resolve({status:true})
                 }) 
             }
                        
@@ -349,6 +349,61 @@ module.exports = {
             
             console.log(total[0].total);
             resolve(total[0].total)
+
+        })        
+    },
+    getSubTotal:(userId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let subtotal = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                {
+                    $match:{
+                        user:objectId(userId)
+                    }
+                },
+                {
+                    $unwind:'$products'
+                },
+                {
+                    $project:{
+                        item:'$products.item',
+                        quantity:'$products.quantity'
+                    }
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCT_COLLECTION,
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'products'
+
+                    }
+                },
+                {
+                    $project:{
+                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]}
+                    
+                    }
+                    
+                },
+                {
+                   $project:{
+                    unitPrice:{$toInt:'$product.Price'},
+                    quantity:{$toInt:'$quantity'}
+                   }
+                },
+                {
+                    $project:{
+                
+                        subtotal:{$sum:{$multiply:['$quantity','$unitPrice']}}
+                    }
+                }
+                
+            ]).toArray()
+            
+            console.log(subtotal);
+            resolve(subtotal)
 
         })        
     }

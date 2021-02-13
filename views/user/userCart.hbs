@@ -28,49 +28,58 @@
         <h3 class="cart-page-title">Your cart items</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                
-                    <div class="table-content table-responsive cart-table-content">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
-                                    <th>Until Price</th>
-                                    <th>Qty</th>
-                                    <th>Subtotal</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each product}}
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <img class="img-responsive ml-3" src="/product-images/{{this.product._id}}a.jpg"
-                                            alt="" />
-                                    </td>
-                                    <td class="product-name">{{this.product.Name}}</td>
-                                    <td class="product-price-cart"><span class="amount">{{this.product.Price}}</span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <a class="btn btn-danger text-center pb-2 mr-3" style="width: 30px;height:30px;"
-                                            onclick="changeQty('{{this._id}}','{{this.product._id}}',-1)">-</a>
-                                       <span id ="{{this.product._id}}">{{this.quantity}}</span><button class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
-                                            onclick="changeQty('{{this._id}}','{{this.product._id}}',1)">+</button>
-                                    </td>
 
-                                    <td class="product-subtotal"></td>
-                                    <td class="product-remove">
+                <div class="table-content table-responsive cart-table-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Until Price</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                        <button onclick="deleteProCart('{{this._id}}','{{this.item}}')"><i class="icon-close"></i></button>
-                                    </td>
-                                </tr>
-                                {{/each}}
+                            {{#each product}}
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <img class="img-responsive ml-3" src="/product-images/{{this.product._id}}a.jpg"
+                                        alt="" />
+                                </td>
+                                <td class="product-name">{{this.product.Name}}</td>
+                                <td class="product-price-cart"><span class="amount"
+                                        id="unitPrice">{{this.product.Price}}</span>
+                                </td>
 
-                            </tbody>
-                        </table>
-                    </div>
+                                <td class="product-quantity">
 
-                
+                                    <a class="btn btn-danger text-center pb-2 mr-3" style="width: 30px;height:30px;"
+                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',-1)" onclick="subtotal('{{this.product._id}}','-1')">-</a>
+                                    <span id="{{this.product._id}}">{{this.quantity}}</span><button
+                                        class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
+                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',1)" onclick="subtotal('{{this.product._id}}','1')">+</button>
+                                </td>
+                                <td class="product-subtotal" id="subtotal">
+                                
+                                </td>
+                                <td class="product-remove">
+
+                                    <button onclick="deleteProCart('{{this._id}}','{{this.item}}')"><i
+                                            class="icon-close"></i></button>
+                                </td>
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                    </table>
+                </div>
+                {{#each subtotal}}
+                <p class="h5" id="hk">{{this.subtotal}}</p>
+                {{/each}}
+
                 <div class="row">
 
                     <div class="col-lg-4 col-md-6 mb-lm-30px">
@@ -94,7 +103,7 @@
                             </div>
                             <h5 class="pb-5"> <span></span></h5>
 
-                            <h4 class="grand-totall-title">Grand Total <span>Rs.{{total}}</span></h4>
+                            <h4 class="grand-totall-title">Grand Total <span id="total">Rs.{{total}}</span></h4>
                             <a href="" style="text-decoration: none;">Proceed to Checkout</a>
                         </div>
                     </div>
@@ -116,34 +125,47 @@
                 proId: prodId
 
             },
-                method: 'post',
+            method: 'post',
             success: (response) => {
                 if (response.deleteSingleProduct) {
-                   location.reload()
+                    location.reload()
                 }
             }
         })
     }
-    function changeQty(cartId, proId, count) {
+    function changeQty(cartId, proId, userId, count) {
         let quantity = parseInt(document.getElementById(proId).innerHTML)
+        var price = parseInt(document.getElementById('unitPrice').innerHTML)
+        
         $.ajax({
             url: '/change-product-qty',
             data: {
+                user: userId,
                 cart: cartId,
                 product: proId,
                 count: count,
-                quantity:quantity
+                quantity: quantity
             },
             method: 'post',
             success: (response) => {
                 if (response.removeProduct) {
                     alert("The item has been removed")
                     location.reload()
+
+                } else {
+                    console.log(response)
+
+                    document.getElementById(proId).innerHTML = quantity + count
+                    document.getElementById('total').innerHTML = response.total
                     
-                }else{
-                    document.getElementById(proId).innerHTML=quantity+count
+
+
+
+
                 }
             }
         })
     }
+    
+
 </script>
