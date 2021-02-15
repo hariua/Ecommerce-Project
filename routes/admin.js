@@ -101,14 +101,18 @@ router.get('/deleteUser',verifyAdmin,(req,res)=>
   })
 })
 
-router.get('/addproduct',verifyAdmin,(req,res)=>
+router.get('/addproduct',verifyAdmin,async(req,res)=>
 {
-  res.render('admin/addProduct',{admin:true})
+  let category = await adminHelper.getCategory()
+  console.log(category);
+ 
+  res.render('admin/addNewProduct',{category})
 })
 router.post('/addProduct',(req,res)=>
 {
   req.body.Price=parseInt(req.body.Price)
   req.body.Stock=parseInt(req.body.Stock)
+  console.log(req.body);
   adminHelper.addProduct(req.body).then((id)=>
   {
     let img1 = req.files.Image1
@@ -125,11 +129,12 @@ router.get('/allProducts',verifyAdmin,async(req,res)=>
   let products = await adminHelper.getAllProducts()
   res.render('admin/allProducts',{admin:true,products})
 })
+
 router.get('/editProduct',verifyAdmin,async(req,res)=>
 {
-  
+  let category = await adminHelper.getCategory()
   let products = await adminHelper.getProductDetails(req.query.id)
-  res.render('admin/editProduct', { products, admin: true })
+  res.render('admin/editProductNew', { products,category })
   
 })
 router.post('/editProduct',(req,res)=>
@@ -185,6 +190,33 @@ router.get('/unblock-user/:id',(req,res)=>
   userHelper.unblockUser(req.params.id).then(()=>
   {
     res.redirect('/admin/allUsers')
+  })
+})
+router.get('/addCategory',(req,res)=>
+{
+  res.render('admin/addCategory')
+})
+router.post('/addCategory',(req,res)=>
+{
+  adminHelper.addCategory(req.body).then((response)=>
+  {
+    res.redirect('/admin/addCategory')
+    window.alert("Product Added Successfully")
+  })
+})
+router.get('/allCategory',(req,res)=>
+{
+  adminHelper.getCategory().then((category)=>
+  {
+    res.render('admin/allCategories',{admin:true,category})
+  })
+})
+router.get('/deleteCategory',(req,res)=>
+{
+  console.log(req.query.id);
+  adminHelper.deleteCategory(req.query.id).then(()=>
+  {
+    res.redirect('/admin/allCategory')
   })
 })
 module.exports = router;

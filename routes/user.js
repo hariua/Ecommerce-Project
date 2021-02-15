@@ -35,6 +35,7 @@ router.get('/', async function(req, res, next) {
     
   // }
   let cartCount = null
+  let category = await adminHelper.getCategory()
   if(req.session.loggedIn)
   {
     if(req.session.user)
@@ -45,20 +46,22 @@ router.get('/', async function(req, res, next) {
   
   if(req.session.loggedIn)
   {
+    
     adminHelper.getAllProducts().then((items)=>
   {
     
-    
-    var products = items.slice(0,4)
-    res.render('index',{user:true,products,cartCount,userBtn:req.session.user});
+    let len = items.length
+    var products = items.slice(len-4,len)
+    res.render('index',{user:true,products,cartCount,userBtn:req.session.user,category});
   })
   }
   adminHelper.getAllProducts().then((items)=>
   {
     
     
-    var products = items.slice(0,4)
-    res.render('index',{user:true,products,cartCount});
+    let len = items.length
+    var products = items.slice(len-4,len)
+    res.render('index',{user:true,products,cartCount,category});
   })
   
   
@@ -207,6 +210,7 @@ router.get('/userCart',verifyLogin,async(req,res)=>
   }  
  
   let product = await userHelper.getCartProducts(req.session.user._id)
+ 
   // let  subtotal = await userHelper.getSubTotal(req.session.user._id)
   
   res.render('user/userCart',{user:true,product,'userBtn':req.session.user._id,cartCount,total,subtotal})
@@ -260,6 +264,22 @@ router.get('/allProducts',async(req,res)=>
     
     res.render('user/allProducts',{user:true,products,cartCount,userBtn:req.session.user});
   })
+})
+router.get('/getCategoryProduct/:category',async(req,res)=>
+{
+  let cartCount = null
+  if(req.session.user)
+  {
+    cartCount = await userHelper.getCartCount(req.session.user._id)
+  }
+ 
+  adminHelper.getCategoryProduct(req.params.category).then((products)=>
+  {
+    console.log(products);
+    res.render('user/allProducts',{user:true,products,cartCount,userBtn:req.session.user});
+  })
+
+  
 })
 router.get('/userOTPLogin',(req,res)=>
 {

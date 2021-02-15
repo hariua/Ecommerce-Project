@@ -30,10 +30,10 @@
                 <!-- Shop Top Area Start -->
                 <div class="shop-top-bar d-flex">
                     <!-- Left Side start -->
-                    <p>There Are Products.</p>
+                    <h6 class="p-2">These Are Products.</h6>
                     <!-- Left Side End -->
                     <!-- Right Side Start -->
-                    <div class="select-shoing-wrap d-flex align-items-center">
+                    {{!-- <div class="select-shoing-wrap d-flex align-items-center">
                         <div class="shot-product">
                             <p>Sort By:</p>
                         </div>
@@ -47,7 +47,7 @@
                             </select>
 
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- Right Side End -->
                 </div>
                 <!-- Shop Top Area End -->
@@ -57,7 +57,7 @@
 
                     <div class="row">
                         {{#each products}}
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 alert border-light" data-aos="fade-up" data-aos-delay="200">
                             <!-- Single Prodect -->
                             <div class="product mb-5" style="width: 250px;height:400px">
                                 <div class="thumb">
@@ -67,7 +67,7 @@
                                             alt="Product" />
                                     </a>
                                     <span class="badges">
-                                        <span class="new">New</span>
+                                        <span class="new"></span>
                                     </span>
                                     <div class="actions">
                                         

@@ -50,7 +50,8 @@ module.exports = {
                     Name:ProDetails.Name,
                     Description:ProDetails.Description,
                     Price:ProDetails.Price,
-                    Stock:ProDetails.Stock
+                    Stock:ProDetails.Stock,
+                    Category:ProDetails.Category
                 }
             }).then(()=>
             {
@@ -63,6 +64,44 @@ module.exports = {
         return new Promise((resolve,reject)=>
         {
             db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(proId)}).then(()=>
+            {
+                resolve()
+            })
+        })
+    },
+    addCategory:(catName)=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            db.get().collection(collection.CATEGORY_COLLECTION).insertOne(catName).then((response)=>
+            {
+                resolve(response.ops[0])
+            })
+        })
+    },
+    getCategory:()=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            let cat = db.get().collection(collection.CATEGORY_COLLECTION).find().toArray()
+            resolve(cat)
+        })
+    },
+    getCategoryProduct:(category)=>
+    {
+        console.log(category);
+        return new Promise(async(resolve,reject)=>
+        {
+            let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({Category:category}).toArray()
+            
+            resolve(products)
+        })
+    },
+    deleteCategory:(catId)=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            db.get().collection(collection.CATEGORY_COLLECTION).deleteOne({_id:objectId(catId)}).then(()=>
             {
                 resolve()
             })

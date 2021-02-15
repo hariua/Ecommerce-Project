@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/adminLogin/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/adminLogin/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/style.css">
+    <title>Edit Product</title>
+</head>
+
+<body>
+    <div class="half">
+        <div class="bg order-1 order-md-2" style="background-image: url('/adminLogin/images/bg_1.jpg');"></div>
+        <div class="contents order-2 order-md-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-12">
+                        <div class="text-center mb-5">
+                            <h3>Edit <strong>Product</strong></h3>
+
+                        </div>
+                        <form action="/admin/editProduct?id={{products._id}}" method="POST"
+                            enctype="multipart/form-data" style="padding-top: 40px;">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputName">Product Name</label>
+                                    <input type="text" class="form-control" id="inputName" name="Name"
+                                        value="{{products.Name}}" required>
+                                </div>
+
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputDescription">Description</label>
+                                    <input type="text" class="form-control" id="inputDescription" name="Description"
+                                        value="{{products.Description}}" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputPrice">Price</label>
+                                    <input type="number" class="form-control" id="inputPrice" name="Price"
+                                        value="{{products.Price}}" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputStock">Stock</label>
+                                    <input type="number" class="form-control" id="inputStock" name="Stock"
+                                        value="{{products.Stock}}" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="category">Category</label>
+                                    
+                                    <select name="Category" class="custom-select p-2">
+                                        <option selected>Choose a Category</option>
+                                        {{#each category}}
+                                        <option value="{{this.Category}}">{{this.Category}}</option>
+                                        {{/each}}
+                                    </select>
+                                    
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group mt-2 col-md-4">
+                                    <label for="exampleFormControlFile1">Select 1st Image</label>
+                                    <img src="/product-images/{{products._id}}a.jpg" style="width:100px;height:100px"
+                                        id="imgView1"><br><br>
+                                    <input type="file" class="form-control" name="Image1" id="exampleFormControlFile1"
+                                        style="width: 250px;" onchange="viewImage1(event)">
+                                </div>
+                                <div class="form-group mt-2 col-md-4">
+                                    <label for="exampleFormControlFile2">Select 2nd Image</label>
+                                    <img src="/product-images/{{products._id}}b.jpg" style="width:100px;height:100px"
+                                        id="imgView2"><br><br>
+                                    <input type="file" class="form-control" name="Image2" id="exampleFormControlFile2"
+                                        style="width: 250px;" onchange="viewImage2(event)">
+                                </div>
+                                <div class="form-group mt-2 col-md-4">
+                                    <label for="exampleFormControlFile3">Select 3rd Image</label>
+                                    <img src="/product-images/{{products._id}}c.jpg" style="width:100px;height:100px"
+                                        id="imgView3"><br><br>
+                                    <input type="file" class="form-control" name="Image3" id="exampleFormControlFile3"
+                                        style="width: 250px;" onchange="viewImage3(event)">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary mt-5 pt-3">Edit Product</button>
+                                </div>
+                            </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        function viewImage1(event) {
+            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        }
+        function viewImage2(event) {
+            document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+        }
+        function viewImage3(event) {
+            document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+        }
+    </script>
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    <script src="/adminLogin/js/popper.min.js"></script>
+    <script src="/adminLogin/js/bootstrap.min.js"></script>
+    <script src="/adminLogin/js/main.js"></script>
+</body>
+
+
+</html>
