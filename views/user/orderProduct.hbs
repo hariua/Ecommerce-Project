@@ -1,0 +1,55 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Shop</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    {{#each products}}
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 alert border-light" data-aos="fade-up" data-aos-delay="200">
+        <!-- Single Prodect -->
+        <div class="product mb-5" style="width: 250px;height:400px">
+            <div class="thumb">
+                
+                    <img src="/product-images/{{this.product._id}}a.jpg" alt="Product" style="height: 10em;" />
+                    
+                
+                <span class="badges">
+                    <span class="new"></span>
+                </span>
+                <div class="actions">
+
+
+                </div>
+               
+            </div>
+            <div class="content">
+                <h5 class="title">{{this.product.Name}}</a></h5>
+                <span class="price">
+                    <span class="new">Rs.{{this.product.Price}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+
+
+
+
+</div>

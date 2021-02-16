@@ -1,0 +1,171 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Checkout</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- breadcrumb-area end -->
+
+<!-- checkout area start -->
+<div class="checkout-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            
+                <div class="billing-info-wrap">
+                    <h3>Billing Details</h3>
+                    <form action="" id="checkout-form" method="POST">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-row">
+                                    <div class=" form-group billing-info mb-4 col-md-6">
+                                        <label for="fname">First Name</label>
+                                        <input type="text" id="fname" name="FirstName" required/>
+                                    </div>
+                                
+                                    <div class="form-group billing-info mb-4 col-md-6">
+                                        <label for="lname">Last Name</label>
+                                        <input type="text" id="lname" name="LastName" required/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group billing-info mb-4 col-md-12">
+                                        <label for="house">House Name</label>
+                                        <input type="text" id="house" name="House" required/>
+                                    </div>
+                                </div>
+
+                                <div class="form-row ">
+                                    <div class="form-group billing-info mb-4 col-md-12">
+                                        <label for="street">Street Address</label>
+                                        <input class="billing-address" placeholder="street name" id="street" name="Street" type="text" required/>
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group billing-info mb-4 col-md-6">
+                                        <label for="city">Town / City</label>
+                                        <input type="text" id="city" name="Town" required/>
+                                    </div>
+                                
+
+                                
+                                    <div class="form-group billing-info mb-4 col-md-6">
+                                        <label for="pin">Postcode / ZIP</label>
+                                        <input type="text" id="pin" name="PIN" required/>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group billing-info mb-4 col-md-6">
+                                        <label for="phone">Phone</label>
+                                        <input type="text" id="phone" name="Mobile" required/>
+                                    </div>
+                                
+
+                                
+                                    <div class="form-group billing-info mb-4 col-md-6">
+                                        <label for="email">Email Address</label>
+                                        <input type="text" required id="email" name="Email" />
+                                    </div>
+                                    <input type="text" name="User" value="{{userBtn._id}}" hidden>
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="col-lg-12 mt-md-30px mt-lm-30px ">
+                                    <div class="your-order-area">
+                                        <h3>Your order</h3>
+                                        <div class="your-order-wrap gray-bg-4">
+                                            <div class="your-order-product-info">
+                                                <div class="your-order-top">
+                                                    <ul>
+                                                        <li>Product</li>
+                                                        <li>Total</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="your-order-middle">
+                                                    <ul>
+                                                        {{#each items}}
+                                                        <li><span class="order-middle-left">{{this.product.Name}} X {{this.quantity}}</span>
+                                                            <span class="order-price">Rs.{{this.subtotal}}
+                                                            </span></li>
+                                                            {{/each}}
+
+                                                    </ul>
+                                                </div>
+                                                {{!-- <div class="your-order-bottom">
+                                                    <ul>
+                                                        <li class="your-order-shipping">Shipping</li>
+                                                        <li>Free shipping</li>
+                                                    </ul>
+                                                </div> --}}
+                                                <div class="your-order-total">
+                                                    <ul>
+                                                        <li class="order-total">Total</li>
+                                                        <li>Rs.{{total}}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="payment-method">
+                                                <div class="payment-accordion element-mrg">
+                                                    <div id="faq" class="panel-group">
+                                                        <input type="radio" name="Payment" value="COD" style="width:5%;height:auto" checked >Cash on Delivery<br>
+                                                        <input type="radio" name="Payment" value="Online Payment"  style="width:5%;height:auto">Online Payment
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="Place-order mt-25">
+                                            <button class="btn btn-primary btn-hover" type="submit" style="width: 100%;" href="#">Place Order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $('#checkout-form').submit((e)=>
+    {
+        e.preventDefault()
+        $.ajax({
+            url:'/place-order',
+            method:'post',
+            data:$('#checkout-form').serialize(),
+            success:(response)=>
+            {
+                if(response.status)
+                {
+                    location.href="orderSuccess"
+                }
+            }
+        })
+
+    })
+</script>

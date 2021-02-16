@@ -62,9 +62,9 @@
                                         class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
                                         onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',1)" onclick="subtotal('{{this.product._id}}','1')">+</button>
                                 </td>
-                                <td class="product-subtotal" id="subtotal">
+                                <td class="product-subtotal" id="{{this.product._id}}5">{{this.subtotal}}</td>
                                 
-                                </td>
+                                
                                 <td class="product-remove">
 
                                     <button onclick="deleteProCart('{{this._id}}','{{this.item}}')"><i
@@ -76,9 +76,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{#each subtotal}}
-                <p class="h5" id="hk">{{this.subtotal}}</p>
-                {{/each}}
+                
 
                 <div class="row">
 
@@ -103,8 +101,8 @@
                             </div>
                             <h5 class="pb-5"> <span></span></h5>
 
-                            <h4 class="grand-totall-title">Grand Total <span id="total">Rs.{{total}}</span></h4>
-                            <a href="" style="text-decoration: none;">Proceed to Checkout</a>
+                            <h4 class="grand-totall-title">Grand Total Rs. <span id="total">{{total}}</span></h4>
+                            <a href="/placeOrder" style="text-decoration: none;">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>
@@ -154,7 +152,7 @@
 
                 } else {
                     console.log(response)
-
+                    document.getElementById(proId+5).innerHTML=response.subtotal
                     document.getElementById(proId).innerHTML = quantity + count
                     document.getElementById('total').innerHTML = response.total
                     

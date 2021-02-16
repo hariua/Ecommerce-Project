@@ -139,7 +139,7 @@
                                                     {{!-- <a href="compare.html" class="action compare" title="Compare"><i
                                                             class="icon-refresh"></i></a> --}}
                                                 </div>
-                                                <button onclick="addCart('{{this._id}}')" class="btn add-to-cart" style="text-decoration: none;">Add To Cart</button>
+                                                <button onclick="addCart('{{this._id}}')" class="btn btn-secondary add-to-cart " style="text-decoration: none;">Add To Cart</button>
                                             </div>
                                             <div class="content">
                                                 <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}
@@ -184,8 +184,9 @@
             method: 'post',
             success: (response) => {
                 if (response.cartOne) {
-
+                    location.reload()
                     document.getElementById("cart-count").innerHTML=count
+                    l
                 }
             }
         })

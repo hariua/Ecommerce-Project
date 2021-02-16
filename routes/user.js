@@ -51,7 +51,7 @@ router.get('/', async function(req, res, next) {
   {
     
     let len = items.length
-    var products = items.slice(len-4,len)
+    var products = items.slice(len-8,len)
     res.render('index',{user:true,products,cartCount,userBtn:req.session.user,category});
   })
   }
@@ -60,7 +60,7 @@ router.get('/', async function(req, res, next) {
     
     
     let len = items.length
-    var products = items.slice(len-4,len)
+    var products = items.slice(len-8,len)
     res.render('index',{user:true,products,cartCount,category});
   })
   
@@ -206,14 +206,14 @@ router.get('/userCart',verifyLogin,async(req,res)=>
   {
     cartCount = await userHelper.getCartCount(req.session.user._id)
     total = await userHelper.getTotalAmount(req.session.user._id)
-    subtotal = await userHelper.getSubTotal(req.session.user._id)
+    
   }  
  
   let product = await userHelper.getCartProducts(req.session.user._id)
  
-  // let  subtotal = await userHelper.getSubTotal(req.session.user._id)
+ 
   
-  res.render('user/userCart',{user:true,product,'userBtn':req.session.user._id,cartCount,total,subtotal})
+  res.render('user/userCart',{user:true,product,'userBtn':req.session.user._id,cartCount,total})
 })
 router.get('/add-to-cart',verifyLogin,(req,res)=>
 {
@@ -238,9 +238,12 @@ router.post('/change-product-qty',(req,res,next)=>
   
   userHelper.changeProductQty(req.body).then(async(response)=>
   {
-    
+    response.subtotal = await userHelper.getSubTotal(req.session.user._id)
     response.total = await userHelper.getTotalAmount(req.body.user)
-    res.json(response)
+    
+      res.json(response)
+    
+    
   })
 }
 )
@@ -351,5 +354,49 @@ router.post('/userOTPSubmit',(req,res)=>
       
       res.redirect('/userOTPSubmit')
     })
+})
+router.get('/placeOrder',async(req,res)=>
+{
+  let items = await userHelper.getCartProducts(req.session.user._id)
+  let total = await userHelper.getTotalAmount(req.session.user._id)
+  res.render('user/placeOrder',{user:true,total,items,userBtn:req.session.user})
+})
+router.post('/place-order',async(req,res)=>
+{
+  
+  let products = await userHelper.getCartProductList(req.body.User)
+  let total = await userHelper.getTotalAmount(req.body.User)
+  userHelper.placeOrder(req.body,products,total).then((response)=>
+  {
+    req.session.orderId = response._id
+    if(response.Status==='placed')
+    {
+      res.json({status:true})
+    }
+  })
+ 
+})
+router.get('/orderSuccess',(req,res)=>
+{
+  
+  res.render('user/orderSuccess',{user:true,orderId:req.session.orderId})
+ 
+})
+router.get('/userOrders',(req,res)=>
+{
+  userHelper.getOrderList(req.session.user._id).then((orderList)=>
+  {
+    res.render('user/userOrderList',{user:true,orderList})
+  })
+
+})
+router.get('/viewOrderProduct/:id',(req,res)=>
+{
+  userHelper.getOrderProducts(req.params.id).then((products)=>
+  {
+    console.log("hello");
+    console.log(products);
+    res.render('user/orderProduct',{user:true,products})
+  })
 })
 module.exports = router;

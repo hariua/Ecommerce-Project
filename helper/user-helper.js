@@ -178,7 +178,8 @@ module.exports = {
                 },
                 {
                     $project:{
-                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]}
+                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]},
+                        subtotal:{$multiply:[{$arrayElemAt:["$products.Price",0]},"$quantity"]}
                     
                     }
                     
@@ -406,17 +407,111 @@ module.exports = {
                 },
                 {
                     $project:{
-                
+                        _id:null,
                         subtotal:{$sum:{$multiply:['$quantity','$unitPrice']}}
                     }
                 }
                 
             ]).toArray()
             
-            console.log(subtotal);
-            resolve(subtotal)
+            console.log("kooi"+subtotal[0].subtotal);
+            resolve(subtotal[0].subtotal)
 
         })        
+    },
+    placeOrder:(order,products,total)=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            let status = order.Payment==='COD'?'placed':'pending'
+            let orderObj={
+                deliveryDetails:{
+                    FirstName:order.FirstName,
+                    LastName:order.LastName,
+                    House:order.House,
+                    Street:order.Street,
+                    Town:order.Town,
+                    PIN:order.PIN,
+                    Mobile:order.Mobile
+                },
+                Email:order.Email,
+                User:order.User,
+                PaymentMethod:order.Payment,
+                Products:products,
+                Total:total,
+                Date:new Date().toISOString().replace(/T/, ' ').replace(/T/, ' '),
+                Status:status
+                
+            }
+            db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response)=>
+            {
+                
+                resolve(response.ops[0])
+                db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.User)})
+            })
+        })
+    },
+    getCartProductList:(userId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let cart = await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
+            
+            resolve(cart.products)
+                
+        })
+    },
+    getOrderList:(userId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            console.log("hai"+userId)
+            let order = await db.get().collection(collection.ORDER_COLLECTION).find({User:userId}).toArray()
+            console.log(order);
+            resolve(order)
+        })
+    },
+    getOrderProducts:(orderId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let orderItem = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        _id:objectId(orderId)
+                    }
+                },
+                {
+                    $unwind:'$Products'
+                },
+                {
+                    $project:{
+                        item:'$Products.item',
+                        quantity:'$Products.quantity'
+                    }
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCT_COLLECTION,
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'products'
+
+                    }
+                },
+                {
+                    $project:{
+                        item:1,quantity:1,product:{$arrayElemAt:['$products',0]},
+                        
+                    
+                    }
+                    
+                }
+                
+            ]).toArray()
+            
+            resolve(orderItem)
+        })
     }
 
 } 
