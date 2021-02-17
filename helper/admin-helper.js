@@ -106,5 +106,13 @@ module.exports = {
                 resolve()
             })
         })
+    },
+    getAllTransactions:()=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let list = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+            resolve(list)
+        })
     }
 }

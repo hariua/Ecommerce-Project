@@ -219,4 +219,19 @@ router.get('/deleteCategory',(req,res)=>
     res.redirect('/admin/allCategory')
   })
 })
+router.get('/allTransactions',(req,res)=>
+{
+  adminHelper.getAllTransactions().then((list)=>
+  {
+    res.render('admin/allTransactions',{list})
+  })
+})
+router.get('/userOrderPdt/:id',(req,res)=>
+{
+  userHelper.getOrderProducts(req.params.id).then((products)=>
+  {
+    
+    res.render('admin/singleOrderPdt',{products})
+  })
+})
 module.exports = router;
