@@ -354,9 +354,21 @@ router.post('/userOTPSubmit',(req,res)=>
 })
 router.get('/placeOrder',async(req,res)=>
 {
+  var address = null
+  userHelper.addressChecker(req.session.user._id).then(async(status)=>
+  {
+    if(status.address)
+    {
+       addr = await userHelper.getUserAddress(req.session.user._id)
+       let len = addr.length
+       address = addr.slice(len-3,len)
+    }
+    
+  })
+  
   let items = await userHelper.getCartProducts(req.session.user._id)
   let total = await userHelper.getTotalAmount(req.session.user._id)
-  res.render('user/placeOrder',{user:true,total,items,userBtn:req.session.user})
+  res.render('user/placeOrder',{user:true,total,items,userBtn:req.session.user,address})
 })
 router.post('/place-order',async(req,res)=>
 {
@@ -415,6 +427,16 @@ router.post('/verify-payment',(req,res)=>
     {
       console.log(err);
       res.json({status:false})
+  })
+})
+router.get('/addNewAddress',(req,res)=>{
+  res.render('user/addNewAddress',{user:true,userBtn:req.session.user})
+})
+router.post('/addNewAddress',(req,res)=>
+{
+  userHelper.addNewAddress(req.body).then((data)=>
+  {
+    res.redirect('/placeOrder')
   })
 })
 module.exports = router;

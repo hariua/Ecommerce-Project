@@ -148,6 +148,24 @@
             </div>
 
         </div>
+        <div class="row">
+            {{#each address}}
+            <div class="col-md-3 mt-5 alert border-warning mr-2">
+                
+                <div class="col-md-12" onclick="hai('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
+                
+                    <h6 class="">{{this.FirstName}} {{this.LastName}}</h6>
+                    <p class="">{{this.House}},{{this.Town}} - {{this.PIN}}<br>Ph : {{this.Mobile}}</p>
+
+                
+                </div>
+                
+            </div>
+            {{/each}}
+            <div class="col-md-2 pt-5">
+                <a href="/addNewAddress" class="btn btn-warning pt-3" style="text-decoration: none;width:100%;margin-top:30px;">Add New Address</a>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -223,5 +241,17 @@
                 }
             }
         })
+    }
+    function hai(fname,lname,house,street,town,pin,mobile,email)
+    {
+        
+        document.getElementById('fname').value=fname
+        document.getElementById('lname').value=lname
+        document.getElementById('house').value=house
+        document.getElementById('street').value=street
+        document.getElementById('city').value=town
+        document.getElementById('pin').value=pin
+        document.getElementById('phone').value=mobile
+        document.getElementById('email').value=email
     }
 </script>

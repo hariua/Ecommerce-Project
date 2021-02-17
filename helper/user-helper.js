@@ -5,6 +5,7 @@ var objectId = require('mongodb').ObjectID
 const { response } = require('express')
 const { PRODUCT_COLLECTION } = require('../config/collection')
 const Razorpay = require('razorpay')
+const { resolve } = require('path')
 var instance = new Razorpay({
     key_id: 'rzp_test_65QtpTCsZaSsL7',
     key_secret: 'JIbfL8ylyjMsr7SIz4Ki0GEU',
@@ -559,6 +560,63 @@ module.exports = {
             {
                 resolve()
             })
+        })
+    },
+    addNewAddress:(details)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(details.User)})
+            if(user.address)
+            {
+                db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(details.User)},{
+                    $push:{
+                        address:details
+                    }
+                }).then(()=>
+                {
+                    resolve()
+                })                
+            }else{
+                
+                addr = [details]
+                db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(details.User)},{
+                    $set:{
+                        address:addr
+                    }
+                }).then((user)=>
+                {
+                    resolve(user)
+                })
+            }
+
+        })
+    },
+    getUserAddress:(userId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)})
+            console.log(user);
+            let address = user.address
+            
+            resolve(address)
+        })
+    },
+    addressChecker:(userId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let status ={}
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({_id:objectId(userId)})
+            if(user.address)
+            {
+                status.address=true
+            }
+            resolve(status)
+
+
+
         })
     }
 
