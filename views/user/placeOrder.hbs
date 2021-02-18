@@ -131,6 +131,9 @@
                                                         style="width:5%;height:auto" checked>Cash on Delivery<br>
                                                     <input type="radio" name="Payment" value="Online Payment"
                                                         style="width:5%;height:auto">Online Payment
+                                                    <input type="radio" name="Payment" value="Paypal"
+                                                        style="width:5%;height:auto">Paypal
+                                                    <div id="paypal-payment-button"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -151,19 +154,21 @@
         <div class="row">
             {{#each address}}
             <div class="col-md-3 mt-5 alert border-warning mr-2">
-                
-                <div class="col-md-12" onclick="hai('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
-                
+
+                <div class="col-md-12"
+                    onclick="hai('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
+
                     <h6 class="">{{this.FirstName}} {{this.LastName}}</h6>
                     <p class="">{{this.House}},{{this.Town}} - {{this.PIN}}<br>Ph : {{this.Mobile}}</p>
 
-                
+
                 </div>
-                
+
             </div>
             {{/each}}
             <div class="col-md-2 pt-5">
-                <a href="/addNewAddress" class="btn btn-warning pt-3" style="text-decoration: none;width:100%;margin-top:30px;">Add New Address</a>
+                <a href="/addNewAddress" class="btn btn-warning pt-3"
+                    style="text-decoration: none;width:100%;margin-top:30px;">Add New Address</a>
             </div>
         </div>
     </div>
@@ -171,10 +176,28 @@
 </div>
 </div>
 </div>
+<script>
+    function hai(fname, lname, house, street, town, pin, mobile, email) {
+
+        document.getElementById('fname').value = fname
+        document.getElementById('lname').value = lname
+        document.getElementById('house').value = house
+        document.getElementById('street').value = street
+        document.getElementById('city').value = town
+        document.getElementById('pin').value = pin
+        document.getElementById('phone').value = mobile
+        document.getElementById('email').value = email
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AVH4zvU5seJDDc1AizTEk60_DaAdig8d4FWLNJ3bsVj1ZGL9rCt9y09lWPaEdvoP2F30-D5-eAG-cufL&disable-funding=credit,card"></script>
+<script>
+
+</script>
 <script>
     $('#checkout-form').submit((e) => {
         e.preventDefault()
@@ -185,13 +208,41 @@
             success: (response) => {
                 if (response.codSuccess) {
                     location.href = "orderSuccess"
-                } else {
+                } else if (response.paypal) {
+                    console.log("response coming")
+                    paypal.Buttons({
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: response.total
+                                    }
+
+                                }]
+                            })
+                        },
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (details) {
+                                console.log(details);
+                                
+                                paymentStatusChange(details)
+                            })
+                
+                        },
+                        onCancel:function(data){
+                            alert("Payment Failed!!!")
+                        }
+                    }).render('#paypal-payment-button');
+
+                }
+                else {
                     razorpayPayment(response)
                 }
             }
         })
 
     })
+
     function razorpayPayment(order) {
         var options = {
             "key": "rzp_test_65QtpTCsZaSsL7", // Enter the Key ID generated from the Dashboard
@@ -202,8 +253,8 @@
             "image": '/images/hk brand logo.jpg',
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
-                
-                verifyPayment(response,order)
+
+                verifyPayment(response, order)
             },
             "prefill": {
                 "name": "Harikrishnan U A",
@@ -219,39 +270,47 @@
         };
         var rzp1 = new Razorpay(options);
         rzp1.open();
-       
+
     }
-    function verifyPayment(payment,order)
-    {
+    function verifyPayment(payment, order) {
         $.ajax({
-            url:'/verify-payment',
-            data:{
+            url: '/verify-payment',
+            data: {
                 payment,
                 order
             },
-            method:'post',
-            success:(response)=>
-            {
-                if(response.status)
-                {
-                    location.href="orderSuccess"
+            method: 'post',
+            success: (response) => {
+                if (response.status) {
+                    location.href = "orderSuccess"
+                
                 }
-                else{
+                else {
                     alert("Payment Failed ")
                 }
             }
         })
     }
-    function hai(fname,lname,house,street,town,pin,mobile,email)
+    function paymentStatusChange(datas)
     {
-        
-        document.getElementById('fname').value=fname
-        document.getElementById('lname').value=lname
-        document.getElementById('house').value=house
-        document.getElementById('street').value=street
-        document.getElementById('city').value=town
-        document.getElementById('pin').value=pin
-        document.getElementById('phone').value=mobile
-        document.getElementById('email').value=email
+        $.ajax({
+            url:'/paypal-status-change',
+            data:{
+                datas
+            },
+            method:'post',
+            success:(response)=>
+            {
+                
+                if(response.status)
+                {
+                    location.href = "orderSuccess"
+                }
+                
+                    
+                
+            }
+        })
     }
+
 </script>

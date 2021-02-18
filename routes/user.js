@@ -5,6 +5,7 @@ var adminHelper = require('../helper/admin-helper');
 var otp = require('../config/otp-secrets')
 const twilio = require('twilio')(otp.accountSID,otp.authToken)
 const { Db } = require('mongodb');
+const { response } = require('express');
 
 const verifyLogin = async(req,res,next)=>
 {
@@ -361,7 +362,7 @@ router.get('/placeOrder',async(req,res)=>
     {
        addr = await userHelper.getUserAddress(req.session.user._id)
        let len = addr.length
-       address = addr.slice(len-3,len)
+       address = addr.slice(len-2,len)
     }
     
   })
@@ -381,9 +382,20 @@ router.post('/place-order',async(req,res)=>
     if(req.body.Payment==='COD')
     {
       res.json({codSuccess:true})
-    }else{
+    }else if(req.body.Payment==='Paypal')
+    {
+      val=total/72
+      console.log(val)
+      total = val.toFixed(2)
+      response.total=total
+      response.paypal=true
+      res.json(response)
+      
+    }
+    else{
         userHelper.generateRazorpay(orderId,total).then((response)=>
         {
+          
           res.json(response)
         })
     }
@@ -418,7 +430,7 @@ router.post('/verify-payment',(req,res)=>
   console.log(req.body);
   userHelper.verifyPayment(req.body).then(()=>
   {
-    userHelper.changePaymentStatus(req.body['order[receipt]']).then(()=>
+    userHelper.changePaymentStatus(req.body['order[receipt]'],req.session.user._id).then(()=>
     {
       console.log("Payment Successful");
       res.json({status:true})
@@ -437,6 +449,16 @@ router.post('/addNewAddress',(req,res)=>
   userHelper.addNewAddress(req.body).then((data)=>
   {
     res.redirect('/placeOrder')
+  })
+})
+router.post('/paypal-status-change',(req,res)=>
+{
+  userHelper.changePaymentStatus(req.session.orderId,req.session.user._id).then((response)=>
+  {
+    res.json({status:true})
+  }).catch((err)=>
+  {
+    res.json({status:false})
   })
 })
 module.exports = router;

@@ -452,7 +452,7 @@ module.exports = {
             {
                 
                 resolve(response.ops[0]._id)
-                db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.User)})
+                
             })
         })
     },
@@ -548,7 +548,7 @@ module.exports = {
             }
         })
     },
-    changePaymentStatus:(orderId)=>
+    changePaymentStatus:(orderId,userId)=>
     {
         return new Promise((resolve,reject)=>
         {
@@ -558,6 +558,7 @@ module.exports = {
                 }
             }).then(()=>
             {
+                db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(userId)})
                 resolve()
             })
         })
