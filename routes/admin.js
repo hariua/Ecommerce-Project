@@ -234,4 +234,28 @@ router.get('/userOrderPdt/:id',(req,res)=>
     res.render('admin/singleOrderPdt',{products})
   })
 })
+router.get('/shipped/:id',(req,res)=>
+{
+  status='Shipped'
+  adminHelper.changeOrderStatus(req.params.id,status).then(()=>
+  {
+    res.redirect('/admin/allTransactions')
+  })
+})
+router.get('/delivered/:id',(req,res)=>
+{
+  status='Delivered'
+  adminHelper.changeOrderStatus(req.params.id,status).then(()=>
+  {
+    res.redirect('/admin/allTransactions')
+  })
+})
+router.get('/cancelled/:id',(req,res)=>
+{
+  status='Cancelled'
+  adminHelper.changeOrderStatus(req.params.id,status).then(()=>
+  {
+    res.redirect('/admin/allTransactions')
+  })
+})
 module.exports = router;

@@ -111,8 +111,22 @@ module.exports = {
     {
         return new Promise(async(resolve,reject)=>
         {
-            let list = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
+            let list = await db.get().collection(collection.ORDER_COLLECTION).find().sort({Date:-1}).toArray()
             resolve(list)
+        })
+    },
+    changeOrderStatus:(orderId,stat)=>
+    {
+        return new Promise((resolve,reject)=>
+        {
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},{
+                $set:{
+                    Status:stat
+                }
+            }).then(()=>
+            {
+                resolve()
+            })
         })
     }
 }

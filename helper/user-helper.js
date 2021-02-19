@@ -471,7 +471,7 @@ module.exports = {
         return new Promise(async(resolve,reject)=>
         {
             console.log("hai"+userId)
-            let order = await db.get().collection(collection.ORDER_COLLECTION).find({User:userId}).toArray()
+            let order = await db.get().collection(collection.ORDER_COLLECTION).find({User:userId}).sort({Date:-1}).toArray()
             console.log(order);
             resolve(order)
         })

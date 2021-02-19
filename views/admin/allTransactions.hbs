@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="/adminLogin/css/style.css">
     <script src="/cropper/cropper.js"></script>
-   
+
     <title>Add New Product</title>
 </head>
 
@@ -25,42 +25,58 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-md-12">
                         <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Items</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Payment</th>
-                            
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each list}}
-                        <tr>
-                            <th scope="row">{{inc @index}}</th>
-                            <td>{{this.Date}}</td>
-                            <td>{{this.User}}</td>
-                            <td>{{this.deliveryDetails.FirstName}},{{this.deliveryDetails.House}}<br>{{this.deliveryDetails.Town}},PIN:{{this.deliveryDetails.PIN}}<br>PH:{{this.deliveryDetails.Mobile}}</td>
-                            <td><a class="btn btn-secondary " style="width: 125px;height:auto;text-decoration:none" href="/admin/userOrderPdt/{{this._id}}">View Product</a></td>
-                            <td>{{this.Total}}</td>
-                            <td>{{this.PaymentMethod}}</td>
-                            <td>{{this.Status}}</td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-                       
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Items</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Payment</th>
+
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each list}}
+                                <tr>
+                                    <th scope="row">{{inc @index}}</th>
+                                    <td>{{this.Date}}</td>
+                                    <td>{{this.User}}</td>
+                                    <td>{{this.deliveryDetails.FirstName}},{{this.deliveryDetails.House}}<br>{{this.deliveryDetails.Town}},PIN:{{this.deliveryDetails.PIN}}<br>PH:{{this.deliveryDetails.Mobile}}
+                                    </td>
+                                    <td><a class="btn btn-secondary "
+                                            style="width: 125px;height:auto;text-decoration:none"
+                                            href="/admin/userOrderPdt/{{this._id}}">View Product</a></td>
+                                    <td>{{this.Total}}</td>
+                                    <td>{{this.PaymentMethod}}</td>
+                                    <td>{{this.Status}}</td>
+                                    <td><div class="dropdown">
+                                            <button class="btn btn-dark dropdown-toggle p-1" type="button"
+                                                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false" style="height: 2em;width:7em">
+                                                Status
+                                            </button>
+                                            <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="/admin/shipped/{{this._id}}" style="text-decoration: none;">Shipped</a>
+                                                <a class="dropdown-item" href="/admin/delivered/{{this._id}}" style="text-decoration: none;">Delivered</a>
+                                                <a class="dropdown-item" href="/admin/cancelled/{{this._id}}" style="text-decoration: none;">Cancelled</a>
+                                            </div>
+                                        </div></td>
+                                    
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
-   
+
     <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>
