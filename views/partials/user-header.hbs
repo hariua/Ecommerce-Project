@@ -3,11 +3,13 @@
 
 
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Furns eCommerce Project</title>
-    <meta name="description" content="240+ Best Bootstrap Templates are available on this website. Find your template for your project compatible with the most popular HTML library in the world." />
+    <meta name="description"
+        content="240+ Best Bootstrap Templates are available on this website. Find your template for your project compatible with the most popular HTML library in the world." />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <link rel="canonical" href="https://htmldemo.hasthemes.com/furns/" />
@@ -53,26 +55,28 @@
     <link rel="stylesheet" href="/assets/css/vendor/vendor.min.css" />
     <link rel="stylesheet" href="/assets/css/plugins/plugins.min.css" />
     <link rel="stylesheet" href="/assets/css/style.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <!-- Main Style -->
     <!-- <link rel="stylesheet" href="assets/css/style.css" /> -->
-    
-    	
+
+
 
 </head>
 
 <body>
     <!-- Header Area start  -->
     <div class="header section bg-dark">
-        
+
         <!-- Header Bottom  Start -->
-        <div class="header-bottom d-none d-lg-block">
+        <div class="header-bottom d-none d-lg-block p-3">
             <div class="container position-relative">
                 <div class="row align-self-center">
                     <!-- Header Logo Start -->
                     <div class="col-auto align-self-center">
                         <div class="header-logo">
-                            <a href="/" class="display-4 text-white" style="text-decoration: none;font-weight:500 ">Furns</a>
+                            <a href="/" class="display-4 text-white"
+                                style="text-decoration: none;font-weight:500 ">Furns</a>
                         </div>
                     </div>
                     <!-- Header Logo End -->
@@ -84,20 +88,21 @@
                                 <a href="javascript:void(0)" class="header-action-btn search-btn"><i
                                         class="icon-magnifier"></i></a>
                                 <div class="dropdown_search">
-                                    <form class="action-form" action="#"  style="color: white;">
+                                    <form class="action-form" action="#" style="color: white;">
                                         <input class="form-control" placeholder="Enter your search key" type="text">
-                                        <button class="submit text-white" type="submit"  style="color: white;"><i class="icon-magnifier" style="color: white;"></i></button>
+                                        <button class="submit text-white" type="submit" style="color: white;"><i
+                                                class="icon-magnifier" style="color: white;"></i></button>
                                     </form>
                                 </div>
                             </div>
                             <!-- Single Wedge Start -->
                             <div class="header-bottom-set dropdown">
-                                <button class="dropdown-toggle header-action-btn text-white" data-bs-toggle="dropdown"><i
-                                        class="icon-user" ></i>
-                                        {{#if userBtn}}
-                                        {{userBtn.Name}}
-                                        {{/if}}
-                                        </button>
+                                <button class="dropdown-toggle header-action-btn text-white"
+                                    data-bs-toggle="dropdown"><i class="icon-user"></i>
+                                    {{#if userBtn}}
+                                    {{userBtn.Name}}
+                                    {{/if}}
+                                </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     {{!-- <li><a class="dropdown-item" href="my-account.html">My account</a></li> --}}
                                     {{#if userBtn}}
@@ -108,19 +113,39 @@
                                 </ul>
                             </div>
                             <!-- Single Wedge End -->
-                           <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0" >
+                            <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0">
                                 <i class="icon-handbag" style="color: white;"></i>
-                                
+
                                 <span class="header-action-num" id="cart-count">{{cartCount}}</span> </a>
-                            {{!-- <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
+                            {{!-- <a href="#offcanvas-mobile-menu"
+                                class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                 <i class="icon-menu"></i> --}}
                             </a>
                         </div>
+                        
                     </div>
+                    
                     <!-- Header Action End -->
                 </div>
             </div>
         </div>
+        <div class="bg-black d-none d-lg-block sticky-nav">
+                            <div class="container position-relative">
+                                <div class="row">
+                                    <div class="col-md-12 align-self-center">
+                                        <div class="main-menu">
+                                            <ul>
+                                                <li><a href="" style="text-decoration: none;">My Account</a> </li>
+                                                <li><a href="/userOrders" style="text-decoration: none;">My Orders</a> </li>
+                                                <li><a href="/userCart" style="text-decoration: none;">My Cart</a> </li>
+                                                <li><a href="/allProducts" style="text-decoration: none;">All Products</a> </li>
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
         <!-- Header Bottom  End -->
         <!-- Header Bottom  Start -->
         <div class="header-bottom d-lg-none sticky-nav bg-white">
@@ -151,12 +176,12 @@
                             <div class="header-bottom-set dropdown">
                                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i
                                         class="icon-user"></i>
-                                         {{#if userBtn}}
-                                        {{userBtn.Name}}
-                                        {{/if}}
-                                        </button>
+                                    {{#if userBtn}}
+                                    {{userBtn.Name}}
+                                    {{/if}}
+                                </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
-                                     {{#if userBtn}}
+                                    {{#if userBtn}}
                                     <li><a class="dropdown-item" href="/userLogout">Logout</a></li>
                                     {{else}}
                                     <li><a class="dropdown-item" href="/userLogin"> Login</a></li>
@@ -166,12 +191,14 @@
                             <!-- Single Wedge End -->
                             <a href="/userCart" class="header-action-btn header-action-btn-cart  pr-0">
                                 <i class="icon-handbag"></i>
-                                
+
                                 <span class="header-action-num">{{cartCount}}</span> </a>
-                                <!-- <span class="cart-amount">€30.00</span> -->
-                                {{!-- <a href="/userCart" class="" style="text-decoration: none;font-size:larger">Cart<i class="icon-handbag"></i></a> --}}
-                            
-                            {{!-- <a href="#offcanvas-mobile-menu" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
+                            <!-- <span class="cart-amount">€30.00</span> -->
+                            {{!-- <a href="/userCart" class="" style="text-decoration: none;font-size:larger">Cart<i
+                                    class="icon-handbag"></i></a> --}}
+
+                            {{!-- <a href="#offcanvas-mobile-menu"
+                                class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                                 <i class="icon-menu"></i> --}}
                             </a>
                         </div>
@@ -184,7 +211,7 @@
         <!-- Main Menu Start -->
         <div class="bg-black d-none d-lg-block sticky-nav" style="height: 10px;">
             <div class="container position-relative">
-               
+
             </div>
         </div>
         <!-- Main Menu End -->
