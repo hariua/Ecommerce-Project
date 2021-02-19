@@ -260,10 +260,26 @@ router.get('/allProducts',async(req,res)=>
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }
   
-  adminHelper.getAllProducts().then((products)=>
+  adminHelper.getAllProducts().then((items)=>
   {
-    
-    res.render('user/allProducts',{user:true,products,cartCount,userBtn:req.session.user});
+  
+  products = items.slice(0,12) 
+    res.render('user/allProducts1',{user:true,products,cartCount,userBtn:req.session.user});
+  })
+})
+router.get('/allProducts2',async(req,res)=>
+{
+  let cartCount = null
+  if(req.session.user)
+  {
+    cartCount = await userHelper.getCartCount(req.session.user._id)
+  }
+  
+  adminHelper.getAllProducts().then((items)=>
+  {
+  let val=items.length
+  products = items.slice(12,val) 
+    res.render('user/allProducts2',{user:true,products,cartCount,userBtn:req.session.user});
   })
 })
 router.get('/getCategoryProduct/:category',async(req,res)=>
@@ -277,7 +293,7 @@ router.get('/getCategoryProduct/:category',async(req,res)=>
   adminHelper.getCategoryProduct(req.params.category).then((products)=>
   {
     console.log(products);
-    res.render('user/allProducts',{user:true,products,cartCount,userBtn:req.session.user});
+    res.render('user/categoryProducts',{user:true,products,cartCount,userBtn:req.session.user});
   })
 
   
@@ -412,7 +428,7 @@ router.get('/userOrders',(req,res)=>
 {
   userHelper.getOrderList(req.session.user._id).then((orderList)=>
   {
-    res.render('user/userOrderList',{user:true,orderList})
+    res.render('user/userOrderList',{user:true,orderList,userBtn:req.session.user})
   })
 
 })
@@ -422,7 +438,7 @@ router.get('/viewOrderProduct/:id',(req,res)=>
   {
     console.log("hello");
     console.log(products);
-    res.render('user/orderProduct',{user:true,products})
+    res.render('user/orderProduct',{user:true,products,userBtn:req.session.user})
   })
 })
 router.post('/verify-payment',(req,res)=>
@@ -459,6 +475,33 @@ router.post('/paypal-status-change',(req,res)=>
   }).catch((err)=>
   {
     res.json({status:false})
+  })
+})
+router.get('/userAccount',(req,res)=>
+{
+  userHelper.getUserDetails(req.session.user._id).then((user)=>
+  {
+    res.render('user/userAccount',{user:true,user,'psdSuccess':req.session.passwordChangeSuccess,'psdFailure':req.session.passwordChangeFailure,userBtn:req.session.user})
+    req.session.passwordChangeSuccess=false
+    req.session.passwordChangeFailure=false
+  })
+  
+})
+router.post('/changePassword',(req,res)=>
+{
+  console.log(req.body)
+  userHelper.changePassword(req.body,req.session.user._id).then((response)=>
+  {
+    if(response.success)
+    {
+      req.session.passwordChangeSuccess = "Password Has Been Updated Successfully"
+      res.redirect('/userAccount')
+    }
+    if(response.failure)
+    {
+      req.session.passwordChangeFailure = "You have entered Incorrect Password"
+      res.redirect('/userAccount')
+    }
   })
 })
 module.exports = router;

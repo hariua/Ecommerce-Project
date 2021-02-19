@@ -1,0 +1,127 @@
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Account</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="ml-auto mr-auto col-lg-9">
+                <div class="checkout-wrapper">
+                    <div id="faq" class="panel-group">
+                        <div class="panel panel-default single-my-account" data-aos="fade-up" data-aos-delay="200">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>1 .</span> <a data-bs-toggle="collapse" class="collapsed"
+                                        aria-expanded="true" href="#my-account-1" style="text-decoration: none;">User Profile</a>
+                                </h3>
+                            </div>
+                            <div id="my-account-1" class="panel-collapse collapse show" data-bs-parent="#faq">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>Account Information : <span class="text-danger">{{user.Name}}</span></h4>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="billing-info">
+                                                    <label>Name</label>
+                                                    <input type="text" value="{{user.Name}}" readonly />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="billing-info">
+                                                    <label>Email Address</label>
+                                                    <input type="email" value="{{user.Email}}" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="billing-info">
+                                                    <label>Mobile</label>
+                                                    <input type="text" value="{{user.Mobile}}" readonly />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="billing-back-btn">
+                                            <div class="billing-back">
+                                                <a href="" style="text-decoration: none;"><i class="icon-arrow-up-circle"></i> back</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default single-my-account" data-aos="fade-up" data-aos-delay="400">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>2 .</span> <a data-bs-toggle="collapse" class="collapsed"
+                                        aria-expanded="false" href="#my-account-2" style="text-decoration: none;">Change your password </a></h3>
+                            </div>
+                            <div id="my-account-2" class="panel-collapse collapse" data-bs-parent="#faq">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>Change Password</h4>
+                                            <h5>Your Password</h5>
+                                        </div>
+                                        <form action="/changePassword" method="POST">
+                                            <div class="row">
+
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="billing-info">
+                                                        <label>Your Current Password</label>
+                                                        <input type="password" name="CurrentPassword" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="billing-info">
+                                                        <label>New Password</label>
+                                                        <input type="password" name="NewPassword" required />
+                                                    </div>
+                                                    {{#if psdSuccess}}
+                                                    <p class="text-center text-success">{{psdSuccess}}</p>
+                                                    {{/if}}
+                                                    {{#if psdFailure}}
+                                                    <p class="text-center text-danger">{{psdFailure}}</p>
+                                                    {{/if}}
+                                                </div>
+
+                                            </div>
+                                            <div class="billing-back-btn">
+                                                <div class="billing-back">
+                                                    <a href="" style="text-decoration: none;"><i class="icon-arrow-up-circle"></i> back</a>
+                                                </div>
+                                                <div class="billing-btn">
+                                                    <input type="submit" class="btn btn-dark" value="Continue">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
