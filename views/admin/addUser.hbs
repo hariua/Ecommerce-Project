@@ -15,11 +15,11 @@
                                 <div class="login-register-form">
                                     <form action="/admin/addUser" id="addUser" method="post">
                                     <label class="text-primary">Name:</label>
-                                     <input type="text" id="Name" name="Name" placeholder="Enter your Name here"/>
+                                     <input type="text" id="Name" name="Name" required minlength="4" placeholder="Enter your Name here"/>
                                       <label class="text-primary">Email ID:</label>
                                         <input type="email" name="Email" placeholder="Email ID" required/>
                                          <label class="text-primary">Mobile Number:</label>
-                                        <input type="number" name="Mobile" placeholder="Mobile Number" required />
+                                        <input type="text" name="Mobile" placeholder="Mobile Number" required pattern=".{10,10}"/>
                                          <label class="text-primary">Password:</label>
                                         <input type="password" name="Password" placeholder="Password" required />
                                         <div class="button-box">

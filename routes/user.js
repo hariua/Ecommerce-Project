@@ -52,8 +52,10 @@ router.get('/', async function(req, res, next) {
   {
     
     let len = items.length
+    var prod = items.slice(0,8)
+    
     var products = items.slice(len-8,len)
-    res.render('index',{user:true,products,cartCount,userBtn:req.session.user,category});
+    res.render('index',{user:true,products,cartCount,userBtn:req.session.user,category,prod});
   })
   }
   adminHelper.getAllProducts().then((items)=>
@@ -61,8 +63,9 @@ router.get('/', async function(req, res, next) {
     
     
     let len = items.length
+    var prod = items.slice(0,8)
     var products = items.slice(len-8,len)
-    res.render('index',{user:true,products,cartCount,category});
+    res.render('index',{user:true,products,cartCount,category,prod});
   })
   
   

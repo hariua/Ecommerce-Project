@@ -5,6 +5,7 @@ var objectId = require('mongodb').ObjectID
 const { response } = require('express')
 const { PRODUCT_COLLECTION } = require('../config/collection')
 const Razorpay = require('razorpay')
+const moment = require('moment')
 const { resolve } = require('path')
 var instance = new Razorpay({
     key_id: 'rzp_test_65QtpTCsZaSsL7',
@@ -392,6 +393,8 @@ module.exports = {
     placeOrder: (order, products, total) => {
         return new Promise((resolve, reject) => {
             let status = order.Payment === 'COD' ? 'placed' : 'pending'
+            let dateIso = new  Date()
+            let date = moment(dateIso).format('DD-MM-YYYY')
             let orderObj = {
                 deliveryDetails: {
                     FirstName: order.FirstName,
@@ -407,9 +410,13 @@ module.exports = {
                 PaymentMethod: order.Payment,
                 Products: products,
                 Total: total,
-                Date: new Date().toISOString().replace(/T/, ' ').replace(/T/, ' '),
+                Date: date,
                 Status: status
 
+            }
+            if(status=='placed')
+            {
+                db.get().collection(collection.CART_COLLECTION).deleteOne({ user: objectId(orderObj.User) })
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
 

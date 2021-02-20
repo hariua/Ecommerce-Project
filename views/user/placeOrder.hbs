@@ -35,7 +35,7 @@
                             <div class="form-row">
                                 <div class=" form-group billing-info mb-4 col-md-6">
                                     <label for="fname">First Name</label>
-                                    <input type="text" id="fname" name="FirstName" required />
+                                    <input type="text" id="fname" name="FirstName" minlength="4" required />
                                 </div>
 
                                 <div class="form-group billing-info mb-4 col-md-6">
@@ -46,7 +46,7 @@
                             <div class="form-row">
                                 <div class="form-group billing-info mb-4 col-md-12">
                                     <label for="house">House Name</label>
-                                    <input type="text" id="house" name="House" required />
+                                    <input type="text" id="house" name="House" minlength="4" required />
                                 </div>
                             </div>
 
@@ -54,27 +54,27 @@
                                 <div class="form-group billing-info mb-4 col-md-12">
                                     <label for="street">Street Address</label>
                                     <input class="billing-address" placeholder="street name" id="street" name="Street"
-                                        type="text" required />
+                                        type="text" required minlength="4"/>
 
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group billing-info mb-4 col-md-6">
                                     <label for="city">Town / City</label>
-                                    <input type="text" id="city" name="Town" required />
+                                    <input type="text" id="city" name="Town" required  minlength="4"/>
                                 </div>
 
 
 
                                 <div class="form-group billing-info mb-4 col-md-6">
                                     <label for="pin">Postcode / ZIP</label>
-                                    <input type="text" id="pin" name="PIN" required />
+                                    <input type="text" id="pin" name="PIN" required pattern=".{6,6}" />
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group billing-info mb-4 col-md-6">
                                     <label for="phone">Phone</label>
-                                    <input type="text" id="phone" name="Mobile" required />
+                                    <input type="text" id="phone" name="Mobile"  required pattern=".{10,10}"/>
                                 </div>
 
 
@@ -195,9 +195,7 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script
     src="https://www.paypal.com/sdk/js?client-id=AVH4zvU5seJDDc1AizTEk60_DaAdig8d4FWLNJ3bsVj1ZGL9rCt9y09lWPaEdvoP2F30-D5-eAG-cufL&disable-funding=credit,card"></script>
-<script>
 
-</script>
 <script>
     $('#checkout-form').submit((e) => {
         e.preventDefault()

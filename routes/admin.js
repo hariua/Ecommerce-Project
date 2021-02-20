@@ -5,6 +5,7 @@ var router = express.Router();
 
 var adminHelper = require('../helper/admin-helper')
 var userHelper = require('../helper/user-helper')
+var adminDashboard = require('../helper/admin-dashboard')
 const verifyAdmin=(req,res,next)=>
 {
   if(req.session.adminLoggedIn)
@@ -30,9 +31,15 @@ router.get('/', function(req, res, next) {
   req.session.adminNameErr=false
   req.session.adminPasswordErr=false
 });
-router.get('/home',verifyAdmin,(req,res)=>
+router.get('/home',verifyAdmin,async(req,res)=>
 {
-  res.render('admin/adminHome',{admin:true})
+  let totalOrders = await adminDashboard.getTotalOrders()
+  let ordersPlaced = await adminDashboard.getPlacedOrders()
+  let ordersCancelled = await adminDashboard.getCancelledOrders()
+  let ordersShipped = await adminDashboard.getShippedOrders()
+  let dailyOrderPercentage = await adminDashboard.getDailyOrders()
+ 
+  res.render('admin/adminHome',{admin:true,totalOrders,ordersPlaced,ordersCancelled,ordersShipped,dailyOrderPercentage})
  
 })
 router.post('/login',(req,res)=>
