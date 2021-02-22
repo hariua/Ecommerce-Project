@@ -12,8 +12,58 @@
     <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/adminLogin/css/style.css">
-    <script src="/cropper/cropper.js"></script>
-   
+    
+    <style>
+        #canvas {
+            height: 600px;
+            width: 600px;
+            background-color: #ffffff;
+            cursor: default;
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+        var canvas = $("#canvas"),
+            context = canvas.get(0).getContext("2d"),
+            $result = $('#result');
+
+        $('#fileInput').on('change', function () {
+            if (this.files && this.files[0]) {
+                if (this.files[0].type.match(/^image\//)) {
+                    var reader = new FileReader();
+                    reader.onload = function (evt) {
+                        var img = new Image();
+                        img.onload = function () {
+                            context.canvas.height = img.height;
+                            context.canvas.width = img.width;
+                            context.drawImage(img, 0, 0);
+                            var cropper = canvas.cropper({
+                                aspectRatio: 16 / 9
+                            });
+                            $('#btnCrop').click(function () {
+                                // Get a string base 64 data url
+                                var croppedImageDataURL = canvas.cropper('getCroppedCanvas').toDataURL("image/png");
+                                $result.append($('<img>').attr('src', croppedImageDataURL));
+                            });
+                            $('#btnRestore').click(function () {
+                                canvas.cropper('reset');
+                                $result.empty();
+                            });
+                        };
+                        img.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+                else {
+                    alert("Invalid file type! Please select an image file.");
+                }
+            }
+            else {
+                alert('No file(s) selected.');
+            }
+        });
+    </script>
+
     <title>Add New Product</title>
 </head>
 
@@ -35,13 +85,15 @@
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="inputName">Product Name</label>
-                                    <input type="text" class="form-control" id="inputName" name="Name" minlength="4" required>
+                                    <input type="text" class="form-control" id="inputName" name="Name" minlength="4"
+                                        required>
                                 </div>
 
 
                                 <div class="form-group col-md-7">
                                     <label for="inputDescription">Description</label>
-                                    <input type="text" class="form-control" id="inputDescription" required minlength="4" name="Description">
+                                    <input type="text" class="form-control" id="inputDescription" required minlength="4"
+                                        name="Description">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -70,7 +122,7 @@
                                     <label for="exampleFormControlFile1">Select 1st Image</label>
                                     <img src="" style="width:100px;height:100px" id="imgView1"><br><br>
                                     <input type="file" class="form-control" name="Image1" id="exampleFormControlFile1"
-                                        style="width: 250px;"  accept="image/*" required onchange="viewImage1(event)">
+                                        style="width: 250px;" accept="image/*" required onchange="viewImage1(event)">
                                 </div>
                                 <div class="form-group mt-2 col-md-4">
                                     <label for="exampleFormControlFile2">Select 2nd Image</label>
@@ -85,54 +137,40 @@
                                         style="width: 250px;" accept="image/*" required onchange="viewImage3(event)">
                                 </div>
                             </div>
-
-                            {{!-- <canvas id="testCanvas" width="300" height="300" style="border: 1px solid black;"></canvas>
-                            <script type="text/javascript">
-                                cropper.start(document.getElementById("testCanvas"), 1); // initialize cropper by providing it with a target canvas and a XY ratio (height = width * ratio)
-
-                                function handleFileSelect() {
-                                    // this function will be called when the file input below is changed
-                                    var file = document.getElementById("exampleFormControlFile1").files[0];  // get a reference to the selected file
-
-                                    var reader = new FileReader(); // create a file reader
-                                    // set an onload function to show the image in cropper once it has been loaded
-                                    reader.onload = function (event) {
-                                        var data = event.target.result; // the "data url" of the image
-                                        cropper.showImage(data); // hand this to cropper, it will be displayed
-                                    };
-
-                                    reader.readAsDataURL(file); // this loads the file as a data url calling the function above once done
-                                }
-                                 
-
-                            </script>
-                            <br>
-                            <input type="button" onclick="cropper.startCropping()" value="Start cropping" />
-                            <input type="button" onclick="cropper.getCroppedImageSrc()" value="Crop" />
-                            <input type="button" onclick="cropper.restore()" value="Restore" />
-                            --}}
-
+                            <input type="file" id="fileInput" accept="image/*" />
+                            <input type="button" id="btnCrop" value="Crop" />
+                            <input type="button" id="btnRestore" value="Restore" />
 
                             <input type="submit" value="Submit" class="btn btn-block btn-primary mt-4">
                         </form>
+                        
+                        
+                            <div>
+                                <canvas id="canvas">
+                                    Your browser does not support the HTML5 canvas element.
+                                </canvas>
+                            </div>
+
+                            <div id="result"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
-    <script>
-  function viewImage1(event) {
-    document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
-  }
-  function viewImage2(event) {
-    document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
-  }
-  function viewImage3(event) {
-    document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
-  }
-</script>
     
+    <script>
+        function viewImage1(event) {
+            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        }
+        function viewImage2(event) {
+            document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+        }
+        function viewImage3(event) {
+            document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+        }
+    </script>
+
     <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>

@@ -150,9 +150,12 @@
                     alert("The item has been removed")
                     location.reload()
 
-                } else {
+                }else if(response.subtotal){
+                    location.reload()
+                }
+                 else {
                     console.log(response)
-                    document.getElementById(proId+5).innerHTML=response.subtotal
+                    
                     document.getElementById(proId).innerHTML = quantity + count
                     document.getElementById('total').innerHTML = response.total
                     

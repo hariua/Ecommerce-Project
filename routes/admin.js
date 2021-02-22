@@ -265,4 +265,10 @@ router.get('/cancelled/:id',(req,res)=>
     res.redirect('/admin/allTransactions')
   })
 })
+router.get('/offerSection',async(req,res)=>
+{
+  let products = await adminHelper.getAllProducts()
+  let category = await adminHelper.getCategory()
+  res.render('admin/offerProduct',{products,category})
+})
 module.exports = router;

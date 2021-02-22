@@ -73,7 +73,7 @@
                                         
                                         
                                     </div>
-                                    <button onclick="addCart('{{this._id}}')" title="Add To Cart" class=" add-to-cart">Add
+                                    <button onclick="addCart('{{this._id}}')" title="Add To Cart" class=" add-to-cart"  style="width: auto;height:3em;">Add
                                         To Cart</button>    
                                 </div>
                                 <div class="content">
@@ -122,7 +122,7 @@
             data: { proId: productId },
             method: 'post',
             success: (response) => {
-                if (cartOne) {
+                if (response.cartOne) {
 
                     window.location.href = "allProducts"
                 }

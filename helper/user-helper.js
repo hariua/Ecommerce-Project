@@ -332,8 +332,13 @@ module.exports = {
 
             ]).toArray()
 
-            console.log(total[0].total);
-            resolve(total[0].total)
+            if(total.length>0){
+                resolve(total[0].total)
+            }else{
+                total=0
+                resolve(total)
+            }
+            
 
         })
     },
@@ -385,8 +390,15 @@ module.exports = {
 
             ]).toArray()
 
-            console.log("kooi" + subtotal[0].subtotal);
-            resolve(subtotal[0].subtotal)
+            if(subtotal.length>0)
+            {
+                resolve(subtotal[0].subtotal)
+            }
+            else{
+                subtotal=0
+                resolve(subtotal)
+            }
+            
 
         })
     },

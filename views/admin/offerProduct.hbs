@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/adminLogin/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/adminLogin/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/style.css">
+    <title>Add Category</title>
+</head>
+
+<body>
+    <div class="half">
+        <div class="bg order-1 order-md-2" style="background-image: url('/adminLogin/images/bg_1.jpg');"></div>
+        <div class="contents order-2 order-md-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-6">
+                        <div class="form-block" id = "pro">
+                            <div class="text-center mb-5">
+                                <h3>Product <strong>Offer</strong></h3>
+
+                            </div>
+                            <form action="/admin/productOffer" id="productPage" method="post">
+                                <div class="form-group first">
+                                    <label for="proList">Product List</label>
+                                    <select name="Product" class="custom-select p-2">
+                                        <option selected>Choose a Product</option>
+                                        {{#each products}}
+                                        <option value="{{this._id}}">{{this.Name}}  (Rs.{{this.Price}})
+                                        </option>
+                                        {{/each}}
+                                    </select>
+                                    <label class="pt-4">Offer Percentage</label>
+                                    <input type="number" class="form-control" required name="Offer">
+
+                                </div>
+                                <input type="submit" value="Submit" class="btn btn-block btn-primary">
+                            </form>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-block" id = "cat">
+                            <div class="text-center mb-5" >
+                                <h3 >Category <strong>Offer</strong></h3>
+
+                            </div>
+                            <form action="/admin/categoryOffer" id="categoryPage" method="post" style="display: none;"> 
+                                <div class="form-group first">
+                                    <label for="category">Category</label>
+
+                                    <select name="Category" class="custom-select p-2">
+                                        <option selected>Choose a Category</option>
+                                        {{#each category}}
+                                        <option value="{{this.Category}}">{{this.Category}}</option>
+                                        {{/each}}
+                                    </select>
+                                    <label class="pt-4">Offer Percentage</label>
+                                    <input type="number" class="form-control" required name="Offer">
+
+                                </div>
+                                <input type="submit" value="Submit" class="btn btn-block btn-primary">
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $('#cat').click(function(){
+                $('#categoryPage').show()
+                $('#productPage').hide()
+            })
+            $('#pro').click(function(){
+                $('#categoryPage').hide()
+                $('#productPage').show()
+            })
+        })
+    </script>
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    <script src="/adminLogin/js/popper.min.js"></script>
+    <script src="/adminLogin/js/bootstrap.min.js"></script>
+    <script src="/adminLogin/js/main.js"></script>
+</body>
+
+
+</html>
