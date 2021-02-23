@@ -67,7 +67,9 @@
                                             alt="Product" />
                                     </a>
                                     <span class="badges">
-                                        <span class="new"></span>
+                                        {{#if this.Offer}}
+                                            <span class="sale">{{this.Offer}}% OFF</span>
+                                            {{/if}}
                                     </span>
                                     <div class="actions">
                                         
@@ -79,7 +81,12 @@
                                 <div class="content">
                                     <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}</a></h5>
                                     <span class="price">
-                                        <span class="new">Rs.{{this.Price}}</span>
+                                        {{#if this.Offer}}
+                                            <span class="new pr-2" style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
+                                            <span class="new">Rs.{{this.Price}}</span>
+                                            {{else}}
+                                            <span class="new">Rs.{{this.Price}}</span>
+                                            {{/if}}
                                     </span>
                                 </div>
                             </div>
@@ -123,7 +130,7 @@
             method: 'post',
             success: (response) => {
                 if (response.cartOne) {
-
+                    alert("An item Added to Cart")
                     location.reload()
                 }
             }

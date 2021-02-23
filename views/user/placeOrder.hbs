@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                     <div class="Place-order mt-25">
-                                        <button class="btn btn-primary btn-hover" type="submit" style="width: 100%;"
+                                        <button class="btn btn-primary btn-hover" id="submit" type="submit" style="width: 100%;"
                                             href="#">Place Order</button>
                                     </div>
                                 </div>
@@ -191,11 +191,55 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script
     src="https://www.paypal.com/sdk/js?client-id=AVH4zvU5seJDDc1AizTEk60_DaAdig8d4FWLNJ3bsVj1ZGL9rCt9y09lWPaEdvoP2F30-D5-eAG-cufL&disable-funding=credit,card"></script>
 
+    <script>
+        function viewImage1(event) {
+            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        }
+        function viewImage2(event) {
+            document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+        }
+        function viewImage3(event) {
+            document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+        }
+    </script>
+
+{{!-- <script>
+     $(document).ready(function () {
+        $('#submit').click(function() {  
+
+    $(".error").hide();
+    var hasError = false;
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var emailblockReg =
+     /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
+
+    var emailaddressVal = $("#UserEmail").val();
+    if(emailaddressVal == '') {
+      $("#UserEmail").after('<span class="error">Please enter your email address.</span>');
+      hasError = true;
+    }
+
+    else if(!emailReg.test(emailaddressVal)) {
+      $("#UserEmail").after('<span class="error">Enter a valid email address.</span>');
+      hasError = true;
+    }
+
+    else if(!emailblockReg.test(emailaddressVal)) {
+      $("#UserEmail").after('<span class="error">No yahoo, gmail or hotmail emails.</span>');
+      hasError = true
+    } 
+
+    if(hasError == true) { return false; }
+
+    });
+    })
+</script> --}}
 <script>
     $('#checkout-form').submit((e) => {
         e.preventDefault()

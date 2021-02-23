@@ -80,8 +80,13 @@ router.get('/addUser',verifyAdmin,(req,res)=>
 })
 router.post('/addUser',(req,res)=>
 {
+  console.log(req.body);
   userHelper.signupUser(req.body).then((response)=>
   {
+    console.log("resp",response);
+    let img = req.files.Image1
+    console.log('img',img);
+    img.mv('./public/user-images/'+response.id+'.jpg')
     res.redirect('/admin/allUsers')
   }).catch(()=>
   {
@@ -97,6 +102,11 @@ router.post('/editUser',(req,res)=>
 {
   userHelper.updateUser(req.query.id,req.body).then(()=>
   {
+    if(req.files.Image1)
+    {
+      let img1 = req.files.Image1
+      img1.mv('./public/user-images/'+req.query.id+'.jpg')
+    }
     res.redirect('/admin/allUsers')
   })
 })
@@ -270,5 +280,12 @@ router.get('/offerSection',async(req,res)=>
   let products = await adminHelper.getAllProducts()
   let category = await adminHelper.getCategory()
   res.render('admin/offerProduct',{products,category})
+})
+router.post('/productOffer',(req,res)=>
+{
+  adminHelper.productOffer(req.body).then(()=>
+  {
+    res.redirect('/admin/offerSection')
+  })
 })
 module.exports = router;

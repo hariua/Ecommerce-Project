@@ -92,7 +92,7 @@
 </div>
 
 <!-- Product Category End -->
-<a href="/placeOrder">add</a>
+
 <!-- Product tab Area Start -->
 <div class="section product-tab-area">
     <div class="container">
@@ -127,6 +127,9 @@
                                                 alt="Product" />
                                         </a>
                                         <span class="badges">
+                                            {{#if this.Offer}}
+                                            <span class="sale">{{this.Offer}}% OFF</span>
+                                            {{/if}}
                                             <span class="new">New</span>
                                         </span>
                                         <div class="actions">
@@ -147,7 +150,12 @@
                                             </a>
                                         </h5>
                                         <span class="price">
+                                            {{#if this.Offer}}
+                                            <span class="new pr-2" style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
                                             <span class="new">Rs.{{this.Price}}</span>
+                                            {{else}}
+                                            <span class="new">Rs.{{this.Price}}</span>
+                                            {{/if}}
                                         </span>
                                     </div>
                                 </div>
@@ -202,7 +210,12 @@
                                             <img class="hover-image" src="/product-images/{{this._id}}b.jpg"
                                                 alt="Product" />
                                         </a>
-                                        
+                                        <span class="badges">
+                                            {{#if this.Offer}}
+                                            <span class="sale">{{this.Offer}}% OFF</span>
+                                            {{/if}}
+                                            
+                                        </span>                                        
                                         <div class="actions">
                                             {{!-- <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
                                                     class="icon-heart"></i></a> --}}
@@ -221,7 +234,12 @@
                                             </a>
                                         </h5>
                                         <span class="price">
+                                            {{#if this.Offer}}
+                                            <span class="new pr-2" style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
                                             <span class="new">Rs.{{this.Price}}</span>
+                                            {{else}}
+                                            <span class="new">Rs.{{this.Price}}</span>
+                                            {{/if}}
                                         </span>
                                     </div>
                                 </div>
@@ -263,6 +281,7 @@
             success: (response) => {
                 if (response.cartOne) {
                     location.reload()
+                    alert("An item Added to Cart")
                     document.getElementById("cart-count").innerHTML = count
                     l
                 }

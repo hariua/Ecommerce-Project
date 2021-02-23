@@ -28,15 +28,23 @@
                         <div class="panel panel-default single-my-account" data-aos="fade-up" data-aos-delay="200">
                             <div class="panel-heading my-account-title">
                                 <h3 class="panel-title"><span>1 .</span> <a data-bs-toggle="collapse" class="collapsed"
-                                        aria-expanded="true" href="#my-account-1" style="text-decoration: none;">User Profile</a>
+                                        aria-expanded="true" href="#my-account-1" style="text-decoration: none;">User
+                                        Profile</a>
                                 </h3>
                             </div>
                             <div id="my-account-1" class="panel-collapse collapse show" data-bs-parent="#faq">
                                 <div class="panel-body">
                                     <div class="myaccount-info-wrapper">
                                         <div class="account-info-wrapper">
-                                            <h4>Account Information : <span class="text-danger">{{user.Name}}</span></h4>
-                                            
+                                            <h4>Account Information : <span class="text-danger">{{user.Name}}</span>
+                                            </h4>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 text-center">
+                                                <img class="img-fluid rounded-circle"
+                                                    src="/user-images/{{user._id}}.jpg" style="width: 7em;height:7em;">
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12">
@@ -62,7 +70,8 @@
                                         </div>
                                         <div class="billing-back-btn">
                                             <div class="billing-back">
-                                                <a href="" style="text-decoration: none;"><i class="icon-arrow-up-circle"></i> back</a>
+                                                <a href="" style="text-decoration: none;"><i
+                                                        class="icon-arrow-up-circle"></i> back</a>
                                             </div>
 
                                         </div>
@@ -73,7 +82,8 @@
                         <div class="panel panel-default single-my-account" data-aos="fade-up" data-aos-delay="400">
                             <div class="panel-heading my-account-title">
                                 <h3 class="panel-title"><span>2 .</span> <a data-bs-toggle="collapse" class="collapsed"
-                                        aria-expanded="false" href="#my-account-2" style="text-decoration: none;">Change your password </a></h3>
+                                        aria-expanded="false" href="#my-account-2" style="text-decoration: none;">Change
+                                        your password </a></h3>
                             </div>
                             <div id="my-account-2" class="panel-collapse collapse" data-bs-parent="#faq">
                                 <div class="panel-body">
@@ -107,10 +117,56 @@
                                             </div>
                                             <div class="billing-back-btn">
                                                 <div class="billing-back">
-                                                    <a href="" style="text-decoration: none;"><i class="icon-arrow-up-circle"></i> back</a>
+                                                    <a href="" style="text-decoration: none;"><i
+                                                            class="icon-arrow-up-circle"></i> back</a>
                                                 </div>
                                                 <div class="billing-btn">
                                                     <input type="submit" class="btn btn-dark" value="Continue">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default single-my-account" data-aos="fade-up" data-aos-delay="400">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>3 .</span> <a data-bs-toggle="collapse" class="collapsed"
+                                        aria-expanded="false" href="#my-account-3" style="text-decoration: none;">Add
+                                        Your Profile Picture </a></h3>
+                            </div>
+                            <div id="my-account-3" class="panel-collapse collapse" data-bs-parent="#faq">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>Profile Picture</h4>
+
+                                        </div>
+                                        <form action="/changeProfilePic/{{user._id}}" method="POST"
+                                            enctype="multipart/form-data">
+                                            <div class="row">
+
+                                                <label for="exampleFormControlFile1">Select Your Image</label>
+                                                <div class="row">
+                                                    <img src="" style="width:100px;height:100px" id="imgView1"
+                                                    style="display: none;"><br><br>
+                                                </div>
+                                                <input type="file" class="form-control" name="Image1"
+                                                    id="exampleFormControlFile1" style="width: 250px;" accept="image/*"
+                                                    required onchange="viewImage1(event)">
+                                                <p class="text-warning text-center" style="display: none;" id="errMsg">
+                                                    Only
+                                                    Image is
+                                                    Accepted</p>
+                                                <div class="billing-back-btn">
+                                                    <div class="billing-back">
+                                                        <a href="" style="text-decoration: none;"><i
+                                                                class="icon-arrow-up-circle"></i> back</a>
+                                                    </div>
+                                                    <div class="billing-btn">
+                                                        <input id="submit" type="submit" class="btn btn-dark"
+                                                            value="Continue">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
@@ -125,3 +181,21 @@
         </div>
     </div>
 </div>
+<script>
+    function viewImage1(event) {
+        document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgView1').show()
+            $('#submit').show()
+            $('#errMsg').hide()
+
+
+        }
+        else {
+            $('#submit').hide()
+            $('#errMsg').show()
+        }
+    }
+</script>

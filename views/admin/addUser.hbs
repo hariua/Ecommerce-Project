@@ -1,42 +1,100 @@
-
 <div class="container-fluid" id="page-wrapper">
     <div class="login-register-area pt-100px pb-100px">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 col-md-12 ml-auto mr-auto">
-                <div class="login-register-wrapper">
-                    <div class="login-register-tab-list nav">
-                        
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-12 ml-auto mr-auto">
+                    <div class="login-register-wrapper">
+                        <div class="login-register-tab-list nav">
 
-                    </div>
-                    <div class="tab-content ">
-                        <div id="lg1" class="tab-pane active">
-                            <div class="login-form-container alert bg-light border-success">
-                                <div class="login-register-form">
-                                    <form action="/admin/addUser" id="addUser" method="post">
-                                    <label class="text-primary">Name:</label>
-                                     <input type="text" id="Name" name="Name" required minlength="4" placeholder="Enter your Name here"/>
-                                      <label class="text-primary">Email ID:</label>
-                                        <input type="email" name="Email" placeholder="Email ID" required/>
-                                         <label class="text-primary">Mobile Number:</label>
-                                        <input type="text" name="Mobile" placeholder="Mobile Number" required pattern=".{10,10}"/>
-                                         <label class="text-primary">Password:</label>
-                                        <input type="password" name="Password" placeholder="Password" required />
-                                        <div class="button-box">
-                                           
-                                            <button type="submit"><span>Add User</span></button>
-                                        </div>
-                                    </form>
+
+                        </div>
+                        <div class="tab-content ">
+                            <div id="lg1" class="tab-pane active">
+                                <div class="login-form-container alert bg-light border-success">
+                                    <div class="login-register-form">
+                                        <form action="/admin/addUser" id="addUser" method="post" enctype="multipart/form-data">
+                                            <label class="text-primary">Name:</label>
+                                            <input type="text" id="Name" name="Name" required minlength="4"
+                                                placeholder="Enter your Name here" />
+                                            <label class="text-primary">Email ID:</label>
+                                            <input type="email" name="Email" placeholder="Email ID" id="UserEmail"
+                                                value="" size="32" required />
+                                            <label class="text-primary">Mobile Number:</label>
+                                            <input type="text" name="Mobile" placeholder="Mobile Number" required
+                                                pattern=".{10,10}" />
+                                            <label class="text-primary">Password:</label>
+                                            <input type="password" name="Password" placeholder="Password" required />
+
+                                            <label for="exampleFormControlFile1">Select Your Image</label>
+                                            <img src="" style="width:100px;height:100px" id="imgView1"
+                                                style="display: none;"><br><br>
+                                           <input type="file" class="form-control" name="Image1" id="exampleFormControlFile1"
+                                        style="width: 250px;" accept="image/*" required onchange="viewImage1(event)">
+                                            <p class="text-warning text-center" style="display: none;" id="errMsg">Only
+                                                Image is
+                                                Accepted</p>
+
+                                            <div class="button-box">
+
+                                                <input id="submit" type="submit" class="btn btn-primary">
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 
-   
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#submit').click(function () {
+
+            $(".error").hide();
+            var hasError = false;
+            var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+            var emailblockReg =
+                /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
+
+            var emailaddressVal = $("#UserEmail").val();
+            if (emailaddressVal == '') {
+                $("#UserEmail").after('<span class="error">Please enter your email address.</span>');
+                hasError = true;
+            }
+
+            else if (!emailReg.test(emailaddressVal)) {
+                $("#UserEmail").after('<span class="error">Enter a valid email address.</span>');
+                hasError = true;
+            }
+
+            if (hasError == true) { return false; }
+
+        });
+    })
+</script>
+<script>
+    function viewImage1(event) {
+        document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let extension = file.split('.').pop()
+        if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+            $('#imgView1').show()
+            $('#submit').show()
+            $('#errMsg').hide()
+
+
+        }
+        else {
+            $('#submit').hide()
+            $('#errMsg').show()
+        }
+    }
+</script>

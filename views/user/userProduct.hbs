@@ -26,118 +26,132 @@
 
 <!-- Product Details Area Start -->
 <!-- Product Details Area Start -->
-    <div class="product-details-area pt-100px pb-100px">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
-                    <!-- Swiper -->
-                    <div class="swiper-container zoom-top">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="/product-images/{{product._id}}a.jpg" alt="">
-                            </div>
-                            <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="/product-images/{{product._id}}b.jpg" alt="">
-                            </div>
-                            <div class="swiper-slide zoom-image-hover">
-                                <img class="img-responsive m-auto" src="/product-images/{{product._id}}c.jpg" alt="">
-                            </div>
-                        
+<div class="product-details-area pt-100px pb-100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-sm-12 col-xs-12 mb-lm-30px mb-md-30px mb-sm-30px">
+                <!-- Swiper -->
+                <div class="swiper-container zoom-top">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide zoom-image-hover">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}a.jpg" alt="">
                         </div>
-                    </div>
-                    <div class="swiper-buttons">
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
+                        <div class="swiper-slide zoom-image-hover">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}b.jpg" alt="">
                         </div>
-                    <div class="swiper-container zoom-thumbs slider-nav-style-1 small-nav mt-3 mb-3">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="/product-images/{{product._id}}a.jpg" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="/product-images/{{product._id}}b.jpg" alt="">
-                            </div>
-                            <div class="swiper-slide">
-                                <img class="img-responsive m-auto" src="/product-images/{{product._id}}c.jpg" alt="">
-                            </div>
-                           
+                        <div class="swiper-slide zoom-image-hover">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}c.jpg" alt="">
                         </div>
-                        <!-- Add Arrows -->
-                        
+
                     </div>
                 </div>
-                <div class="col-lg-7 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
-                    <div class="product-details-content quickview-content">
-                        <h2>{{product.Name}}</h2>
-                        <p class="reference">Reference:<span> demo_17</span></p>
-                        <div class="pro-details-rating-wrap">
-                            <div class="rating-product">
-                                <i class="ion-android-star"></i>
-                                <i class="ion-android-star"></i>
-                                <i class="ion-android-star"></i>
-                                <i class="ion-android-star"></i>
-                                <i class="ion-android-star"></i>
-                            </div>
-                            <span class="read-review"><a class="reviews" href="#">Read reviews (1)</a></span>
+                <div class="swiper-buttons">
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+                <div class="swiper-container zoom-thumbs slider-nav-style-1 small-nav mt-3 mb-3">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}a.jpg" alt="">
                         </div>
-                        <div class="pricing-meta">
-                            <ul>
-                                <li class="old-price not-cut">Rs.{{product.Price}}</li>
+                        <div class="swiper-slide">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}b.jpg" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="img-responsive m-auto" src="/product-images/{{product._id}}c.jpg" alt="">
+                        </div>
+
+                    </div>
+                    <!-- Add Arrows -->
+
+                </div>
+            </div>
+            <div class="col-lg-7 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-details-content quickview-content">
+                    <h2>{{product.Name}}</h2>
+                    <p class="reference">Reference:<span> demo_17</span></p>
+                    <div class="pro-details-rating-wrap">
+                        <div class="rating-product">
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                            <i class="ion-android-star"></i>
+                        </div>
+
+                        <span class="read-review"><a class="reviews" href="#">Read reviews (1)</a></span>
+                    </div>
+                    <span class="badges">
+                        {{#if product.Offer}}
+                        <h6 class="sale text-danger">{{product.Offer}}% OFF</h6>
+                        {{/if}}
+
+                    </span>
+                    <div class="pricing-meta">
+                        <ul>
+                            {{#if product.Offer}}
+                            <span class="new pr-2"
+                                style="text-decoration: line-through;">Rs.{{product.actualPrice}}</span>
+                            <span class="new">Rs.{{product.Price}}</span>
+                            {{else}}
+                            <span class="new">Rs.{{product.Price}}</span>
+                            {{/if}}
+                        </ul>
+                    </div>
+                    <p class="quickview-para">{{product.Description}}</p>
+                    <div class="pro-details-quality">
+                        {{!-- <div class="cart-plus-minus">
+                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
+                        </div> --}}
+                        <div class="pro-details-cart">
+                            <button onclick="addCart('{{product._id}}')"
+                                class="add-cart btn btn-primary btn-hover-primary ml-4"> Add To
+                                Cart</button>
+                        </div>
+                    </div>
+                    <div class="pro-details-wish-com">
+                        <div class="pro-details-wishlist">
+                            <a href=""><i class="ion-android-favorite-outline"></i>Add to
+                                wishlist</a>
+                        </div>
+                        {{!-- <div class="pro-details-compare">
+                            <a href=""><i class="ion-ios-shuffle-strong"></i>Add to compare</a>
+                        </div> --}}
+                    </div>
+                    <div class="pro-details-social-info">
+                        <span>Share</span>
+                        <div class="social-info">
+                            <ul class="d-flex">
+                                <li>
+                                    <a href="#"><i class="ion-social-facebook"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ion-social-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ion-social-google"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ion-social-instagram"></i></a>
+                                </li>
                             </ul>
                         </div>
-                        <p class="quickview-para">{{product.Description}}</p>
-                        <div class="pro-details-quality">
-                            {{!-- <div class="cart-plus-minus">
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                            </div> --}}
-                            <div class="pro-details-cart">
-                                <button onclick="addCart('{{product._id}}')" class="add-cart btn btn-primary btn-hover-primary ml-4" > Add To
-                                    Cart</button>
-                            </div>
-                        </div>
-                        <div class="pro-details-wish-com">
-                            <div class="pro-details-wishlist">
-                                <a href=""><i class="ion-android-favorite-outline"></i>Add to
-                                    wishlist</a>
-                            </div>
-                            {{!-- <div class="pro-details-compare">
-                                <a href=""><i class="ion-ios-shuffle-strong"></i>Add to compare</a>
-                            </div> --}}
-                        </div>
-                        <div class="pro-details-social-info">
-                            <span>Share</span>
-                            <div class="social-info">
-                                <ul class="d-flex">
-                                    <li>
-                                        <a href="#"><i class="ion-social-facebook"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="ion-social-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="ion-social-google"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="ion-social-instagram"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="pro-details-policy ">
-                            <ul>
-                                <li><img src="/assets/images/icons/policy.png" alt="" /><span>Security Policy (Edit With
-                                        Customer Reassurance Module)</span></li>
-                                <li><img src="/assets/images/icons/policy-2.png" alt="" /><span>Delivery Policy (Edit
-                                        With Customer Reassurance Module)</span></li>
-                                <li><img src="/assets/images/icons/policy-3.png" alt="" /><span>Return Policy (Edit With
-                                        Customer Reassurance Module)</span></li>
-                            </ul>
-                        </div>
+                    </div>
+                    <div class="pro-details-policy ">
+                        <ul>
+                            <li><img src="/assets/images/icons/policy.png" alt="" /><span>Security Policy (Edit With
+                                    Customer Reassurance Module)</span></li>
+                            <li><img src="/assets/images/icons/policy-2.png" alt="" /><span>Delivery Policy (Edit
+                                    With Customer Reassurance Module)</span></li>
+                            <li><img src="/assets/images/icons/policy-3.png" alt="" /><span>Return Policy (Edit With
+                                    Customer Reassurance Module)</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -148,9 +162,10 @@
             data: { proId: productId },
             method: 'post',
             success: (response) => {
-                if (cartOne) {
+                if (response.cartOne) {
 
-                    window.location.href = "userProduct"
+                    alert("Item added to Cart")
+                    location.reload()
                 }
             }
         })

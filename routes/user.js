@@ -487,7 +487,7 @@ router.post('/paypal-status-change',(req,res)=>
     res.json({status:false})
   })
 })
-router.get('/userAccount',(req,res)=>
+router.get('/userAccount',verifyLogin,(req,res)=>
 {
   userHelper.getUserDetails(req.session.user._id).then((user)=>
   {
@@ -513,5 +513,11 @@ router.post('/changePassword',(req,res)=>
       res.redirect('/userAccount')
     }
   })
+})
+router.post('/changeProfilePic/:id',(req,res)=>
+{
+  let img = req.files.Image1
+  img.mv('./public/user-images/'+req.params.id+'.jpg')
+  res.redirect('/userAccount')
 })
 module.exports = router;

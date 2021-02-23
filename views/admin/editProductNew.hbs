@@ -56,14 +56,14 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="category">Category</label>
-                                    
+
                                     <select name="Category" class="custom-select p-2">
                                         <option selected>Choose a Category</option>
                                         {{#each category}}
                                         <option value="{{this.Category}}">{{this.Category}}</option>
                                         {{/each}}
                                     </select>
-                                    
+
                                 </div>
                             </div>
                             <div class="form-row">
@@ -89,10 +89,12 @@
                                         style="width: 250px;" onchange="viewImage3(event)">
                                 </div>
                             </div>
-
+                            <p class="text-warning text-center" style="display: none;" id="errMsg">Only Image is
+                                Accepted</p>
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <button type="submit" class="btn btn-primary mt-5 pt-3">Edit Product</button>
+                                    <button type="submit" class="btn btn-primary mt-5 pt-3" id="sub">Edit
+                                        Product</button>
                                 </div>
                             </div>
 
@@ -106,19 +108,74 @@
         </div>
     </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#add-prod').validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        minlength: 4
+                    },
+                    Description: {
+                        required: true,
+                        minlength: 4
+                    },
+                    Price: {
+                        required: true
+
+                    },
+                    Stock: {
+                        required: true
+                    }
+                }
+            })
+
+        })
+    </script>
 
     <script>
         function viewImage1(event) {
             document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+            let file = event.target.files[0].name
+            let extension = file.split('.').pop()
+            if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+                $('#imgView1').show()
+            }
+            else {
+                $('#sub').hide()
+                $('#errMsg').show()
+            }
         }
         function viewImage2(event) {
             document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+            let file = event.target.files[0].name
+            let extension = file.split('.').pop()
+            if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+                $('#imgView2').show()
+            }
+            else {
+                $('#sub').hide()
+                $('#errMsg').show()
+            }
         }
         function viewImage3(event) {
             document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+            let file = event.target.files[0].name
+            let extension = file.split('.').pop()
+            if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+                $('#imgView3').show()
+            }
+            else {
+                $('#sub').hide()
+                $('#errMsg').show()
+            }
         }
     </script>
-    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    {{!--
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script> --}}
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>
     <script src="/adminLogin/js/main.js"></script>

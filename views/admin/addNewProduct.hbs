@@ -12,57 +12,8 @@
     <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/adminLogin/css/style.css">
-    
-    <style>
-        #canvas {
-            height: 600px;
-            width: 600px;
-            background-color: #ffffff;
-            cursor: default;
-            border: 1px solid black;
-        }
-    </style>
-    <script>
-        var canvas = $("#canvas"),
-            context = canvas.get(0).getContext("2d"),
-            $result = $('#result');
+  
 
-        $('#fileInput').on('change', function () {
-            if (this.files && this.files[0]) {
-                if (this.files[0].type.match(/^image\//)) {
-                    var reader = new FileReader();
-                    reader.onload = function (evt) {
-                        var img = new Image();
-                        img.onload = function () {
-                            context.canvas.height = img.height;
-                            context.canvas.width = img.width;
-                            context.drawImage(img, 0, 0);
-                            var cropper = canvas.cropper({
-                                aspectRatio: 16 / 9
-                            });
-                            $('#btnCrop').click(function () {
-                                // Get a string base 64 data url
-                                var croppedImageDataURL = canvas.cropper('getCroppedCanvas').toDataURL("image/png");
-                                $result.append($('<img>').attr('src', croppedImageDataURL));
-                            });
-                            $('#btnRestore').click(function () {
-                                canvas.cropper('reset');
-                                $result.empty();
-                            });
-                        };
-                        img.src = evt.target.result;
-                    };
-                    reader.readAsDataURL(this.files[0]);
-                }
-                else {
-                    alert("Invalid file type! Please select an image file.");
-                }
-            }
-            else {
-                alert('No file(s) selected.');
-            }
-        });
-    </script>
 
     <title>Add New Product</title>
 </head>
@@ -79,31 +30,29 @@
 
                         </div>
                         <form action="/admin/addProduct" method="POST" enctype="multipart/form-data"
-                            style="padding-top: 40px;">
+                            style="padding-top: 40px;" id="add-prod">
 
 
                             <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label for="inputName">Product Name</label>
-                                    <input type="text" class="form-control" id="inputName" name="Name" minlength="4"
-                                        required>
+                                    <input type="text" class="form-control" id="inputName" name="Name">
                                 </div>
 
 
                                 <div class="form-group col-md-7">
                                     <label for="inputDescription">Description</label>
-                                    <input type="text" class="form-control" id="inputDescription" required minlength="4"
-                                        name="Description">
+                                    <input type="text" class="form-control" id="inputDescription" name="Description">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="inputPrice">Price</label>
-                                    <input type="number" class="form-control" id="inputPrice" name="Price" required>
+                                    <input type="number" class="form-control" id="inputPrice" name="Price">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputStock">Stock</label>
-                                    <input type="number" class="form-control" id="inputStock" name="Stock" required>
+                                    <input type="number" class="form-control" id="inputStock" name="Stock">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="category">Category</label>
@@ -120,7 +69,8 @@
                             <div class="form-row pb-3">
                                 <div class="form-group mt-2 col-md-4">
                                     <label for="exampleFormControlFile1">Select 1st Image</label>
-                                    <img src="" style="width:100px;height:100px" id="imgView1"><br><br>
+                                    <img src="" style="width:100px;height:100px" id="imgView1"
+                                        style="display: none;"><br><br>
                                     <input type="file" class="form-control" name="Image1" id="exampleFormControlFile1"
                                         style="width: 250px;" accept="image/*" required onchange="viewImage1(event)">
                                 </div>
@@ -137,41 +87,104 @@
                                         style="width: 250px;" accept="image/*" required onchange="viewImage3(event)">
                                 </div>
                             </div>
-                            <input type="file" id="fileInput" accept="image/*" />
-                            <input type="button" id="btnCrop" value="Crop" />
-                            <input type="button" id="btnRestore" value="Restore" />
+                            <p class="text-warning text-center" style="display: none;" id="errMsg">Only Image is
+                                Accepted</p>
 
-                            <input type="submit" value="Submit" class="btn btn-block btn-primary mt-4">
+
+                            <input type="submit" value="Submit" id='sub' class="btn btn-block btn-primary mt-4">
                         </form>
-                        
-                        
-                            <div>
-                                <canvas id="canvas">
-                                    Your browser does not support the HTML5 canvas element.
-                                </canvas>
-                            </div>
 
-                            <div id="result"></div>
+
+                       
+
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
-    
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#add-prod').validate({
+                rules: {
+                    Name: {
+                        required: true,
+                        minlength: 4
+                    },
+                    Description: {
+                        required: true,
+                        minlength: 4
+                    },
+                    Price: {
+                        required: true
+
+                    },
+                    Stock: {
+                        required: true
+                    }
+                }
+            })
+
+        })
+    </script>
+
+
+
+
+
     <script>
         function viewImage1(event) {
             document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+            let file = event.target.files[0].name
+            let extension = file.split('.').pop()
+            if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+                $('#imgView1').show()
+                $('#sub').show()
+                $('#errMsg').hide()
+
+            }
+            else {
+                $('#sub').hide()
+                $('#errMsg').show()
+            }
         }
         function viewImage2(event) {
             document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+            let file = event.target.files[0].name
+            let extension = file.split('.').pop()
+            if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+                $('#imgView2').show()
+                 $('#sub').show()
+                $('#errMsg').hide()
+            }
+            else {
+                $('#sub').hide()
+                $('#errMsg').show()
+            }
         }
         function viewImage3(event) {
             document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+            let file = event.target.files[0].name
+            let extension = file.split('.').pop()
+            if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
+                $('#imgView3').show()
+                 $('#sub').show()
+                $('#errMsg').hide()
+            }
+            else {
+                $('#sub').hide()
+                $('#errMsg').show()
+            }
         }
     </script>
 
-    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    {{!--
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script> --}}
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>
     <script src="/adminLogin/js/main.js"></script>

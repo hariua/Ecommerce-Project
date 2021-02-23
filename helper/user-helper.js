@@ -44,7 +44,12 @@ module.exports = {
             userData.Password = await bcrypt.hash(userData.Password, 10)
             db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((response) => {
                 data.user = userData
+                data.id = response.ops[0]._id
                 resolve(data)
+            }).catch((err)=>
+            {
+                console.log("error",err);
+                reject(err)
             })
         })
     },
