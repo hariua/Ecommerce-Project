@@ -288,4 +288,11 @@ router.post('/productOffer',(req,res)=>
     res.redirect('/admin/offerSection')
   })
 })
+router.post('/categoryOffer',(req,res)=>
+{
+  adminHelper.categoryOffer(req.body).then(()=>
+  {
+    res.redirect('/admin/offerSection')
+  })
+})
 module.exports = router;

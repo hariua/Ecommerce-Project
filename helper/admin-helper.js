@@ -122,8 +122,7 @@ module.exports = {
                             actualPrice: actualPrice,
                             Price: offerPrice
                         }
-                    }).then(()=>
-                    {
+                    }).then(() => {
                         resolve()
                     })
                 } else {
@@ -135,14 +134,66 @@ module.exports = {
                             actualPrice: actualPrice,
                             Price: offerPrice
                         }
-                    }).then(()=>
-                    {
+                    }).then(() => {
                         resolve()
                     })
                 }
             }
 
 
+        })
+    },
+    categoryOffer: (catDetails) => {
+        return new Promise(async (resolve, reject) => {
+            var cat = await db.get().collection(collection.PRODUCT_COLLECTION).find({ Category: catDetails.Category }).toArray()
+            let lim = cat.length
+            console.log("array Length", lim);
+            let offerVal = parseInt(catDetails.Offer)
+            for (let x = 0; x < lim; x++) {
+                // db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(cat[x]._id)})
+                
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectId(cat[x]._id) }, {
+                    $set: {
+                        Offer: catDetails.Offer
+                    }
+                }).then(()=>
+                {
+                    db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(cat[x]._id)}).then((data)=>
+                    {
+                        if (data.Offer) {
+                            if (data.actualPrice) {
+                                let actualPrice = data.actualPrice
+                                let discountVal = ((actualPrice * offerVal) / 100).toFixed()
+                                let offerPrice = actualPrice - discountVal
+                                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectId(cat[x]._id) }, {
+                                    $set: {
+                                        actualPrice: actualPrice,
+                                        Price: offerPrice
+                                    }
+                                }).then(() => {
+                                    resolve()
+                                })
+                            } else {
+                                let actualPrice = data.Price
+                                let discountVal = ((actualPrice * offerVal) / 100).toFixed()
+                                let offerPrice = actualPrice - discountVal
+                                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectId(cat[x]._id) }, {
+                                    $set: {
+                                        actualPrice: actualPrice,
+                                        Price: offerPrice
+                                    }
+                                }).then(() => {
+                                    resolve()
+                                })
+                            }
+                        }
+                    })
+                })
+
+
+
+
+            }
         })
     }
 }
