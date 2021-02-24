@@ -22,7 +22,7 @@
             <div class="container">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-md-6">
-                        <div class="form-block" id = "pro">
+                        <div class="form-block" id="pro">
                             <div class="text-center mb-5">
                                 <h3>Product <strong>Offer</strong></h3>
 
@@ -30,47 +30,56 @@
                             <form action="/admin/productOffer" id="productPage" method="post">
                                 <div class="form-group first">
                                     <label for="proList">Product List</label>
-                                    <select name="Product" class="custom-select p-2">
-                                        <option selected>Choose a Product</option>
+                                    <select name="Product" class="custom-select p-2" required>
+                                        <option value="empty" selected>Choose a Product</option>
                                         {{#each products}}
-                                        <option value="{{this._id}}">{{this.Name}}  (Rs.{{this.Price}})
+                                        <option value="{{this._id}}">{{this.Name}} (Rs.{{this.Price}})
                                         </option>
                                         {{/each}}
                                     </select>
+                                    {{#if proErr}}
+                                    <p class="text-center text-danger">{{proErr}}</p>
+                                    {{/if}}
+                                    <label class="pt-4">Expiry Date</label>
+                                    <input type="Date" class="form-control" required name="Expiry" id="prod">
                                     <label class="pt-4">Offer Percentage</label>
                                     <input type="number" class="form-control" required name="Offer">
-                                    <label class="pt-4">Expiry Date</label>
-                                    <input type="Date" class="form-control" required name="Expiry">
+                                    
 
                                 </div>
-                                <input type="submit" value="Submit" class="btn btn-block btn-primary">
+                                <input type="submit" value="Submit" id="prosub" class="btn btn-block btn-primary">
+
                             </form>
 
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-block" id = "cat">
-                            <div class="text-center mb-5" >
-                                <h3 >Category <strong>Offer</strong></h3>
-
+                        <div class="form-block" id="cat">
+                            <div class="text-center mb-5">
+                                <h3>Category <strong>Offer</strong></h3>
+                                {{#if catErr}}
+                                <p class="text-center text-danger">{{catErr}}</p>
+                                {{/if}}
                             </div>
-                            <form action="/admin/categoryOffer" id="categoryPage" method="post" style="display: none;"> 
+                            <form action="/admin/categoryOffer" id="categoryPage" method="post" style="display: none;">
                                 <div class="form-group first">
                                     <label for="category">Category</label>
 
-                                    <select name="Category" class="custom-select p-2">
-                                        <option selected>Choose a Category</option>
+                                    <select name="Category" class="custom-select p-2" required>
+                                        <option value="empty" selected>Choose a Category</option>
                                         {{#each category}}
                                         <option value="{{this.Category}}">{{this.Category}}</option>
                                         {{/each}}
                                     </select>
+                                    <label class="pt-4">Expiry Date</label>
+                                    <input type="Date" class="form-control" required name="Expiry" id="cate">
                                     <label class="pt-4">Offer Percentage</label>
-                                    <input type="number" class="form-control" required name="Offer">
-                                     <label class="pt-4">Expiry Date</label>
-                                    <input type="Date" class="form-control" required name="Expiry">
+                                    <input type="number" class="form-control" required name="Offer" max="100">
+                                    
 
                                 </div>
-                                <input type="submit" value="Submit" class="btn btn-block btn-primary">
+                                <input type="submit" value="Submit" id="catsub" class="btn btn-block btn-primary">
+
                             </form>
 
                         </div>
@@ -80,21 +89,69 @@
         </div>
     </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function(){
-            $('#cat').click(function(){
+        $(document).ready(function () {
+            $('#cat').click(function () {
                 $('#categoryPage').show()
                 $('#productPage').hide()
+
             })
-            $('#pro').click(function(){
+            $('#pro').click(function () {
                 $('#categoryPage').hide()
                 $('#productPage').show()
             })
+            $('#cate').blur(function () {
+                let date = document.getElementById('cate').value
+                console.log(date)
+                let today = new Date()
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                 today = yyyy + '-' + mm + '-' + dd;
+                 console.log(today)
+                if (date < today) {
+                    $('#catsub').hide()
+                    alert("Enter a Valid Date")
+                }else{
+                    $('#catsub').show()
+                }
+            })
+             $('#prod').blur(function () {
+                let date = document.getElementById('prod').value
+                console.log(date)
+                let today = new Date()
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                 today = yyyy + '-' + mm + '-' + dd;
+                 console.log(today)
+                if (date < today) {
+                    $('#prosub').hide()
+                    alert("Enter a Valid Date")
+                }else{
+                    $('#prosub').show()
+                }
+            })
         })
     </script>
-    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    {{!--
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script> --}}
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>
     <script src="/adminLogin/js/main.js"></script>
