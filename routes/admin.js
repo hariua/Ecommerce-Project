@@ -251,4 +251,24 @@ router.post('/categoryOffer', (req, res) => {
   }
 
 })
+router.get('/allCoupons',(req,res)=>
+{
+  adminHelper.allCoupons().then((coupon)=>
+  {
+    res.render('admin/allCoupons',{coupon})
+  })
+  
+})
+router.get('/generateCoupon',(req,res)=>
+{
+  res.render('admin/couponGenerate')
+})
+router.post('/generateCoupon',(req,res)=>
+{
+  console.log(req.body);
+  adminHelper.generateCoupon(req.body).then(()=>
+  {
+    res.redirect('/admin/allCoupons')
+  })
+})
 module.exports = router;

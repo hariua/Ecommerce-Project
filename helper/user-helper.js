@@ -412,6 +412,7 @@ module.exports = {
             let status = order.Payment === 'COD' ? 'placed' : 'pending'
             let dateIso = new  Date()
             let date = moment(dateIso).format('DD-MM-YYYY')
+            let time = moment(dateIso).format('HH:mm:ss')
             let orderObj = {
                 deliveryDetails: {
                     FirstName: order.FirstName,
@@ -428,6 +429,7 @@ module.exports = {
                 Products: products,
                 Total: total,
                 Date: date,
+                Time:time,
                 Status: status
 
             }
@@ -453,7 +455,7 @@ module.exports = {
     getOrderList: (userId) => {
         return new Promise(async (resolve, reject) => {
             console.log("hai" + userId)
-            let order = await db.get().collection(collection.ORDER_COLLECTION).find({ User: userId }).sort({ Date: -1 }).toArray()
+            let order = await db.get().collection(collection.ORDER_COLLECTION).find({ User: userId }).sort({ Date: -1,Time: -1 }).toArray()
             console.log(order);
             resolve(order)
         })

@@ -394,14 +394,25 @@ router.get('/placeOrder',async(req,res)=>
   })
   
   let items = await userHelper.getCartProducts(req.session.user._id)
-  let total = await userHelper.getTotalAmount(req.session.user._id)
+  if(req.session.couponTotal)
+  {
+    var total=req.session.couponTotal
+  }else{
+    total = await userHelper.getTotalAmount(req.session.user._id)
+  }
+  
   res.render('user/placeOrder',{user:true,total,items,userBtn:req.session.user,address})
 })
 router.post('/place-order',async(req,res)=>
 {
   
   let products = await userHelper.getCartProductList(req.body.User)
-  let total = await userHelper.getTotalAmount(req.body.User)
+  if(req.session.couponTotal)
+  {
+    var total=req.session.couponTotal
+  }else{
+     total = await userHelper.getTotalAmount(req.body.User)
+  }
   userHelper.placeOrder(req.body,products,total).then((orderId)=>
   {
     req.session.orderId = orderId
@@ -430,7 +441,7 @@ router.post('/place-order',async(req,res)=>
 })
 router.get('/orderSuccess',(req,res)=>
 {
-  
+  req.session.couponTotal=false  
   res.render('user/orderSuccess',{user:true,orderId:req.session.orderId})
  
 })
@@ -519,5 +530,23 @@ router.post('/changeProfilePic/:id',(req,res)=>
   let img = req.files.Image1
   img.mv('./public/user-images/'+req.params.id+'.jpg')
   res.redirect('/userAccount')
+})
+router.post('/couponSubmit',(req,res)=>
+{
+  adminHelper.couponValidate(req.body).then((response)=>
+  {
+    req.session.couponTotal = response.total
+    if(response.success)
+    {
+      res.json({couponSuccess:true,total:response.total})
+    }else if(response.couponUsed)
+    {
+      res.json({couponUsed:true})
+    }
+    else{
+      res.json({invalidCoupon:true})
+    }
+  })
+  
 })
 module.exports = router;

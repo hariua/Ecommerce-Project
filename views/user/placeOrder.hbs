@@ -54,14 +54,14 @@
                                 <div class="form-group billing-info mb-4 col-md-12">
                                     <label for="street">Street Address</label>
                                     <input class="billing-address" placeholder="street name" id="street" name="Street"
-                                        type="text" required minlength="4"/>
+                                        type="text" required minlength="4" />
 
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group billing-info mb-4 col-md-6">
                                     <label for="city">Town / City</label>
-                                    <input type="text" id="city" name="Town" required  minlength="4"/>
+                                    <input type="text" id="city" name="Town" required minlength="4" />
                                 </div>
 
 
@@ -74,7 +74,7 @@
                             <div class="form-row">
                                 <div class="form-group billing-info mb-4 col-md-6">
                                     <label for="phone">Phone</label>
-                                    <input type="text" id="phone" name="Mobile"  required pattern=".{10,10}"/>
+                                    <input type="text" id="phone" name="Mobile" required pattern=".{10,10}" />
                                 </div>
 
 
@@ -111,16 +111,11 @@
 
                                                 </ul>
                                             </div>
-                                            {{!-- <div class="your-order-bottom">
-                                                <ul>
-                                                    <li class="your-order-shipping">Shipping</li>
-                                                    <li>Free shipping</li>
-                                                </ul>
-                                            </div> --}}
+
                                             <div class="your-order-total">
                                                 <ul>
                                                     <li class="order-total">Total</li>
-                                                    <li>Rs.{{total}}</li>
+                                                    <li id="totalOriginal">Rs.{{total}}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -139,8 +134,8 @@
                                         </div>
                                     </div>
                                     <div class="Place-order mt-25">
-                                        <button class="btn btn-primary btn-hover" id="submit" type="submit" style="width: 100%;"
-                                            href="#">Place Order</button>
+                                        <button class="btn btn-primary btn-hover" id="submit" type="submit"
+                                            style="width: 100%;" href="#">Place Order</button>
                                     </div>
                                 </div>
                             </div>
@@ -148,6 +143,27 @@
                     </div>
                 </form>
 
+
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-6 pt-3">
+                <div class="your-order-bottom">
+                    <div class="discount-code">
+                        <p>Enter your coupon code if you have one.</p>
+                        <form action="" id="coupon" method="POST">
+                            <input type="text" class="form-control" required name="Coupon" />
+                            <input type="text" name="Total" value="{{total}}" hidden>
+                            <button type="submit" class="btn bg-success text-white text-center mt-3"
+                                style="width: 100%;">Apply Coupon</button>
+                            <p class="text-center text-danger" style="display: none;" id="couponUsed">This Coupon has
+                                been Used</p>
+                            <p class="text-center text-danger" style="display: none;" id="couponInvalid">This Coupon is
+                                invalid</p>
+                            <p class="text-center text-success" style="display: none;" id="couponSuccess">Coupon Applied
+                                Successfully</p>
+                        </form>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -191,55 +207,57 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script
     src="https://www.paypal.com/sdk/js?client-id=AVH4zvU5seJDDc1AizTEk60_DaAdig8d4FWLNJ3bsVj1ZGL9rCt9y09lWPaEdvoP2F30-D5-eAG-cufL&disable-funding=credit,card"></script>
 
-    <script>
-        function viewImage1(event) {
-            document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
-        }
-        function viewImage2(event) {
-            document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
-        }
-        function viewImage3(event) {
-            document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
-        }
-    </script>
-
-{{!-- <script>
-     $(document).ready(function () {
-        $('#submit').click(function() {  
-
-    $(".error").hide();
-    var hasError = false;
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    var emailblockReg =
-     /^([\w-\.]+@(?!gmail.com)(?!yahoo.com)(?!hotmail.com)([\w-]+\.)+[\w-]{2,4})?$/;
-
-    var emailaddressVal = $("#UserEmail").val();
-    if(emailaddressVal == '') {
-      $("#UserEmail").after('<span class="error">Please enter your email address.</span>');
-      hasError = true;
+<script>
+    function viewImage1(event) {
+        document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
     }
-
-    else if(!emailReg.test(emailaddressVal)) {
-      $("#UserEmail").after('<span class="error">Enter a valid email address.</span>');
-      hasError = true;
+    function viewImage2(event) {
+        document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
     }
+    function viewImage3(event) {
+        document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>
 
-    else if(!emailblockReg.test(emailaddressVal)) {
-      $("#UserEmail").after('<span class="error">No yahoo, gmail or hotmail emails.</span>');
-      hasError = true
-    } 
+<script>
+    $('#coupon').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/couponSubmit',
+            data: $('#coupon').serialize(),
+            method: 'post',
+            success: (response) => {
+                console.log(response)
+                if (response.couponSuccess) {
+                    
+                    
+                    document.getElementById('totalOriginal').innerHTML = response.total
+                    $('#couponSuccess').show()
+                    $('#couponUsed').hide()
+                    $('#couponInvalid').hide()
+                }
 
-    if(hasError == true) { return false; }
+                if (response.couponUsed) {
+                    $('#couponUsed').show()
+                    $('#couponSuccess').hide()
+                    $('#couponInvalid').hide()
+                }
+                if (response.invalidCoupon) {
+                    $('#couponInvalid').show()
+                     $('#couponSuccess').hide()
+                    $('#couponInvalid').hide()
+                }
 
-    });
+            }
+        })
     })
-</script> --}}
+</script>
 <script>
     $('#checkout-form').submit((e) => {
         e.preventDefault()
@@ -266,12 +284,12 @@
                         onApprove: function (data, actions) {
                             return actions.order.capture().then(function (details) {
                                 console.log(details);
-                                
+
                                 paymentStatusChange(details)
                             })
-                
+
                         },
-                        onCancel:function(data){
+                        onCancel: function (data) {
                             alert("Payment Failed!!!")
                         }
                     }).render('#paypal-payment-button');
@@ -325,7 +343,7 @@
             success: (response) => {
                 if (response.status) {
                     location.href = "orderSuccess"
-                
+
                 }
                 else {
                     alert("Payment Failed ")
@@ -333,24 +351,21 @@
             }
         })
     }
-    function paymentStatusChange(datas)
-    {
+    function paymentStatusChange(datas) {
         $.ajax({
-            url:'/paypal-status-change',
-            data:{
+            url: '/paypal-status-change',
+            data: {
                 datas
             },
-            method:'post',
-            success:(response)=>
-            {
-                
-                if(response.status)
-                {
+            method: 'post',
+            success: (response) => {
+
+                if (response.status) {
                     location.href = "orderSuccess"
                 }
-                
-                    
-                
+
+
+
             }
         })
     }

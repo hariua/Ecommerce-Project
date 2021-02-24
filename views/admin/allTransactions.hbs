@@ -34,6 +34,7 @@
                                 <tr>
                                     <th scope="col">No.</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Time</th>
                                     <th scope="col">User</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Items</th>
@@ -48,10 +49,11 @@
                                 <tr>
                                     <th scope="row">{{inc @index}}</th>
                                     <td>{{this.Date}}</td>
+                                    <td>{{this.Time}}</td>
                                     <td>{{this.User}}</td>
                                     <td>{{this.deliveryDetails.FirstName}},{{this.deliveryDetails.House}}<br>{{this.deliveryDetails.Town}},PIN:{{this.deliveryDetails.PIN}}<br>PH:{{this.deliveryDetails.Mobile}}
                                     </td>
-                                    <td><a class="btn btn-secondary "
+                                    <td><a class="btn btn-secondary text-white"
                                             style="width: 125px;height:auto;text-decoration:none"
                                             href="/admin/userOrderPdt/{{this._id}}">View Product</a></td>
                                     <td>{{this.Total}}</td>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/adminLogin/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/adminLogin/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/style.css">
+    <script src="/cropper/cropper.js"></script>
+
+    <title></title>
+</head>
+
+<body>
+    <div class="half">
+        <div class="bg order-1 order-md-2" style="background-image: url('/adminLogin/images/bg_1.jpg');"></div>
+        <ol class="breadcrumb">
+			<li class="pr-3"><a href="/admin" style="text-decoration: none;">Home</a></li>
+			<li class="pr-3"><a href="" style="text-decoration: none;">Coupons</a></li>
+			<li class="active">All COUPONS</li>
+		</ol>
+        <div class="contents order-2 order-md-1">
+            <div class="container-fluid" >
+                <div class="row">
+                    <div class="col-md-6">
+            <a href="/admin/generateCoupon" class="btn btn-primary text-white" style="text-decoration:none;width:auto;height:2.5em;">Generate New Coupon</a>
+        </div>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-md-12">
+                        <table class="table table-hover" >
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Coupon</th>
+                                    <th scope="col">Percentage</th>
+                                    <th scope="col">Max Amount</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Delete</th>
+
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each coupon}}
+                                <tr>
+                                    <th scope="row">{{inc @index}}</th>
+                                    <td>{{this.date}}</td>
+                                    <td>{{this.time}}</td>
+                                    <td>{{this.coupon}}</td>
+                                    <td>{{this.percent}}</td>
+                                    <td>{{this.maxAmt}}</td>
+                                    <td>{{this.status}}</td>
+                                    <td><a href="" class="btn btn-danger text-white" style="text-decoration: none;width:auto;height:2.1em">Delete</a></td>                                    
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    <script src="/adminLogin/js/popper.min.js"></script>
+    <script src="/adminLogin/js/bootstrap.min.js"></script>
+    <script src="/adminLogin/js/main.js"></script>
+</body>
+
+
+</html>

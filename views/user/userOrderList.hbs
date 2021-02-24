@@ -32,6 +32,7 @@
                         <tr>
                             <th scope="col">No.</th>
                             <th scope="col">Date</th>
+                            <th scope="col">Time</th>
                             <th scope="col">Address</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Payment</th>
@@ -44,6 +45,7 @@
                         <tr>
                             <th scope="row">{{inc @index}}</th>
                             <td>{{this.Date}}</td>
+                            <td>{{this.Time}}</td>
                             <td>{{this.deliveryDetails.FirstName}},{{this.deliveryDetails.House}}<br>{{this.deliveryDetails.Town}},PIN:{{this.deliveryDetails.PIN}}<br>PH:{{this.deliveryDetails.Mobile}}</td>
                             <td>{{this.Total}}</td>
                             <td>{{this.PaymentMethod}}</td>
