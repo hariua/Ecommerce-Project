@@ -1,0 +1,2 @@
+Hello guys!!!
+  This is my first project.It is an ecommerce website which is oriented to sell various types of shoes.I have created this project in node js. The view engine used is Handlebars.Just create an account in it and checkout the working of the project. As this is my first personal project, there may be some bugs which is beyond my knowledge. I have solved majority of the errors,but if you find any new issues please let me know.
