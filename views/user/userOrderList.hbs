@@ -35,6 +35,7 @@
                             <th scope="col">Time</th>
                             <th scope="col">Address</th>
                             <th scope="col">Amount</th>
+                            <th scope="col">Discount</th>
                             <th scope="col">Payment</th>
                             <th scope="col">Items</th>
                             <th scope="col">Status</th>
@@ -48,6 +49,7 @@
                             <td>{{this.Time}}</td>
                             <td>{{this.deliveryDetails.FirstName}},{{this.deliveryDetails.House}}<br>{{this.deliveryDetails.Town}},PIN:{{this.deliveryDetails.PIN}}<br>PH:{{this.deliveryDetails.Mobile}}</td>
                             <td>{{this.Total}}</td>
+                            <td>{{this.Discount}}</td>
                             <td>{{this.PaymentMethod}}</td>
                             <td><a class="btn btn-secondary " style="width: 125px;height:auto" href="/viewOrderProduct/{{this._id}}">View Product</a></td>
                             <td>{{this.Status}}</td>

@@ -212,6 +212,7 @@ router.get('/userCart',verifyLogin,async(req,res)=>
   res.render('user/userCart',{user:true,product,'userBtn':req.session.user._id,cartCount,total})
  }
  else{
+  req.session.couponTotal=false 
    res.render('user/emptyCart',{user:true})
  }
   
@@ -405,7 +406,7 @@ router.get('/placeOrder',async(req,res)=>
 })
 router.post('/place-order',async(req,res)=>
 {
-  
+  console.log(req.body);  
   let products = await userHelper.getCartProductList(req.body.User)
   if(req.session.couponTotal)
   {
@@ -542,6 +543,10 @@ router.post('/couponSubmit',(req,res)=>
     }else if(response.couponUsed)
     {
       res.json({couponUsed:true})
+    }
+    else if(response.couponExpired)
+    {
+      res.json({couponExpired:true})
     }
     else{
       res.json({invalidCoupon:true})

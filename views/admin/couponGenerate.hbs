@@ -31,17 +31,19 @@
                                 <div class="form-group first">
                                     <label for="DiscountPercent">Discount Percentage</label>
                                     <input type="number" class="form-control" 
-                                        id="DiscountPercent" name="Percent">
+                                        id="DiscountPercent" name="Percent" required max="100">
+                                        <label class="pt-4">Expiry Date</label>
+                                    <input type="Date" class="form-control" required name="Expiry" id="expDate">
                                     <label for="maxAmount">Maximum Amount</label>
                                     <input type="number" class="form-control" 
-                                        id="maxAmount" name="MaxAmount">
+                                        id="maxAmount" name="MaxAmount" required>
                                    
 
                                 </div>
 
 
 
-                                <input type="submit" value="Generate Coupon" class="btn btn-block btn-primary">
+                                <input type="submit" value="Generate Coupon" class="btn btn-block btn-primary" id="couponSubmit">
                             </form>
                         </div>
 
@@ -51,7 +53,34 @@
         </div>
     </div>
     </div>
-    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+         $('#expDate').blur(function () {
+                let date = document.getElementById('expDate').value
+                console.log(date)
+                let today = new Date()
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+
+                var yyyy = today.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                 today = yyyy + '-' + mm + '-' + dd;
+                 console.log(today)
+                if (date < today) {
+                    $('#couponSubmit').hide()
+                    alert("Enter a Valid Date")
+                }else{
+                    $('#couponSubmit').show()
+                }
+            })
+    </script>
+    {{!-- <script src="/adminLogin/js/jquery-3.3.1.min.js"></script> --}}
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>
     <script src="/adminLogin/js/main.js"></script>

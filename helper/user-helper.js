@@ -428,6 +428,7 @@ module.exports = {
                 PaymentMethod: order.Payment,
                 Products: products,
                 Total: total,
+                Discount: order.Discount,
                 Date: date,
                 Time:time,
                 Status: status

@@ -88,7 +88,7 @@ module.exports = {
     },
     getAllTransactions: () => {
         return new Promise(async (resolve, reject) => {
-            let list = await db.get().collection(collection.ORDER_COLLECTION).find().sort({ Date: -1,Time: -1 }).toArray()
+            let list = await db.get().collection(collection.ORDER_COLLECTION).find().sort({ Date: -1, Time: -1 }).toArray()
             resolve(list)
         })
     },
@@ -219,7 +219,7 @@ module.exports = {
                                             }
                                         })
                                     }
-                                    
+
                                 })
                             }
                         }
@@ -232,78 +232,78 @@ module.exports = {
             }
         })
     },
-    generateCoupon:(couponData)=>
-    {
-        return new Promise((resolve,reject)=>
-        {
-            
-           let coupons = voucher.generate({
+    generateCoupon: (couponData) => {
+        return new Promise((resolve, reject) => {
+
+            let coupons = voucher.generate({
                 length: 8,
                 count: 1
             });
             let dt = new Date()
             let date = moment(dt).format('DD-MM-YYYY')
             let time = moment(dt).format('HH:mm:ss')
+            let Expiry = moment(couponData.Expiry).format('DD-MM-YYYY')
             let data = {
-                coupon:coupons[0],
-                percent:couponData.Percent,
-                maxAmt:couponData.MaxAmount,
-                status:1,
-                date:date,
-                time:time
+                coupon: coupons[0],
+                percent: couponData.Percent,
+                maxAmt: couponData.MaxAmount,
+                status: 1,
+                date: date,
+                time: time,
+                expiry: Expiry
             }
-            db.get().collection(collection.COUPON_COLLECTION).insertOne(data).then((response)=>{
+            db.get().collection(collection.COUPON_COLLECTION).insertOne(data).then((response) => {
                 console.log(response.ops[0]);
                 resolve()
             })
         })
     },
-    allCoupons:()=>
-    {
-        return new Promise((resolve,reject)=>
-        {
-            db.get().collection(collection.COUPON_COLLECTION).find().sort({ date: -1,time: -1 }).toArray().then((data)=>
-            {
+    allCoupons: () => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.COUPON_COLLECTION).find().sort({ date: -1, time: -1 }).toArray().then((data) => {
                 resolve(data)
             })
         })
     },
-    couponValidate:(couponData)=>
-    {
-        return new Promise(async(resolve,reject)=>
-        {
+    couponValidate: (couponData) => {
+        return new Promise(async (resolve, reject) => {
             data = {}
-            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({coupon:couponData.Coupon})
-            if(coupon)
-            {
-                if(coupon.status == 1)
-                {
-                    let total = parseInt(couponData.Total)
-                    let percentage = parseInt(coupon.percent)
-                    let maxAmt = parseInt(coupon.maxAmt)
-                    let discountVal = ((total*percentage)/100).toFixed()
-                    if(discountVal<=maxAmt)
-                    {
-                        data.total = total-discountVal
-                        data.success = true
-                        resolve(data)
-                    }else{
-                        data.total = total-maxAmt
-                        data.success = true
+            let date = new Date()
+            date = moment(date).format('DD-MM-YYYY')
+            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ coupon: couponData.Coupon })
+            if (coupon) {
+                if (date <= coupon.expiry) {
+                    if (coupon.status == 1) {
+                        let total = parseInt(couponData.Total)
+                        let percentage = parseInt(coupon.percent)
+                        let maxAmt = parseInt(coupon.maxAmt)
+                        let discountVal = ((total * percentage) / 100).toFixed()
+                        if (discountVal <= maxAmt) {
+                            data.total = total - discountVal
+                            data.success = true
+                            resolve(data)
+                        } else {
+                            data.total = total - maxAmt
+                            data.success = true
+                            resolve(data)
+                        }
+                        db.get().collection(collection.COUPON_COLLECTION).updateOne({ coupon: couponData.Coupon }, {
+                            $set: {
+                                status: 0
+                            }
+                        })
+                    }
+                    else {
+                        data.couponUsed = true
                         resolve(data)
                     }
-                    db.get().collection(collection.COUPON_COLLECTION).updateOne({coupon:couponData.Coupon},{
-                        $set:{
-                            status:0
-                        }
-                    })
-                }
-                else{
-                    data.couponUsed = true
+                }else{
+                    data.couponExpired = true
                     resolve(data)
                 }
+
             }
-            else{
+            else {
                 data.invalidCoupon = true
                 resolve(data)
             }
