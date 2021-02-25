@@ -271,4 +271,14 @@ router.post('/generateCoupon',(req,res)=>
     res.redirect('/admin/allCoupons')
   })
 })
+router.get('/salesDate',(req,res)=>
+{
+  res.render('admin/salesDate')
+})
+router.post('/salesDate',(req,res)=>
+{
+  console.log(req.body);
+  adminHelper.salesReport(req.body)
+
+})
 module.exports = router;
