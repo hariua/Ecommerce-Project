@@ -278,7 +278,11 @@ router.get('/salesDate',(req,res)=>
 router.post('/salesDate',(req,res)=>
 {
   console.log(req.body);
-  adminHelper.salesReport(req.body)
+  adminHelper.salesReport(req.body).then((data)=>
+  {
+    res.render('admin/salesReport',{data})
+  })
+  
 
 })
 module.exports = router;

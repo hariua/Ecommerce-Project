@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/adminLogin/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/adminLogin/css/owl.carousel.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/adminLogin/css/style.css">
+    <title>Add Category</title>
+</head>
+
+<body class="bg-light">
+    <div class="half">
+        <div class="bg order-1 order-md-2" style="background-image: url('/adminLogin/images/bg_1.jpg');"></div>
+        <div class="contents order-2 order-md-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-12">
+
+                        <div class=" pt-3 mb-5">
+                            <h4 class="text-danger text-center">SALES REPORT : {{data.start}} - {{data.end}}</h4>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-6 align-items-center">
+                                <div class="card bg-light" style="" >
+                                    <h5 class="card-title p-2 pt-2">Total Sales : {{data.totalSales}}</h5>
+                                    <h5 class="card-title p-1">Total Orders : {{data.totalOrders}}</h5>
+                                    <h5 class="card-title p-1">Orders Confirmed : {{data.successOrders }}</h5>
+                                    <h5 class="card-title p-1">Orders Failed : {{data.failOrders }}</h5>
+                                    <h5 class="card-title p-1">Paypal Payment : {{data.paypal }}</h5>
+                                    <h5 class="card-title p-1">Online Payment : {{data.online }}</h5>
+                                    <h5 class="card-title p-1">Cash On Delivery : {{data.cod }}</h5>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="bg-light card pt-5">
+                                    <canvas class="p-2" id="bar"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                            <div class="bg-light mt-3 card pt-5">
+                                <canvas class="" id="line"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="bg-light mt-3 card pt-5">
+                                <canvas class="" id="pie"></canvas>
+                            </div>
+                        </div>
+                        </div>
+
+
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+                        <div class="row text-center">
+
+
+
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12 bg-dark">
+                                <h1 class="text-center text-white rounded pt-1">All Transactions</h1>
+                            </div>
+                            <div class="col-md-12 card mt-4">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">User</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">Discount</th>
+                                            <th scope="col">Payment</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each data.currentOrders}}
+                                        <tr>
+                                            <th scope="row">{{inc @index}}</th>
+                                            <td>{{this.Date}}</td>
+
+                                            <td>{{this.User}}</td>
+
+
+                                            <td>{{this.Total}}</td>
+                                            <td>{{this.Discount}}</td>
+                                            <td>{{this.PaymentMethod}}</td>
+                                            <td>{{this.Status}}</td>
+
+
+                                        </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('bar').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: ['Total Orders', 'Success Orders', 'Fail Orders'],
+                datasets: [{
+                    label: 'Order Summary',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+
+
+                    data: [{{ data.totalOrders }}, {{ data.successOrders }},{{ data.failOrders }}]
+			}]
+		},
+
+        // Configuration options go here
+        options: { }
+	});
+
+
+        var line = document.getElementById('line').getContext('2d');
+        var chart = new Chart(line, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ['Cash On Delivery', 'Online Payment', 'Paypal'],
+                datasets: [{
+                    label: 'Payment Method',
+                    backgroundColor: 'rgba(342,0,0, 0.5)',
+
+
+                    data: [{{ data.cod }}, {{ data.online }},{{ data.paypal }}]
+			}]
+		},
+
+        // Configuration options go here
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+	});
+
+        var pie = document.getElementById('pie').getContext('2d');
+        var chart = new Chart(pie, {
+            // The type of chart we want to create
+            type: 'doughnut',
+
+            // The data for our dataset
+            data: {
+                labels: ['Total Sales Amount', 'Total Discount Amount'],
+                datasets: [{
+
+                    backgroundColor: [
+
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)'
+                    ],
+                    borderColor: [
+
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+
+
+                    data: [{{ data.totalSales }}, {{ data.discount }}]
+        }]
+		},
+
+        // Configuration options go here
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
+	});
+
+
+    </script>
+    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+    <script src="/adminLogin/js/popper.min.js"></script>
+    <script src="/adminLogin/js/bootstrap.min.js"></script>
+    <script src="/adminLogin/js/main.js"></script>
+</body>
+
+
+</html>

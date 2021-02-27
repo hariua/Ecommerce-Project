@@ -315,7 +315,7 @@ module.exports = {
         {
             let start = moment(dates.StartDate).format('DD-MM-YYYY')
             let end = moment(dates.EndtDate).format('DD-MM-YYYY')
-            let orderSuccess =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{$nin:['Cancelled','pending']}}).toArray()
+            let orderSuccess =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{$nin:['Cancelled','pending']}}).sort({Date:-1,Time:-1}).toArray()
             let orderTotal =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end}}).toArray()
             let orderSuccessLength = orderSuccess.length
             let orderTotalLength = orderTotal.length
@@ -345,10 +345,26 @@ module.exports = {
                  }
 
             }
-            console.log("total",total);
-            console.log("cod : ",cod,"paypal : ",paypal,"online : ",online);
-            console.log("total order :",orderTotalLength,"success order :",orderSuccessLength,"fail order :",orderFailLength,);
-            console.log("Discount Amount : ",discountAmt,"discount count : ",discount);
+            var data = {
+                start:start,
+                end:end,
+                totalOrders:orderTotalLength,
+                successOrders:orderSuccessLength,
+                failOrders:orderFailLength,
+                totalSales:total,
+                cod:cod,
+                paypal:paypal,
+                online:online,
+                discount:discountAmt,
+                currentOrders:orderSuccess
+            }
+
+            // console.log("total",total);
+            // console.log("cod : ",cod,"paypal : ",paypal,"online : ",online);
+            // console.log("total order :",orderTotalLength,"success order :",orderSuccessLength,"fail order :",orderFailLength,);
+            // console.log("Discount Amount : ",discountAmt,"discount count : ",discount);
+            console.log(data);
+            resolve(data)
             
         })
     }
