@@ -106,7 +106,7 @@ module.exports = {
     productOffer: (proDetails) => {
         return new Promise(async (resolve, reject) => {
             let offerVal = parseInt(proDetails.Offer)
-            let Expiry = moment(proDetails.Expiry).format('DD-MM-YYYY')
+            let Expiry = moment(proDetails.Expiry).format('YYYY/MM/DD')
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectId(proDetails.Product) }, {
                 $set: {
                     Offer: proDetails.Offer
@@ -240,9 +240,9 @@ module.exports = {
                 count: 1
             });
             let dt = new Date()
-            let date = moment(dt).format('DD-MM-YYYY')
+            let date = moment(dt).format('YYYY/MM/DD')
             let time = moment(dt).format('HH:mm:ss')
-            let Expiry = moment(couponData.Expiry).format('DD-MM-YYYY')
+            let Expiry = moment(couponData.Expiry).format('YYYY/MM/DD')
             let data = {
                 coupon: coupons[0],
                 percent: couponData.Percent,
@@ -269,7 +269,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             data = {}
             let date = new Date()
-            date = moment(date).format('DD-MM-YYYY')
+            date = moment(date).format('YYYY/MM/DD')
             let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ coupon: couponData.Coupon })
             if (coupon) {
                 if (date <= coupon.expiry) {
@@ -313,8 +313,8 @@ module.exports = {
     {
         return new Promise(async(resolve,reject)=>
         {
-            let start = moment(dates.StartDate).format('DD-MM-YYYY')
-            let end = moment(dates.EndtDate).format('DD-MM-YYYY')
+            let start = moment(dates.StartDate).format('YYYY/MM/DD')
+            let end = moment(dates.EndtDate).format('YYYY/MM/DD')
             let orderSuccess =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{$nin:['Cancelled','pending']}}).sort({Date:-1,Time:-1}).toArray()
             let orderTotal =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end}}).toArray()
             let orderSuccessLength = orderSuccess.length

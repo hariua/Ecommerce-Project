@@ -53,7 +53,7 @@ module.exports={
         return new Promise(async(resolve,reject)=>
         {
             let dateIso = new  Date()
-            let date = moment(dateIso).format('DD-MM-YYYY')
+            let date = moment(dateIso).format('YYYY/MM/DD')
            let todayOrders = await db.get().collection(collection.ORDER_COLLECTION).find({Date:date,Status:{$ne:'Cancelled'}}).toArray()
            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({Status:{$ne:'Cancelled'}}).toArray()
            let todayOrderLen = todayOrders.length

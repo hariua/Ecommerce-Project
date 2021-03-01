@@ -411,7 +411,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let status = order.Payment === 'COD' ? 'placed' : 'pending'
             let dateIso = new  Date()
-            let date = moment(dateIso).format('DD-MM-YYYY')
+            let date = moment(dateIso).format('YYYY/MM/DD')
             let time = moment(dateIso).format('HH:mm:ss')
             let orderObj = {
                 deliveryDetails: {
