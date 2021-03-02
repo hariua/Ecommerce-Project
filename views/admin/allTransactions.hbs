@@ -60,21 +60,22 @@
                                     <td>{{this.Total}}</td>
                                     <td>{{this.Discount}}</td>
                                     <td>{{this.PaymentMethod}}</td>
-                                    <td>{{this.Status}}</td>
+                                    <td id="{{this._id}}">{{this.Status}}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-dark dropdown-toggle p-1" type="button"
                                                 id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false" style="height: 2em;width:7em">
+                                                aria-expanded="false" style="height: 2em;width:7em" onclick="statusChecker('{{this._id}}')">
                                                 Status
                                             </button>
+
                                             <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="/admin/shipped/{{this._id}}"
-                                                    style="text-decoration: none;">Shipped</a>
+                                                    style="text-decoration: none;" id="{{this._id}}ship">Shipped</a>
                                                 <a class="dropdown-item" href="/admin/delivered/{{this._id}}"
-                                                    style="text-decoration: none;">Delivered</a>
+                                                    style="text-decoration: none;" id="{{this._id}}deliver">Delivered</a>
                                                 <a class="dropdown-item" href="/admin/cancelled/{{this._id}}"
-                                                    style="text-decoration: none;">Cancelled</a>
+                                                    style="text-decoration: none;" id="{{this._id}}cancel">Cancelled</a>
                                             </div>
                                         </div>
                                     </td>
@@ -93,8 +94,34 @@
         </div>
     </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script>
+        function statusChecker(orderId)
+        {
+            console.log("llog",orderId)
+            let status = document.getElementById(orderId).innerHTML
+            console.log('ja',status)
+            if(status==='Shipped')
+            {
+                console.log("hello")
+                document.getElementById(orderId+'ship').style.display="none";
+                
+            }else if(status === 'Delivered')
+            {
+                document.getElementById(orderId+'ship').style.display="none";
+                document.getElementById(orderId+'cancel').style.display="none";
+                
+            }else if(status === 'Cancelled')
+            {
+                document.getElementById(orderId+'ship').style.display="none";
+                document.getElementById(orderId+'deliver').style.display="none";
+            }
+        }
+    </script>
 
-    <script src="/adminLogin/js/jquery-3.3.1.min.js"></script>
+
+    {{!-- <script src="/adminLogin/js/jquery-3.3.1.min.js"></script> --}}
     <script src="/adminLogin/js/popper.min.js"></script>
     <script src="/adminLogin/js/bootstrap.min.js"></script>
     <script src="/adminLogin/js/main.js"></script>

@@ -69,7 +69,7 @@
 
                                 <td class="product-remove">
 
-                                    <button onclick="deleteProCart('{{this._id}}','{{this.item}}')"><i
+                                    <button onclick="deleteProCart('{{this._id}}','{{this.item}}','{{this.product._id}}')"><i
                                             class="icon-close"></i></button>
                                 </td>
                             </tr>
@@ -102,7 +102,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-    function deleteProCart(cart, prodId) {
+    function deleteProCart(cart, prodId,proId) {
         console.log("hello ew")
         $.ajax({
             url: '/delete-cart-item',
@@ -114,6 +114,13 @@
             method: 'post',
             success: (response) => {
                 if (response.deleteSingleProduct) {
+                    alert("Product Removed")
+                    document.getElementById(proId+'row').hidden=true
+                    document.getElementById('total').innerHTML = response.total
+                }
+                if(response.cartEmpty)
+                {
+                    alert("The item has been removed")
                     location.reload()
                 }
             }
@@ -135,11 +142,14 @@
             method: 'post',
             success: (response) => {
                 if (response.removeProduct) {
+                    document.getElementById('total').innerHTML = response.total
                     alert("The item has been removed")
                     document.getElementById(proId+'row').hidden=true
+                    
 
                 }
                 else if(response.cartEmpty){
+                    alert("The item has been removed")
                     location.reload()
                 }
                 else {

@@ -230,9 +230,16 @@ router.post('/add-to-cart',verifyLogin,(req,res)=>{
 router.post('/delete-cart-item',(req,res)=>
 {
   
-  userHelper.delCartProduct(req.body).then((response)=>
+  userHelper.delCartProduct(req.body).then(async(response)=>
   {
-    res.json(response)
+    response.total = await userHelper.getTotalAmount(req.session.user._id)
+    if(response.total>0)
+    {
+      res.json(response)
+    }else{
+      res.json({cartEmpty:true})
+    }
+    
   })
 })
 router.post('/change-product-qty',(req,res,next)=>
@@ -252,7 +259,7 @@ router.post('/change-product-qty',(req,res,next)=>
       res.json({cartEmpty:true})
     }
     else{
-      res.json({removeProduct : true})
+      res.json({removeProduct : true,total:response.total})
     }
       
     

@@ -102,7 +102,7 @@
                                             <div class="your-order-middle">
                                                 <ul>
                                                     {{#each items}}
-                                                    <li><span class="order-middle-left">{{this.product.Name}}  X 
+                                                    <li><span class="order-middle-left">{{this.product.Name}} X
                                                             {{this.quantity}}</span>
                                                         <span class="order-price">Rs.{{this.subtotal}}
                                                         </span>
@@ -111,15 +111,40 @@
 
                                                 </ul>
                                             </div>
+                                            <div class="your-order-bottom">
+                                                <div class="discount-code">
+                                                    <p>Enter your coupon code if you have one.</p>
+                                                    <input type="text" class="form-control" name="Coupon"
+                                                        id="couponInput" />
+                                                    <input type="text" id="couponTotal" name="Total" value="{{total}}" hidden>
+                                                    <a  id="couponBtn" onclick="couponApply()"
+                                                        class="btn bg-success text-white text-center pt-2 mt-2"
+                                                        style="width: 100%;text-decoration: none;">Apply Coupon</a>
+                                                    <p class="text-center text-danger" style="display: none;"
+                                                        id="couponUsed">This Coupon has
+                                                        been Used</p>
+                                                    <p class="text-center text-danger" style="display: none;"
+                                                        id="couponInvalid">This Coupon is
+                                                        invalid</p>
+                                                    <p class="text-center text-success" style="display: none;"
+                                                        id="couponSuccess">Coupon Applied
+                                                        Successfully</p>
+                                                    <p class="text-center text-warning" style="display: none;"
+                                                        id="couponExpired">Sorry!!! Your
+                                                        Coupon has been Expired</p>
+                                                </div>
+                                            </div>
 
                                             <div class="your-order-total">
                                                 <ul>
                                                     <li class="order-total">Total</li>
-                                                    <li >Rs.<span id="totalOriginal">{{total}}</span></li>
+                                                    <li>Rs.<span id="totalOriginal">{{total}}</span></li>
                                                 </ul>
                                                 <ul>
-                                                    <li class="order-middle-left" id="discountLabel" style="display: none;">Coupon Applied</li>
-                                                    <li class="order-price"><input type="text" name="Discount" style="display: none;" readonly id="discount"></li>
+                                                    <li class="order-middle-left" id="discountLabel"
+                                                        style="display: none;">Coupon Applied</li>
+                                                    <li class="order-price"><input type="text" name="Discount"
+                                                            style="display: none;" readonly id="discount"></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -129,7 +154,7 @@
                                                     <input type="radio" name="Payment" value="COD"
                                                         style="width:5%;height:auto" checked>Cash on Delivery<br>
                                                     <input type="radio" name="Payment" value="Online Payment"
-                                                        style="width:5%;height:auto">Online Payment
+                                                        style="width:5%;height:auto">Online Payment<br>
                                                     <input type="radio" name="Payment" value="Paypal"
                                                         style="width:5%;height:auto">Paypal
                                                     <div id="paypal-payment-button"></div>
@@ -151,30 +176,13 @@
             </div>
             <div class="col-md-6"></div>
             <div class="col-md-6 pt-3">
-                <div class="your-order-bottom">
-                    <div class="discount-code">
-                        <p>Enter your coupon code if you have one.</p>
-                        <form action="" id="coupon" method="POST">
-                            <input type="text" class="form-control" required name="Coupon" id="couponInput"/>
-                            <input type="text" name="Total" value="{{total}}" hidden>
-                            <button type="submit" class="btn bg-success text-white text-center mt-3"
-                                style="width: 100%;">Apply Coupon</button>
-                            <p class="text-center text-danger" style="display: none;" id="couponUsed">This Coupon has
-                                been Used</p>
-                            <p class="text-center text-danger" style="display: none;" id="couponInvalid">This Coupon is
-                                invalid</p>
-                            <p class="text-center text-success" style="display: none;" id="couponSuccess">Coupon Applied
-                                Successfully</p>
-                                <p class="text-center text-warning" style="display: none;" id="couponExpired">Sorry!!! Your Coupon has been Expired</p>
-                        </form>
-                    </div>
-                </div>
+
             </div>
 
         </div>
         <div class="row">
             {{#each address}}
-            <div class="col-md-3 mt-5 alert border-warning mr-2">
+            <div class="col-md-3 mt-5 alert border-warning mr-2 card" style="cursor: pointer;">
 
                 <div class="col-md-12"
                     onclick="hai('{{this.FirstName}}','{{this.LastName}}','{{this.House}}','{{this.Street}}','{{this.Town}}','{{this.PIN}}','{{this.Mobile}}','{{this.Email}}')">
@@ -199,7 +207,7 @@
 </div>
 <script>
     function hai(fname, lname, house, street, town, pin, mobile, email) {
-
+        alert("Address Form Filled")
         document.getElementById('fname').value = fname
         document.getElementById('lname').value = lname
         document.getElementById('house').value = house
@@ -231,17 +239,22 @@
 </script>
 
 <script>
-    $('#coupon').submit((e) => {
-        e.preventDefault()
+    function couponApply()
+    {
+        let couponCode = document.getElementById('couponInput').value
+        let couponTotal = document.getElementById('couponTotal').value
         $.ajax({
             url: '/couponSubmit',
-            data: $('#coupon').serialize(),
+            data: {
+                Coupon:couponCode,
+                Total:couponTotal
+            },
             method: 'post',
             success: (response) => {
                 console.log(response)
-                
+
                 if (response.couponSuccess) {
-                    let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML )
+                    let oldTotal = parseInt(document.getElementById('totalOriginal').innerHTML)
                     let discount = oldTotal - parseInt(response.total)
                     document.getElementById('couponInput').readOnly = true
                     document.getElementById('discount').value = discount
@@ -264,14 +277,13 @@
                 }
                 if (response.invalidCoupon) {
                     $('#couponInvalid').show()
-                     $('#couponSuccess').hide()
+                    $('#couponSuccess').hide()
                     $('#couponUsed').hide()
-                     $('#couponExpired').hide()
-                     $('#discount').hide()
+                    $('#couponExpired').hide()
+                    $('#discount').hide()
                     $('#discountLabel').hide()
                 }
-                if(response.couponExpired)
-                {
+                if (response.couponExpired) {
                     $('#couponExpired').show()
                     $('#couponSuccess').hide()
                     $('#couponInvalid').hide()
@@ -283,7 +295,7 @@
 
             }
         })
-    })
+    }
 </script>
 <script>
     $('#checkout-form').submit((e) => {
