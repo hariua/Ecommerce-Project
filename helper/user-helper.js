@@ -347,7 +347,7 @@ module.exports = {
 
         })
     },
-    getSubTotal: (userId) => {
+    getSubTotal: (userId,proId) => {
         return new Promise(async (resolve, reject) => {
             let subtotal = await db.get().collection(collection.CART_COLLECTION).aggregate([
                 {
@@ -371,6 +371,11 @@ module.exports = {
                         foreignField: '_id',
                         as: 'products'
 
+                    }
+                },
+                {
+                    $match:{
+                        item:objectId(proId)
                     }
                 },
                 {

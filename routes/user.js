@@ -241,13 +241,17 @@ router.post('/change-product-qty',(req,res,next)=>
   userHelper.changeProductQty(req.body).then(async(response)=>
   {
     console.log('After change product qty user.js',response);
-    response.subtotal = await userHelper.getSubTotal(req.session.user._id)
+    response.subtotal = await userHelper.getSubTotal(req.body.user,req.body.product)
     response.total = await userHelper.getTotalAmount(req.body.user)
     console.log(response.subtotal,response.total,"andappan");
     if(response.subtotal>0 && response.total>0)
     {
       res.json(response)
-    }else{
+    }else if(response.subtotal==0 && response.total==0)
+    {
+      res.json({cartEmpty:true})
+    }
+    else{
       res.json({removeProduct : true})
     }
       

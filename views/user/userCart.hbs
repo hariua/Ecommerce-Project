@@ -44,7 +44,7 @@
                         <tbody>
 
                             {{#each product}}
-                            <tr>
+                            <tr id="{{this.product._id}}row">
                                 <td class="product-thumbnail">
                                     <img class="img-responsive ml-3" src="/product-images/{{this.product._id}}a.jpg"
                                         alt="" />
@@ -57,14 +57,16 @@
                                 <td class="product-quantity">
 
                                     <a class="btn btn-danger text-center pb-2 mr-3" style="width: 30px;height:30px;"
-                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',-1)" onclick="subtotal('{{this.product._id}}','-1')">-</a>
+                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',-1)"
+                                        >-</a>
                                     <span id="{{this.product._id}}">{{this.quantity}}</span><button
                                         class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
-                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',1)" onclick="subtotal('{{this.product._id}}','1')">+</button>
+                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',1)"
+                                       >+</button>
                                 </td>
                                 <td class="product-subtotal" id="{{this.product._id}}5">{{this.subtotal}}</td>
-                                
-                                
+
+
                                 <td class="product-remove">
 
                                     <button onclick="deleteProCart('{{this._id}}','{{this.item}}')"><i
@@ -76,7 +78,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
 
                 <div class="row">
                     <div class="col-lg-4 col-md-12 mt-md-30px">
@@ -120,7 +122,7 @@
     function changeQty(cartId, proId, userId, count) {
         let quantity = parseInt(document.getElementById(proId).innerHTML)
         var price = parseInt(document.getElementById('unitPrice').innerHTML)
-        
+
         $.ajax({
             url: '/change-product-qty',
             data: {
@@ -134,17 +136,19 @@
             success: (response) => {
                 if (response.removeProduct) {
                     alert("The item has been removed")
-                    location.reload()
+                    document.getElementById(proId+'row').hidden=true
 
-                }else if(response.subtotal){
+                }
+                else if(response.cartEmpty){
                     location.reload()
                 }
-                 else {
+                else {
                     console.log(response)
-                    
+
                     document.getElementById(proId).innerHTML = quantity + count
                     document.getElementById('total').innerHTML = response.total
-                    
+                    document.getElementById(proId+5).innerHTML = response.subtotal
+
 
 
 
@@ -153,6 +157,6 @@
             }
         })
     }
-    
+
 
 </script>

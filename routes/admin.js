@@ -102,10 +102,13 @@ router.get('/addproduct', verifyAdmin, async (req, res) => {
   let category = await adminHelper.getCategory()
   console.log(category);
 
-  res.render('admin/addNewProduct', { category })
+  res.render('admin/addNewProduct', { category,'catErrPro':req.session.catErrPro })
+  req.session.catErrPro=false
 })
 router.post('/addProduct', (req, res) => {
-  req.body.Price = parseInt(req.body.Price)
+  if(!req.body.Category == 'empty')
+  {
+    req.body.Price = parseInt(req.body.Price)
   req.body.Stock = parseInt(req.body.Stock)
   console.log(req.body);
   adminHelper.addProduct(req.body).then((id) => {
@@ -117,6 +120,10 @@ router.post('/addProduct', (req, res) => {
     img3.mv('./public/product-images/' + id + 'c.jpg')
     res.redirect('/admin/allProducts')
   })
+  }else{
+    req.session.catErrPro = "Please Select a Category"
+    res.redirect('/admin/addproduct')
+  }
 })
 router.get('/allProducts', verifyAdmin, async (req, res) => {
   let products = await adminHelper.getAllProducts()
