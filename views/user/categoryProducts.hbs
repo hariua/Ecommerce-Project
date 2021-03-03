@@ -77,9 +77,8 @@
 
 
                                     </div>
-                                    <button onclick="addCart('{{this._id}}')" title="Add To Cart"
-                                        class=" add-to-cart">Add
-                                        To Cart</button>
+                                   <button onclick="addCart('{{this._id}}')" class=" add-to-cart"style="width: auto;height:3em;">Add
+                                        To Cart</button> 
                                 </div>
                                 <div class="content">
                                     <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}</a></h5>
@@ -117,14 +116,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function addCart(productId) {
+        console.log('lskdjfl')
         $.ajax({
-            url: 'add-to-cart',
+            url: '/add-to-cart',
             data: { proId: productId },
             method: 'post',
             success: (response) => {
-                if (cartOne) {
-
-                    window.location.href = "allProducts"
+                if (response.cartCount) {
+                    console.log(response.cartCount)
+                    alert("An item Added to Cart")
+                    document.getElementById("cart-count").innerHTML = response.cartCount
+                    document.getElementById("cart-count1").innerHTML = response.cartCount
+                    
                 }
             }
         })

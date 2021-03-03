@@ -117,6 +117,8 @@
                     alert("Product Removed")
                     document.getElementById(proId+'row').hidden=true
                     document.getElementById('total').innerHTML = response.total
+                    document.getElementById("cart-count").innerHTML = response.cartCount
+                    document.getElementById("cart-count1").innerHTML = response.cartCount
                 }
                 if(response.cartEmpty)
                 {
@@ -145,8 +147,8 @@
                     document.getElementById('total').innerHTML = response.total
                     alert("The item has been removed")
                     document.getElementById(proId+'row').hidden=true
-                    
-
+                    document.getElementById("cart-count").innerHTML = response.cart
+                    document.getElementById("cart-count1").innerHTML = response.cart                   
                 }
                 else if(response.cartEmpty){
                     alert("The item has been removed")
@@ -158,11 +160,7 @@
                     document.getElementById(proId).innerHTML = quantity + count
                     document.getElementById('total').innerHTML = response.total
                     document.getElementById(proId+5).innerHTML = response.subtotal
-
-
-
-
-
+                    console.log(response.cartCount,"else")
                 }
             }
         })

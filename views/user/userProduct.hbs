@@ -162,10 +162,12 @@
             data: { proId: productId },
             method: 'post',
             success: (response) => {
-                if (response.cartOne) {
-
-                    alert("Item added to Cart")
-                    location.reload()
+                if (response.cartCount) {
+                    console.log(response.cartCount)
+                    alert("An item Added to Cart")
+                    document.getElementById("cart-count").innerHTML = response.cartCount
+                    document.getElementById("cart-count1").innerHTML = response.cartCount
+                    
                 }
             }
         })

@@ -179,14 +179,17 @@ router.get('/add-to-cart', verifyLogin, (req, res) => {
   res.redirect('/userProduct')
 })
 router.post('/add-to-cart', verifyLogin, (req, res) => {
-  userHelper.addToCart(req.body.proId, req.session.user._id).then((response) => {
-    res.json({ cartOne: true })
+  userHelper.addToCart(req.body.proId, req.session.user._id).then(async(response) => {
+    response.cartCount = await userHelper.getCartCount(req.session.user._id)
+    console.log(response.cartCount,"cartcount");
+    res.json(response)
   })
 })
 router.post('/delete-cart-item', (req, res) => {
 
   userHelper.delCartProduct(req.body).then(async (response) => {
     response.total = await userHelper.getTotalAmount(req.session.user._id)
+    response.cartCount = await userHelper.getCartCount(req.session.user._id)
     if (response.total > 0) {
       res.json(response)
     } else {
@@ -201,6 +204,7 @@ router.post('/change-product-qty', (req, res, next) => {
     console.log('After change product qty user.js', response);
     response.subtotal = await userHelper.getSubTotal(req.body.user, req.body.product)
     response.total = await userHelper.getTotalAmount(req.body.user)
+    response.cartCount = await userHelper.getCartCount(req.session.user._id)
     console.log(response.subtotal, response.total, "andappan");
     if (response.subtotal > 0 && response.total > 0) {
       res.json(response)
@@ -208,7 +212,8 @@ router.post('/change-product-qty', (req, res, next) => {
       res.json({ cartEmpty: true })
     }
     else {
-      res.json({ removeProduct: true, total: response.total })
+      console.log("sl",response.cartCount);
+      res.json({ removeProduct: true, total: response.total,cart: response.cartCount })
     }
 
 

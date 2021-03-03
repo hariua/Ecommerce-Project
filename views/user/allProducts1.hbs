@@ -125,13 +125,16 @@
 <script>
     function addCart(productId) {
         $.ajax({
-            url: 'add-to-cart',
+            url: '/add-to-cart',
             data: { proId: productId },
             method: 'post',
             success: (response) => {
-                if (response.cartOne) {
+                if (response.cartCount) {
+                    console.log(response.cartCount)
                     alert("An item Added to Cart")
-                    window.location.href = "allProducts"
+                    document.getElementById("cart-count").innerHTML = response.cartCount
+                    document.getElementById("cart-count1").innerHTML = response.cartCount
+                    
                 }
             }
         })
