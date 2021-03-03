@@ -16,16 +16,16 @@
                             <div class="login-form-container alert bg-light border-success">
                                 <div class="login-register-form">
                                     <form action="/userSignup" method="post">
-                                     <input type="text" name="Name" placeholder="Enter your Name here" required/>
+                                     <input type="text" name="Name" placeholder="Enter your Name here" required minlength="4"/>
                                         <input type="email" name="Email" placeholder="Email ID" required/>
                                         {{#if emailErr}}
                                         <p class="text-center text-danger">{{emailErr}}</p>
                                         {{/if}}
-                                        <input type="number" name="Mobile" placeholder="Mobile Number" minlength="10"  required/>
+                                        <input type="text" name="Mobile" placeholder="Mobile Number" pattern=".{10,10}"  required/>
                                         {{#if mobileErr}}
                                         <p class="text-center text-danger">{{mobileErr}}</p>
                                         {{/if}}
-                                        <input type="password" name="Password" placeholder="Password" required/>
+                                        <input type="password" name="Password" placeholder="Password" required minlength="4"/>
                                         <div class="button-box">
                                            
                                             <button type="submit"><span>Signup</span></button>

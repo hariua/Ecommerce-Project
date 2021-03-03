@@ -48,6 +48,24 @@ module.exports={
            resolve(orderLength)
         })        
     },
+    getTotalUsers:()=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let user = await db.get().collection(collection.USER_COLLECTION).find({}).toArray()
+            let userLength = user.length
+            resolve(userLength)
+        })
+    },
+    getTotalProducts:()=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let product = await db.get().collection(collection.PRODUCT_COLLECTION).find({}).toArray()
+            let productLength = product.length
+            resolve(productLength)
+        })
+    },
     getDailyOrders:()=>
     {
         return new Promise(async(resolve,reject)=>

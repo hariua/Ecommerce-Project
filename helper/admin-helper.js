@@ -367,5 +367,65 @@ module.exports = {
             resolve(data)
             
         })
+    },
+    monthlyReport:()=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let today = new Date()
+            let end = moment(today).format('YYYY/MM/DD')
+            let start = moment(end).subtract(30,'days').format('YYYY/MM/DD')
+            let orderSuccess =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end},Status:{$nin:['Cancelled','pending']}}).sort({Date:-1,Time:-1}).toArray()
+            let orderTotal =await db.get().collection(collection.ORDER_COLLECTION).find({Date:{$gte:start,$lte:end}}).toArray()
+            let orderSuccessLength = orderSuccess.length
+            let orderTotalLength = orderTotal.length
+            let orderFailLength = orderTotalLength-orderSuccessLength
+            let total = 0
+            let discountAmt = 0
+            let discount = 0
+            let online = 0
+            let cod = 0
+            let paypal = 0
+            for(let x = 0;x<orderSuccessLength;x++)
+            {
+                 total = total+orderSuccess[x].Total
+                 if(orderSuccess[x].PaymentMethod == 'COD')
+                 {
+                     cod++
+                 }else if(orderSuccess[x].PaymentMethod == 'Paypal')
+                 {
+                     paypal++
+                 }else{
+                     online++
+                 }
+                 if(orderSuccess[x].Discount)
+                 {
+                     discountAmt = discountAmt+parseInt(orderSuccess[x].Discount)
+                     discount++
+                 }
+
+            }
+            var data = {
+                start:start,
+                end:end,
+                totalOrders:orderTotalLength,
+                successOrders:orderSuccessLength,
+                failOrders:orderFailLength,
+                totalSales:total,
+                cod:cod,
+                paypal:paypal,
+                online:online,
+                discount:discountAmt,
+                currentOrders:orderSuccess
+            }
+
+            // console.log("total",total);
+            // console.log("cod : ",cod,"paypal : ",paypal,"online : ",online);
+            // console.log("total order :",orderTotalLength,"success order :",orderSuccessLength,"fail order :",orderFailLength,);
+            // console.log("Discount Amount : ",discountAmt,"discount count : ",discount);
+            console.log(data);
+            resolve(data)
+            
+        })
     }
 }

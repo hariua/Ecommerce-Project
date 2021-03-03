@@ -13,8 +13,9 @@ var instance = new Razorpay({
 });
 
 module.exports = {
-    userExist: (userData) => {
+    signupUser: (userData) => {
         signupMsg = {}
+        let data = {}
         return new Promise(async (resolve, reject) => {
             let userEmail = await db.get().collection(collection.USER_COLLECTION).findOne({ Email: userData.Email })
             if (userEmail) {
@@ -25,32 +26,18 @@ module.exports = {
                 signupMsg.Mobile = true
             }
             if (!userEmail && !userPhone) {
-
-
-
-                resolve()
-
+                userData.Password = await bcrypt.hash(userData.Password, 10)
+                db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((response) => {
+                    data.user = userData
+                    data.id = response.ops[0]._id
+                    resolve(data)
+                })
             }
             else {
                 reject(signupMsg)
             }
 
 
-        })
-    },
-    signupUser: (userData) => {
-        return new Promise(async (resolve, reject) => {
-            let data = {}
-            userData.Password = await bcrypt.hash(userData.Password, 10)
-            db.get().collection(collection.USER_COLLECTION).insertOne(userData).then((response) => {
-                data.user = userData
-                data.id = response.ops[0]._id
-                resolve(data)
-            }).catch((err)=>
-            {
-                console.log("error",err);
-                reject(err)
-            })
         })
     },
     loginUser: (userData) => {

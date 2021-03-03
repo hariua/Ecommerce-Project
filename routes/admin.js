@@ -34,8 +34,9 @@ router.get('/home', verifyAdmin, async (req, res) => {
   let ordersCancelled = await adminDashboard.getCancelledOrders()
   let ordersShipped = await adminDashboard.getShippedOrders()
   let dailyOrderPercentage = await adminDashboard.getDailyOrders()
-
-  res.render('admin/adminHome', { admin: true, totalOrders, ordersPlaced, ordersCancelled, ordersShipped, dailyOrderPercentage })
+  let totalUsers = await adminDashboard.getTotalUsers()
+  let totalProducts = await adminDashboard.getTotalProducts()
+  res.render('admin/adminHome', { admin: true, totalOrders, ordersPlaced, ordersCancelled, ordersShipped, dailyOrderPercentage,totalUsers,totalProducts })
 
 })
 router.post('/login', (req, res) => {
@@ -280,7 +281,11 @@ router.post('/generateCoupon',(req,res)=>
 })
 router.get('/salesDate',(req,res)=>
 {
-  res.render('admin/salesDate')
+  adminHelper.monthlyReport().then((data)=>
+  {
+    res.render('admin/salesReport',{data})
+  })
+  // res.render('admin/salesDate')
 })
 router.post('/salesDate',(req,res)=>
 {
