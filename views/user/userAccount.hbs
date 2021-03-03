@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="row breadcrumb_box  align-items-center">
                     <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
-                        <h2 class="breadcrumb-title">Shop</h2>
+                        <h4 class="breadcrumb-title"> user Profile</h4>
                     </div>
                     <div class="col-lg-6  col-md-6 col-sm-12">
                         <!-- breadcrumb-list start -->
@@ -148,8 +148,8 @@
 
                                                 <label for="exampleFormControlFile1">Select Your Image</label>
                                                 <div class="row">
-                                                    <img src="" style="width:100px;height:100px" id="imgView1"
-                                                    style="display: none;"><br><br>
+                                                    <img src="" style="width:100px;height:100px;display: none;" id="imgView1"
+                                                    ><br><br>
                                                 </div>
                                                 <input type="file" class="form-control" name="Image1"
                                                     id="exampleFormControlFile1" style="width: 250px;" accept="image/*"
@@ -196,6 +196,8 @@
         else {
             $('#submit').hide()
             $('#errMsg').show()
+            $('#imgView1').hide()
+
         }
     }
 </script>

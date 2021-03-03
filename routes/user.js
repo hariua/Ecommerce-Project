@@ -148,9 +148,9 @@ router.post('/userSignup', (req, res) => {
 //       // req.session.otpPhone=null
 //     })
 // })
-router.get('/signupOTPSubmit', (req, res) => {
-  res.render('user/signupOTPSubmit', { user: true })
-})
+// router.get('/signupOTPSubmit', (req, res) => {
+//   res.render('user/signupOTPSubmit', { user: true })
+// })
 router.get('/userProduct', async (req, res) => {
   let cartCount = null
   if (req.session.user) {
@@ -167,11 +167,11 @@ router.get('/userCart', verifyLogin, async (req, res) => {
   if (product.length > 0) {
     let cartCount = await userHelper.getCartCount(req.session.user._id)
     let total = await userHelper.getTotalAmount(req.session.user._id)
-    res.render('user/userCart', { user: true, product, 'userBtn': req.session.user._id, cartCount, total })
+    res.render('user/userCart', { user: true, product, userBtn: req.session.user, cartCount, total })
   }
   else {
     req.session.couponTotal = false
-    res.render('user/emptyCart', { user: true })
+    res.render('user/emptyCart', { user: true,userBtn: req.session.user })
   }
 
 })
@@ -211,20 +211,15 @@ router.post('/change-product-qty', (req, res, next) => {
     } else if (response.subtotal == 0 && response.total == 0) {
       res.json({ cartEmpty: true })
     }
-    else {
-      console.log("sl",response.cartCount);
+    else {      
       res.json({ removeProduct: true, total: response.total,cart: response.cartCount })
     }
-
-
-
   })
 }
 )
 router.get('/userLogout', (req, res) => {
   req.session.loggedIn = false
   req.session.user = null
-
   res.redirect('/userLogin')
 })
 router.get('/allProducts', async (req, res) => {
@@ -232,7 +227,6 @@ router.get('/allProducts', async (req, res) => {
   if (req.session.user) {
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }
-
   adminHelper.getAllProducts().then((items) => {
 
     products = items.slice(0, 12)
@@ -244,7 +238,6 @@ router.get('/allProducts2', async (req, res) => {
   if (req.session.user) {
     cartCount = await userHelper.getCartCount(req.session.user._id)
   }
-
   adminHelper.getAllProducts().then((items) => {
     let val = items.length
     products = items.slice(12, val)
@@ -259,7 +252,7 @@ router.get('/getCategoryProduct/:category', async (req, res) => {
 
   adminHelper.getCategoryProduct(req.params.category).then((products) => {
     console.log(products);
-    res.render('user/categoryProducts', { user: true, products, cartCount, userBtn: req.session.user });
+    res.render('user/categoryProducts', { user: true, products, cartCount, userBtn: req.session.user,cat:req.params.category });
   })
 
 
@@ -325,7 +318,7 @@ router.post('/userOTPSubmit', (req, res) => {
       res.redirect('/userOTPSubmit')
     })
 })
-router.get('/placeOrder', async (req, res) => {
+router.get('/placeOrder',verifyLogin, async (req, res) => {
   var address = null
   userHelper.addressChecker(req.session.user._id).then(async (status) => {
     if (status.address) {
@@ -335,7 +328,7 @@ router.get('/placeOrder', async (req, res) => {
     }
 
   })
-
+  let cartCount = await userHelper.getCartCount(req.session.user._id)
   let items = await userHelper.getCartProducts(req.session.user._id)
   if (req.session.couponTotal) {
     var total = req.session.couponTotal
@@ -343,7 +336,7 @@ router.get('/placeOrder', async (req, res) => {
     total = await userHelper.getTotalAmount(req.session.user._id)
   }
 
-  res.render('user/placeOrder', { user: true, total, items, userBtn: req.session.user, address })
+  res.render('user/placeOrder', { user: true, total, items,cartCount, userBtn: req.session.user, address })
 })
 router.post('/place-order', async (req, res) => {
   console.log(req.body);
@@ -375,22 +368,25 @@ router.post('/place-order', async (req, res) => {
   })
 
 })
-router.get('/orderSuccess', (req, res) => {
+router.get('/orderSuccess',verifyLogin, async(req, res) => {
   req.session.couponTotal = false
-  res.render('user/orderSuccess', { user: true, orderId: req.session.orderId })
+  let cartCount = await userHelper.getCartCount(req.session.user._id)
+  res.render('user/orderSuccess', { user: true, orderId: req.session.orderId,userBtn: req.session.user,cartCount })
 
 })
-router.get('/userOrders', (req, res) => {
+router.get('/userOrders',verifyLogin, async(req, res) => {
+  let cartCount = await userHelper.getCartCount(req.session.user._id)
   userHelper.getOrderList(req.session.user._id).then((orderList) => {
-    res.render('user/userOrderList', { user: true, orderList, userBtn: req.session.user })
+    res.render('user/userOrderList', { user: true, orderList,cartCount, userBtn: req.session.user })
   })
 
 })
-router.get('/viewOrderProduct/:id', (req, res) => {
+router.get('/viewOrderProduct/:id',verifyLogin, async(req, res) => {
+  let cartCount = await userHelper.getCartCount(req.session.user._id)
   userHelper.getOrderProducts(req.params.id).then((products) => {
     console.log("hello");
     console.log(products);
-    res.render('user/orderProduct', { user: true, products, userBtn: req.session.user })
+    res.render('user/orderProduct', { user: true, products,cartCount, userBtn: req.session.user })
   })
 })
 router.post('/verify-payment', (req, res) => {
@@ -405,8 +401,9 @@ router.post('/verify-payment', (req, res) => {
     res.json({ status: false })
   })
 })
-router.get('/addNewAddress', (req, res) => {
-  res.render('user/addNewAddress', { user: true, userBtn: req.session.user })
+router.get('/addNewAddress',verifyLogin, async(req, res) => {
+  let cartCount = await userHelper.getCartCount(req.session.user._id)
+  res.render('user/addNewAddress', { user: true,cartCount, userBtn: req.session.user })
 })
 router.post('/addNewAddress', (req, res) => {
   userHelper.addNewAddress(req.body).then((data) => {
@@ -420,9 +417,10 @@ router.post('/paypal-status-change', (req, res) => {
     res.json({ status: false })
   })
 })
-router.get('/userAccount', verifyLogin, (req, res) => {
+router.get('/userAccount', verifyLogin, async(req, res) => {
+  let cartCount = await userHelper.getCartCount(req.session.user._id)
   userHelper.getUserDetails(req.session.user._id).then((user) => {
-    res.render('user/userAccount', { user: true, user, 'psdSuccess': req.session.passwordChangeSuccess, 'psdFailure': req.session.passwordChangeFailure, userBtn: req.session.user })
+    res.render('user/userAccount', { user: true, user, 'psdSuccess': req.session.passwordChangeSuccess, 'psdFailure': req.session.passwordChangeFailure, userBtn: req.session.user,cartCount })
     req.session.passwordChangeSuccess = false
     req.session.passwordChangeFailure = false
   })

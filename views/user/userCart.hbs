@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="row breadcrumb_box  align-items-center">
                     <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-left">
-                        <h2 class="breadcrumb-title">Shop</h2>
+                        <h4 class="breadcrumb-title">cart</h4>
                     </div>
                     <div class="col-lg-6  col-md-6 col-sm-12">
                         <!-- breadcrumb-list start -->
@@ -57,11 +57,11 @@
                                 <td class="product-quantity">
 
                                     <a class="btn btn-danger text-center pb-2 mr-3" style="width: 30px;height:30px;"
-                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',-1)"
+                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn._id}}',-1)"
                                         >-</a>
                                     <span id="{{this.product._id}}">{{this.quantity}}</span><button
                                         class="btn btn-success text-center ml-3 p-2" style="width: 30px;height:30px;"
-                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn}}',1)"
+                                        onclick="changeQty('{{this._id}}','{{this.product._id}}','{{../userBtn._id}}',1)"
                                        >+</button>
                                 </td>
                                 <td class="product-subtotal" id="{{this.product._id}}5">{{this.subtotal}}</td>
