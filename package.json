@@ -10,6 +10,7 @@
     "cookie-parser": "~1.4.4",
     "croppie": "^2.6.5",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "express-fileupload": "^1.2.1",
     "express-handlebars": "^5.2.0",

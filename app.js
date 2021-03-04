@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var dotenv = require('dotenv').config()
 var hbs = require('express-handlebars')
 var handlebars = require('handlebars');
 var cookieParser = require('cookie-parser');
@@ -62,7 +63,7 @@ app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.status(404).render('error')
 });
 
 // error handler
