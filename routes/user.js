@@ -459,6 +459,5 @@ router.post('/couponSubmit', (req, res) => {
       res.json({ invalidCoupon: true })
     }
   })
-
 })
 module.exports = router;

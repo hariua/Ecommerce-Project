@@ -61,31 +61,24 @@
 <!-- Hero/Intro Slider End -->
 
 <!-- Product Category Start -->
-<div class="section pt-50px pb-50px">
+<div class="section pt-50px pb-50px" style="height: auto;">
     <div class="container">
-        <div class="category-slider swiper-container" data-aos="fade-up">
-            <div class="category-wrapper swiper-wrapper" style="height: 20em;">
+        {{!-- <div class="category-slider swiper-container" data-aos="fade-up"> --}}
+            <div class="category-wrapper swiper-wrapper" style="height: auto;align-items: center;">
                 <!-- Single Category -->
-                {{#each category}}
-                <a href="/getCategoryProduct/{{this.Category}}" class="category-inner " style="text-decoration: none;">
-                    <div class="category-single-item">
-                        <img src="/assets/images/icons/1.png" style="width: 6em;height:6em" alt="">
-                        <span class="title">{{this.Category}}</span>
+                <div class="row " style="padding-top: 5%;padding-bottom:5%;margin-left:10%">
+                    {{#each category}}
+                    <div class="col-6 col-md-3" style="margin-top:3%;">
+                        <a href="/getCategoryProduct/{{this.Category}}" class="category-inner"
+                            style="text-decoration: none;">
+                            <div class="category-single-item">
+                                <img src="/assets/images/icons/1.png" style="width: 6rem;height:6rem" alt="">
+                                <span class="title">{{this.Category}}</span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-                {{/each}}
-
-                {{!--
-                <!-- Single Category -->
-
-                <a href="shop-left-sidebar.html" class="category-inner ">
-                    <div class="category-single-item">
-                        <img src="/assets/images/icons/2.png" alt="" style="width: 5em;height:5em">
-                        <span class="title">Casual Shoes</span>
-                    </div>
-                </a> --}}
-
-
+                    {{/each}}
+                </div>
             </div>
         </div>
     </div>
@@ -151,7 +144,8 @@
                                         </h5>
                                         <span class="price">
                                             {{#if this.Offer}}
-                                            <span class="new pr-2" style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
+                                            <span class="new pr-2"
+                                                style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
                                             <span class="new">Rs.{{this.Price}}</span>
                                             {{else}}
                                             <span class="new">Rs.{{this.Price}}</span>
@@ -166,7 +160,7 @@
                     </div>
                     <!-- 1st tab end -->
 
-                    
+
 
 
                 </div>
@@ -177,8 +171,8 @@
     </div>
 </div>
 <div class="container p-3">
-        <hr class="separator">
-    </div>
+    <hr class="separator">
+</div>
 <div class="section product-tab-area">
     <div class="container">
         <div class="row">
@@ -214,8 +208,8 @@
                                             {{#if this.Offer}}
                                             <span class="sale">{{this.Offer}}% OFF</span>
                                             {{/if}}
-                                            
-                                        </span>                                        
+
+                                        </span>
                                         <div class="actions">
                                             {{!-- <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
                                                     class="icon-heart"></i></a> --}}
@@ -235,7 +229,8 @@
                                         </h5>
                                         <span class="price">
                                             {{#if this.Offer}}
-                                            <span class="new pr-2" style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
+                                            <span class="new pr-2"
+                                                style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
                                             <span class="new">Rs.{{this.Price}}</span>
                                             {{else}}
                                             <span class="new">Rs.{{this.Price}}</span>
@@ -284,7 +279,7 @@
                     alert("An item Added to Cart")
                     document.getElementById("cart-count").innerHTML = response.cartCount
                     document.getElementById("cart-count1").innerHTML = response.cartCount
-                    
+
                 }
             }
         })

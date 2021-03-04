@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/adminLogin/css/bootstrap.min.css">
 
     <link rel="stylesheet" href="/adminLogin/css/style.css">
-  
+
 
 
     <title>Add New Product</title>
@@ -101,12 +101,6 @@
 
                             <input type="submit" value="Submit" id='sub' class="btn btn-block btn-primary mt-4">
                         </form>
-
-
-                       
-
-
-
                     </div>
                 </div>
             </div>
@@ -140,11 +134,6 @@
 
         })
     </script>
-
-
-
-
-
     <script>
         function viewImage1(event) {
             document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
@@ -167,7 +156,7 @@
             let extension = file.split('.').pop()
             if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
                 $('#imgView2').show()
-                 $('#sub').show()
+                $('#sub').show()
                 $('#errMsg').hide()
             }
             else {
@@ -181,7 +170,7 @@
             let extension = file.split('.').pop()
             if (extension == 'jpeg' || extension == 'png' || extension == 'jpg') {
                 $('#imgView3').show()
-                 $('#sub').show()
+                $('#sub').show()
                 $('#errMsg').hide()
             }
             else {
