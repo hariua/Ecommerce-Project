@@ -37,7 +37,8 @@ module.exports = {
         })
     },
     updateProduct: (proId, ProDetails) => {
-        return new Promise((resolve, reject) => {
+        return new Promise(async(resolve, reject) => {
+            
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({ _id: objectId(proId) }, {
                 $set: {
                     Name: ProDetails.Name,
@@ -46,9 +47,27 @@ module.exports = {
                     Stock: ProDetails.Stock,
                     Category: ProDetails.Category
                 }
-            }).then(() => {
-                resolve()
             })
+               
+            let pdt =await db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(proId)})
+            if(pdt.Stock>0)
+            {
+                
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},{
+                    $unset:{
+                        Stockout:""
+                    }
+                })
+            }
+            else{
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},{
+                    $set:{
+                        Stockout:true
+                    }
+                })
+            }
+            resolve()
+
         })
     },
     deleteProduct: (proId) => {

@@ -135,8 +135,12 @@
                                             {{!-- <a href="compare.html" class="action compare" title="Compare"><i
                                                     class="icon-refresh"></i></a> --}}
                                         </div>
+                                        {{#if this.Stockout}}
+                                        <p class="text-danger text-center">Out of Stock</p>
+                                        {{else}}
                                         <button onclick="addCart('{{this._id}}')" class="btn btn-secondary add-to-cart "
                                             style="width: auto;height:3.6em;">Add To Cart</button>
+                                        {{/if}}
                                     </div>
                                     <div class="content">
                                         <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}
@@ -220,8 +224,13 @@
                                             {{!-- <a href="compare.html" class="action compare" title="Compare"><i
                                                     class="icon-refresh"></i></a> --}}
                                         </div>
+                                         {{#if this.Stockout}}
+                                        <p class="text-danger text-center">Out of Stock</p>
+                                        {{else}}
                                         <button onclick="addCart('{{this._id}}')" class="btn btn-secondary add-to-cart "
                                             style="width: auto;height:3.6em;">Add To Cart</button>
+                                        {{/if}}
+                                        
                                     </div>
                                     <div class="content">
                                         <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}

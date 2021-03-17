@@ -614,6 +614,68 @@ module.exports = {
                 })
             }
         })
+    },
+    stockChanger:(orderId)=>
+    {
+        return new Promise(async(resolve,reject)=>
+        {
+            let prod = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match:{
+                        _id:objectId(orderId)
+                    }
+                },
+                {
+                    $unwind:'$Products'
+                },
+                {
+                    $project:{
+                        item:'$Products.item',
+                        quantity:'$Products.quantity'
+                    }
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCT_COLLECTION,
+                        localField: 'item',
+                        foreignField:'_id',
+                        as:'products'
+                    }
+                },
+                {
+                    $project: {
+                        item: 1, quantity: 1, product: { $arrayElemAt: ['$products', 0] },
+                        newQty:{$subtract:[{$arrayElemAt:['$products.Stock',0]},'$quantity']}
+                    }
+                }
+            ]).toArray()
+            let proLen = prod.length
+            console.log('stockchange',prod);
+            for(let x = 0; x<proLen; x++)
+            {
+                let itemMain = prod[x]
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(itemMain.item)},{
+                    $set:{
+                        Stock:itemMain.newQty
+                    }
+                })
+                if(itemMain.newQty < 1)
+                {
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(itemMain.item)},{
+                        $set:{
+                            Stockout:true
+                        }
+                    })
+                }else{
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(itemMain.item)},{
+                        $unset:{
+                            Stockout:""
+                        }
+                    })
+                }
+            }
+            resolve()
+        })
     }
 
 } 

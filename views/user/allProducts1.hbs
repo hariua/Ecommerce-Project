@@ -57,43 +57,52 @@
 
                     <div class="row">
                         {{#each products}}
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 alert border-light" data-aos="fade-up" data-aos-delay="200">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 alert border-light" data-aos="fade-up"
+                            data-aos-delay="200">
                             <!-- Single Prodect -->
                             <div class="product mb-5" style="width: 250px;height:250px">
                                 <div class="thumb">
                                     <a href="/userProduct?id={{this._id}}" class="image">
-                                        <img src="/product-images/{{this._id}}a.jpg" alt="Product" style="height: 10em;"/>
+                                        <img src="/product-images/{{this._id}}a.jpg" alt="Product"
+                                            style="height: 10em;" />
                                         <img class="hover-image" src="/product-images/{{this._id}}b.jpg"
                                             alt="Product" />
                                     </a>
                                     <span class="badges">
                                         {{#if this.Offer}}
-                                            <span class="sale">{{this.Offer}}% OFF</span>
-                                            {{/if}}
+                                        <span class="sale">{{this.Offer}}% OFF</span>
+                                        {{/if}}
                                     </span>
                                     <div class="actions">
-                                        
-                                        
+
+
                                     </div>
-                                    <button onclick="addCart('{{this._id}}')" title="Add To Cart" class=" add-to-cart"  style="width: auto;height:3em;">Add
-                                        To Cart</button>    
+                                    {{#if this.Stockout}}
+                                    <p class="text-danger text-center">Out of Stock</p>
+                                    {{else}}
+                                    <button onclick="addCart('{{this._id}}')" title="Add To Cart" class=" add-to-cart"
+                                        style="width: auto;height:3em;">Add
+                                        To Cart</button>
+                                    {{/if}}
+
                                 </div>
                                 <div class="content">
                                     <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}</a></h5>
                                     <span class="price">
                                         {{#if this.Offer}}
-                                            <span class="new pr-2" style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
-                                            <span class="new">Rs.{{this.Price}}</span>
-                                            {{else}}
-                                            <span class="new">Rs.{{this.Price}}</span>
-                                            {{/if}}
+                                        <span class="new pr-2"
+                                            style="text-decoration: line-through;">Rs.{{this.actualPrice}}</span>
+                                        <span class="new">Rs.{{this.Price}}</span>
+                                        {{else}}
+                                        <span class="new">Rs.{{this.Price}}</span>
+                                        {{/if}}
                                     </span>
                                 </div>
                             </div>
                         </div>
                         {{/each}}
 
-                        
+
 
 
 
@@ -134,7 +143,7 @@
                     alert("An item Added to Cart")
                     document.getElementById("cart-count").innerHTML = response.cartCount
                     document.getElementById("cart-count1").innerHTML = response.cartCount
-                    
+
                 }
             }
         })

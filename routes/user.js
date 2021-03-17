@@ -349,7 +349,11 @@ router.post('/place-order', async (req, res) => {
   userHelper.placeOrder(req.body, products, total).then((orderId) => {
     req.session.orderId = orderId
     if (req.body.Payment === 'COD') {
-      res.json({ codSuccess: true })
+      userHelper.stockChanger(orderId).then(()=>
+      {
+        res.json({ codSuccess: true })
+      })
+      
     } else if (req.body.Payment === 'Paypal') {
       val = total / 72
       console.log(val)
@@ -394,7 +398,11 @@ router.post('/verify-payment', (req, res) => {
   userHelper.verifyPayment(req.body).then(() => {
     userHelper.changePaymentStatus(req.body['order[receipt]'], req.session.user._id).then(() => {
       console.log("Payment Successful");
-      res.json({ status: true })
+      userHelper.stockChanger(req.body['order[receipt]']).then(()=>
+      {
+        res.json({ status: true })
+      })
+      
     })
   }).catch((err) => {
     console.log(err);
@@ -412,7 +420,11 @@ router.post('/addNewAddress', (req, res) => {
 })
 router.post('/paypal-status-change', (req, res) => {
   userHelper.changePaymentStatus(req.session.orderId, req.session.user._id).then((response) => {
-    res.json({ status: true })
+    userHelper.stockChanger(req.session.orderId).then(()=>
+    {
+      res.json({ status: true })
+    })
+   
   }).catch((err) => {
     res.json({ status: false })
   })

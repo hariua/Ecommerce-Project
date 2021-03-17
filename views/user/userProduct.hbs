@@ -104,9 +104,14 @@
                             <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
                         </div> --}}
                         <div class="pro-details-cart">
+                            {{#if product.Stockout}}
+                            <h3 class="text-danger text-center">Out of Stock</h3>
+                            {{else}}
                             <button onclick="addCart('{{product._id}}')"
                                 class="add-cart btn btn-primary btn-hover-primary ml-4"> Add To
                                 Cart</button>
+                            {{/if}}
+
                         </div>
                     </div>
                     <div class="pro-details-wish-com">
@@ -167,7 +172,7 @@
                     alert("An item Added to Cart")
                     document.getElementById("cart-count").innerHTML = response.cartCount
                     document.getElementById("cart-count1").innerHTML = response.cartCount
-                    
+
                 }
             }
         })

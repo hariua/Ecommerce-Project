@@ -77,8 +77,13 @@
 
 
                                     </div>
-                                   <button onclick="addCart('{{this._id}}')" class=" add-to-cart"style="width: auto;height:3em;">Add
-                                        To Cart</button> 
+                                     {{#if this.Stockout}}
+                                    <p class="text-danger text-center">Out of Stock</p>
+                                    {{else}}
+                                    <button onclick="addCart('{{this._id}}')" class=" add-to-cart"style="width: auto;height:3em;">Add
+                                        To Cart</button>
+                                    {{/if}}
+                                    
                                 </div>
                                 <div class="content">
                                     <h5 class="title"><a href="/userProduct?id={{this._id}}">{{this.Name}}</a></h5>
